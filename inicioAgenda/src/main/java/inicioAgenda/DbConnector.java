@@ -13,9 +13,10 @@ import com.zaxxer.hikari.HikariDataSource;
 
 public class DbConnector {
 
-	private static final String DATABASE_PASSWORD = "8$C4YBh7t3x5idx4AbIgdAngOfAmilY@!";
-	private static final String DATABASE_USER = "postgres";
+	private static final String DATABASE_PASSWORD = "Agenda";
+	private static final String DATABASE_USER = "Agenda";
 	private static HikariDataSource dataSource;
+	private static String[] defaultDatabaseStrings = {"mock_database_to_test_agenda", "lista_contatos"};
 	private static String[] availableDatabases;
 	
 	DbConnector() {
@@ -44,8 +45,11 @@ public class DbConnector {
 	public static void createDatabaseFile(String filePath) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
-			writer.write("mock_database_to_test_agenda\n"
-					+ "lista_contatos");
+			String defaultDatabases = "";
+			for (String str : defaultDatabaseStrings) {
+				defaultDatabases += str + "\n";
+			}
+			writer.write(defaultDatabases);
 			writer.close();
 		} catch (IOException e) {
 			e.printStackTrace();

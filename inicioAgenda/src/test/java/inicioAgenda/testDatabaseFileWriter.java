@@ -2,6 +2,9 @@ package inicioAgenda;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -27,5 +30,19 @@ class testDatabaseFileWriter {
 	@Test
 	void checkIfFileContentsAreRight() {
 		DbConnector.createDatabaseFile(filePath);
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(filePath));
+			String line;
+			//DbConnector
+			while ((line = reader.readLine()) != null) {
+				
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
