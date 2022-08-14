@@ -3,11 +3,11 @@ package com.ticTacToe;
 public class App {
 
 	public static void main(String[] args) {
-		TicTacToe toe = new TicTacToe();
+		GridAndInputHolder variables = new GridAndInputHolder();
+		TicTacToe toe = new TicTacToe(variables);
+		InputHandler handler = new InputHandler(variables);
+		EndVerifier verifier = new EndVerifier(variables);
 		boolean keepGoing = true;
-		int x = -1;
-		int y = -1;
-		toe.getInput();
 		// this loop verifies if the player wanna play more than one game
 		while (keepGoing) {
 			boolean gameOver = false;
@@ -16,18 +16,16 @@ public class App {
 				boolean invalidInput = true;
 				// this loop pauses the game until the input is valid
 				while (invalidInput) {
-					int[] xyPair = toe.getInput();
-					x = xyPair[0];
-					y = xyPair[1];
-					invalidInput = !toe.validateInput(x, y);
+					handler.getInput();
+					invalidInput = !handler.validateInput();
 				}
-				toe.addInputToGrid(x, y);
+				toe.addInputToGrid();
 				toe.showGrid();
 				toe.switchCurrentPlayer();
-				gameOver = toe.isGameOver();
+				gameOver = verifier.isGameOver(toe);
 			}
-			toe.resetGrid();
-			keepGoing = toe.wannaKeepGoing();
+			toe.resetGridAndPlayerMarker();
+			keepGoing = handler.wannaKeepGoing(); 
 		}
 	}
 
