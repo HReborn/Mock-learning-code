@@ -8,16 +8,18 @@ public class InputHandler{
 	GridAndInputHolder variables;
 	
 	public InputHandler(GridAndInputHolder variables) {
-		this.scan = new Scanner(System.in);
+		this.scan = new Scanner(System.in); // scanner will be closed in the wannaKeepGoing method
 		this.variables = variables;
 	}
 	
-	public boolean validateInput() {
-		// os dois tem que retornar falso. e o método deve retornar true pra dizer que o input é válido
-		if (verifyIfInputIsOutOfGrid()) {
+	public boolean isThePlayValid() {
+		// this method will be called after getInput checks if there isn't any typeMismatchException.
+		// the inputs are saved after getInput and the two methods below will handle getting and checking
+		// those inputs from the 'variables' object.
+		if (isInputIsOutOfGrid()) {
 			System.out.println("Input inválido. Fora do tabuleiro. Tente novamente.");
 			return false;
-		} else if (verifyIfSpotIsTaken()) {
+		} else if (isSpotTaken()) {
 			System.out.println("Input inválido. Posição ocupada. Tente novamente.");
 			return false;
 		} else {
@@ -25,7 +27,7 @@ public class InputHandler{
 		}
 	}
 	
-	private boolean verifyIfSpotIsTaken() {
+	private boolean isSpotTaken() {
 		String[][] grid = variables.getGrid();
 		int x = variables.getxPosition();
 		int y = variables.getyPosition();
@@ -36,7 +38,7 @@ public class InputHandler{
 		}
 	}
 	
-	private boolean verifyIfInputIsOutOfGrid() {
+	private boolean isInputIsOutOfGrid() {
 		int x = variables.getxPosition();
 		int y = variables.getyPosition();
 		if (x < 1 || x > 3 || y < 1 || y > 3)
@@ -47,24 +49,30 @@ public class InputHandler{
 	}
 	
 	public void getInput() {
+		// this method will use the Scanner to get and save user input 
+		// and will ensure that the input is an int with the try-catch with while
 		// TODO: resolver um bug que se você der input de 2 letras ex: a a, o programa continua normalmente, mas ele printa duas vezes as mensagens.
 		while (true) {
 			try {
 				System.out.println("Digite abaixo a posição na qual o player '" + variables.getCurrentPlayer() +"' deseja jogar: ");
+				System.out.println("Ex: Dois números de um a três separados por espaço: '3 1'.");
 				int x = scan.nextInt();
 				int y = scan.nextInt();
+				// the next two lines only saves the input and does not place the marker
 				variables.setxPosition(x);
 				variables.setyPosition(y);;
 				return;
 			} catch (Exception e) {
 				scan.next();
-				System.out.println("Input inválido. Dois números de um a três separados por espaço. Ex: '3 1'. OBS: A posição precisa estar vazia.");
+				System.out.println("Input inválido. Digite dois números de um a três separados por espaço. Ex: '3 1'.");
 			}
-			
 		}
 	}
 	
 	public boolean wannaKeepGoing() {
+		// this method will be called after each game has ended to check if the player
+		// wants to go for another round and it'll only return true if user types 'yes'
+		// else it'll return false and close the scanner
 		System.out.println("Gostaria de ir outra partida? Digite 'yes' abaixo caso queira.");
 		String answer;
 		try {

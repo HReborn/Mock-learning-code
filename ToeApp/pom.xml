@@ -3,5 +3,38 @@
   <groupId>App</groupId>
   <artifactId>ToeApp</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  <build>
+	<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.0</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-surefire-provider</artifactId>
+                    <version>1.2.0</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>3.1</version>
+        	<configuration>
+        		<source>11</source>
+        		<target>>11</target>
+        	</configuration>
+        </plugin>
+	</plugins>
+</build>
+  <dependencies>
+	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.8.2</version>
+        <scope>test</scope>
+	</dependency>
+  </dependencies>
   <name>TicTacToe</name>
 </project>

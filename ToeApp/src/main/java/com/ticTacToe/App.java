@@ -10,23 +10,25 @@ public class App {
 		boolean keepGoing = true;
 		// this loop verifies if the player wanna play more than one game
 		while (keepGoing) {
-			boolean gameOver = false;
 			// this loop keeps the game running until the end has come
-			while (!gameOver) {
+			while (!verifier.isGameOver()) {
 				boolean invalidInput = true;
 				// this loop pauses the game until the input is valid
 				while (invalidInput) {
 					handler.getInput();
-					invalidInput = !handler.validateInput();
+					invalidInput = !handler.isThePlayValid();
 				}
 				toe.addInputToGrid();
 				toe.showGrid();
 				toe.switchCurrentPlayer();
-				gameOver = verifier.isGameOver(toe);
 			}
-			toe.resetGridAndPlayerMarker();
+			if (variables.isGameDrawn()) {
+				toe.declareDraw();
+			} else {
+				toe.declareWinner();
+			}
+			toe.setUpDefaultFieldAndProperties();
 			keepGoing = handler.wannaKeepGoing(); 
 		}
 	}
-
 }

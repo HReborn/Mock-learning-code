@@ -8,20 +8,21 @@ public class EndVerifier{
 		this.variables = variables;
 	}
 	
-	public boolean isGameOver(TicTacToe toe) {
-		if (verifyWin()) {
-			toe.switchCurrentPlayer(); //troca o player pra voltar ao último player que jogou
-			System.out.println("Parabéns ao player " + variables.getCurrentPlayer() +" pela vitória!");
+	public boolean isGameOver() {
+		// if won or drawn set and return property as true. else return false.
+		if (didSomeoneWin()) {
+			variables.setGameWon(true);
 			return true;
-		} else if (verifyDraw()) {
-			System.out.println("It's a draw!");
+		} else if (isDraw()) {
+			variables.setGameDrawn(true);
 			return true;
 		} else {
 			return false;
 		}
 	}
 	
-	private boolean verifyWin() {
+	private boolean didSomeoneWin() {
+		// the method will check all win conditions and return true if any is met
 		// TODO: fazer um algorítimo para isso. Por enquanto, deixar hardcoded.
 		String[][] grid = variables.getGrid();
 		boolean upperLineMatch = ((grid[0][0] + grid[0][1] + grid[0][2]).equals("xxx")) || ((grid[0][0] + grid[0][1] + grid[0][2]).equals("ooo"));
@@ -39,7 +40,9 @@ public class EndVerifier{
 		}
 	}
 	
-	private boolean verifyDraw() {
+	private boolean isDraw() {
+		// return false if there's at least one '.' in the grid as it represents
+		// that there's an empty spot in the grid and the game can go on
 		String[][] grid = variables.getGrid();
 		for (String[] line : grid) {
 			for (String elmt : line) {
@@ -50,6 +53,4 @@ public class EndVerifier{
 		}
 		return true;
 	}
-	
-	
 }
