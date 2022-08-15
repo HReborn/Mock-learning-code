@@ -39,18 +39,13 @@ class TicTacToeTest {
 		variables.setxPosition(3);
 		variables.setyPosition(3);
 		String[][] grid = {{".", ".", "."}, {".", ".", "."}, {".", ".", "."}};
-		String currentPlayer = "x";
-		int xPosition = -1;
-		int yPosition = -1;
-		boolean gameDrawn = false;
-		boolean gameWon = false;
 		toe.setUpDefaultFieldAndProperties();
 		assertTrue(Arrays.deepEquals(grid, variables.getGrid()));
-		assertEquals(currentPlayer, variables.getCurrentPlayer());
-		assertEquals(xPosition, variables.getxPosition());
-		assertEquals(yPosition, variables.getyPosition());
-		assertEquals(gameDrawn, variables.isGameDrawn());
-		assertEquals(gameWon, variables.isGameWon());
+		assertEquals("x", variables.getCurrentPlayer());
+		assertEquals(-1, variables.getxPosition());
+		assertEquals(-1, variables.getyPosition());
+		assertEquals(false, variables.isGameDrawn());
+		assertEquals(false, variables.isGameWon());
 	}
 	
 	@Test
