@@ -12,11 +12,11 @@ public class App {
 		while (keepGoing) {
 			// this loop keeps the game running until the end has come
 			while (!verifier.isGameOver()) {
-				boolean invalidInput = true;
 				// this loop pauses the game until the input is valid
-				while (invalidInput) {
+				while (!handler.isThePlayValid()) {
+					// it'll verify the previous input first but as the grid
+					// position is already taken, the method will return false
 					handler.getInput();
-					invalidInput = !handler.isThePlayValid();
 				}
 				toe.addInputToGrid();
 				toe.showGrid();
