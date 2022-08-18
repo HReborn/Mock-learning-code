@@ -11,10 +11,10 @@ public class GridAndInputHolder {
 	
 	GridAndInputHolder() {
 		// player is x because of the convention to always begin with x
-		// positions are -1 just to initiate the variable and show error if anything goes wrong
+		// positions are 0 just to initiate the variable and show error if anything goes wrong
 		currentPlayer = "x";
-		xPosition = -1;
-		yPosition = -1;
+		xPosition = 0;
+		yPosition = 0;
 		gameWon = false;
 		gameDrawn = false;
 	}

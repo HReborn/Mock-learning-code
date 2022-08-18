@@ -11,11 +11,13 @@ class TicTacToeTest {
 	
 	private GridAndInputHolder variables;
 	private TicTacToe toe;
+	private InstanceManager manager;
 	
 	@BeforeEach
 	void setUp() {
-		variables = new GridAndInputHolder();
-		toe = new TicTacToe(variables);
+		manager = new InstanceManager();
+		toe = manager.getToe();
+		variables = manager.getVariables();
 	}
 	
 	@Test
@@ -32,6 +34,7 @@ class TicTacToeTest {
 	void CheckIfFieldIsReset() {
 		// the test will check if the grid, marker and positions are set to a default initial state
 		String[][] mockGrid = {{"x", "o", "x"}, {"x", "o", "x"}, {"o", "x", "o"}};
+		toe.getClass(); // só pra tirar o unused warning
 		variables.setCurrentPlayer("o");
 		variables.setGameDrawn(true);
 		variables.setGameWon(true);
@@ -39,11 +42,18 @@ class TicTacToeTest {
 		variables.setxPosition(3);
 		variables.setyPosition(3);
 		String[][] grid = {{".", ".", "."}, {".", ".", "."}, {".", ".", "."}};
-		toe.setUpDefaultFieldAndProperties();
+		manager.newGame();
+		//gotta get variables again because a new object is created
+		variables = manager.getVariables();
+		// check if variable object is passed correctly
+		assertTrue(variables == toe.getVariables());
+		assertTrue(variables == manager.getHandler().getVariables());
+		assertTrue(variables == manager.getVerifier().getVariables());
+		// check if variables is really reset
 		assertTrue(Arrays.deepEquals(grid, variables.getGrid()));
 		assertEquals("x", variables.getCurrentPlayer());
-		assertEquals(-1, variables.getxPosition());
-		assertEquals(-1, variables.getyPosition());
+		assertEquals(0, variables.getxPosition());
+		assertEquals(0, variables.getyPosition());
 		assertEquals(false, variables.isGameDrawn());
 		assertEquals(false, variables.isGameWon());
 	}

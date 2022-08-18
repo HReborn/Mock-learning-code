@@ -1,12 +1,21 @@
 package com.ticTacToe;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class InputHandler{
 	
-	Scanner scan;
-	GridAndInputHolder variables;
+	private Scanner scan;
+	private GridAndInputHolder variables;
 	
+	public GridAndInputHolder getVariables() {
+		return variables;
+	}
+
+	public void setVariables(GridAndInputHolder variables) {
+		this.variables = variables;
+	}
+
 	public InputHandler(GridAndInputHolder variables) {
 		this.scan = new Scanner(System.in); // scanner will be closed in the wannaKeepGoing method
 		this.variables = variables;
@@ -17,13 +26,20 @@ public class InputHandler{
 		// the inputs are saved after getInput and the two methods below will handle getting and checking
 		// those inputs from the 'variables' object.
 		if (isInputIsOutOfGrid()) {
-			System.out.println("Input inválido. Fora do tabuleiro. Tente novamente.");
 			return false;
 		} else if (isSpotTaken()) {
-			System.out.println("Input inválido. Posição ocupada. Tente novamente.");
 			return false;
 		} else {
 			return true;
+		}
+	}
+	
+	public void showMessageIfInvalidPlay() {
+		// can't use 'else' to prevent that the message is shown at the wrong time
+		if (isSpotTaken()) {
+			System.out.println("Input inválido. Posição ocupada. Tente novamente.");
+		} else if (isInputIsOutOfGrid()) {
+			System.out.println("Input inválido. Fora do tabuleiro. Tente novamente.");
 		}
 	}
 	
@@ -62,7 +78,7 @@ public class InputHandler{
 				variables.setxPosition(x);
 				variables.setyPosition(y);;
 				return;
-			} catch (Exception e) {
+			} catch (InputMismatchException e) {
 				scan.next();
 				System.out.println("Input inválido. Digite dois números de um a três separados por espaço. Ex: '3 1'.");
 			}
@@ -77,7 +93,7 @@ public class InputHandler{
 		String answer;
 		try {
 			answer = scan.next();	
-		} catch (Exception e) {
+		} catch (InputMismatchException e) {
 			System.out.println("Vejo que não quer continuar. Até mais :D .");
 			scan.close();
 			return false;

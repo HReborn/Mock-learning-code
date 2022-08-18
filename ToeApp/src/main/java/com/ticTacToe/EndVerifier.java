@@ -2,8 +2,16 @@ package com.ticTacToe;
 
 public class EndVerifier{
 	
-	GridAndInputHolder variables;
+	private GridAndInputHolder variables;
 	
+	public GridAndInputHolder getVariables() {
+		return variables;
+	}
+
+	public void setVariables(GridAndInputHolder variables) {
+		this.variables = variables;
+	}
+
 	public EndVerifier(GridAndInputHolder variables) {
 		this.variables = variables;
 	}

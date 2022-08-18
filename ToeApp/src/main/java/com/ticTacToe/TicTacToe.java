@@ -2,8 +2,16 @@ package com.ticTacToe;
 
 public class TicTacToe {
 	
-	GridAndInputHolder variables;
-	
+	private GridAndInputHolder variables;
+
+	public GridAndInputHolder getVariables() {
+		return variables;
+	}
+
+	public void setVariables(GridAndInputHolder variables) {
+		this.variables = variables;
+	}
+
 	public TicTacToe(GridAndInputHolder variables) {
 		this.variables = variables;
 	}
@@ -12,23 +20,6 @@ public class TicTacToe {
 		String[][] grid = variables.getGrid();
 		grid[variables.getxPosition()-1][variables.getyPosition()-1] = variables.getCurrentPlayer();
 		variables.setGrid(grid);
-	}
-	
-	public void setUpDefaultFieldAndProperties() {
-		// sets all attributes to default value
-		String[][] grid = variables.getGrid();
-		for (int line = 0; line <= 2; line++) {
-			for (int column = 0; column <= 2; column++) {
-				grid[line][column] = ".";
-			}
-		}
-		// values below are in accord to the class GridAndInputHolder
-		variables.setGrid(grid);
-		variables.setCurrentPlayer("x");
-		variables.setyPosition(-1);
-		variables.setxPosition(-1);
-		variables.setGameWon(false);
-		variables.setGameDrawn(false);
 	}
 	
 	public void switchCurrentPlayer() {
@@ -62,5 +53,13 @@ public class TicTacToe {
 	
 	public void declareDraw() {
 		System.out.println("It's a draw!");
+	}
+	
+	public boolean isGameDrawn() {
+		return variables.isGameDrawn();
+	}
+	
+	public boolean isGameWon() {
+		return variables.isGameWon();
 	}
 }
