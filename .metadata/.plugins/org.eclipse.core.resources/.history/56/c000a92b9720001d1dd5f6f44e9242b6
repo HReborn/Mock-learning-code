@@ -1,0 +1,14 @@
+package com.breno.temporaries;
+
+public class TestTemp {
+	
+
+	public static void main(String[] args) {
+		Node head = new Node(10);
+		int[] toAdd = {10, 12, 15, 23, 8, 7, 6, 11, 9, 10, 15, 7, 4, 5};
+		//int[] toAdd = {10, 9};
+		for (int i : toAdd) {
+			head.add(i);
+		}
+	}	
+}

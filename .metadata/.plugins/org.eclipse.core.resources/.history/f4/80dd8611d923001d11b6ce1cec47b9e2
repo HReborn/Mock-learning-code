@@ -1,0 +1,10 @@
+package com.breno.temporaries;
+
+public abstract class BSTree {
+	BSTree right;
+	BSTree left;
+	
+	public BSTree() {
+		
+	}
+}

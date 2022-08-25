@@ -1,0 +1,30 @@
+package com.breno.temporaries;
+
+import java.util.Collection;
+
+public class GenericList<T> {
+	private T[] dataArray;
+	private int count = 0;
+	
+	
+	@SafeVarargs
+	GenericList(T... data) {
+		for (T elmt : data) {
+			this.add(elmt);
+		}
+	}
+	
+	GenericList(Collection<T> data) {
+		for (T elmt : data) {
+			this.add(elmt);
+		}
+	}
+	
+	public void add(T elmt) {
+		dataArray[count++] = elmt;
+	}
+	
+	public T get(int index) {
+		return dataArray[index];
+	}
+}

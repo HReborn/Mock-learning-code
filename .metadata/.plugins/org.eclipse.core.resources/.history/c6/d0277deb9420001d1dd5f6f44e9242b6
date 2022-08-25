@@ -1,0 +1,12 @@
+package com.breno.temporaries;
+
+public class TestTemp<T> {
+	
+
+	public static void main(String[] args) {
+		Integer b = null;
+		if (b == null || b > 30) {
+			
+		}
+	}	
+}

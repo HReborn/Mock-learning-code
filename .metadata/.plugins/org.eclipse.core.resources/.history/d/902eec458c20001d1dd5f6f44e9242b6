@@ -1,0 +1,10 @@
+package com.breno.temporaries;
+
+public class TestTemp<T> {
+	
+
+	public static void main(String[] args) {
+
+		
+	}	
+}

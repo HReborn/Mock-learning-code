@@ -1,0 +1,25 @@
+package com.breno.temporaries;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+public class TestTemp<T> {
+	
+	public static Node insert(Node head, int data) {
+		return null;
+	}
+
+	public static void main(String[] args) {
+
+		Set<String> mySet = new HashSet<>();
+		mySet.add("toba1");
+		mySet.add("toba2");
+		mySet.add("toba2");
+		for (var toba : mySet) {
+			System.out.println(toba);
+		}
+		ArrayList<String> list = new ArrayList<>();
+		list.addAll(3, "toba1", "toba2", "toba3");
+	}
+}
