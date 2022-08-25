@@ -1,4 +1,4 @@
-package com.breno.temporaries.genericList;
+package com.bitsofcode.genericlist;
 
 public class TestTemp {
 	

@@ -1,4 +1,4 @@
-package com.breno.temporaries.genericList;
+package com.bitsofcode.genericlist;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -29,7 +29,6 @@ public class GenericList<T> implements Iterable<T> {
 		return dataArray[index];
 	}
 
-	@Override
 	public Iterator<T> iterator() {
 		// TODO Auto-generated method stub
 		return new GenericListIterator<T>(dataArray);
@@ -43,14 +42,12 @@ public class GenericList<T> implements Iterable<T> {
 		GenericListIterator(T[] dataArray) {
 			list = dataArray;
 		}
-
-		@Override
+		
 		public boolean hasNext() {
 			// TODO Auto-generated method stub
 			return count < list.length;
 		}
 
-		@Override
 		public T next() {
 			// TODO Auto-generated method stub
 			return list[count++];
