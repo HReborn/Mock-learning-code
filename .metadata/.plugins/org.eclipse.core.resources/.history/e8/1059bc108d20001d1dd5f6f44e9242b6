@@ -1,9 +1,0 @@
-package com.breno.temporaries;
-
-public class TestTemp<T> {
-	
-
-	public static void main(String[] args) {
-		System.out.println(args[0] + args[1]);
-	}	
-}
