@@ -8,6 +8,17 @@ import java.util.Objects;
 public class GenericList<T> implements Iterable<T> {
 	private T[] dataArray = createNsizedTarray(0);
 	
+	public Object[] getListAsArray() {
+		// return a clone to avoid disclosing the 
+		// memory address
+		// return Object[] instead of T[] to
+		// avoid type casting error in case
+		// someone forgets bc in reality that's
+		// what will really be returned even if
+		// it's T[], so just put Object[];
+		return cloneDataArrayIntoNewObject();
+	}
+	
 	GenericList() {
 	}
 	@SafeVarargs
@@ -20,9 +31,6 @@ public class GenericList<T> implements Iterable<T> {
 		}
 	}
 	GenericList(Collection<T> data) {
-		if(data instanceof Map) {
-			return;
-		}
 		for (T elmt : data) {
 			if (ifNullCreateDataArray(elmt)) {
 				continue;
@@ -41,9 +49,6 @@ public class GenericList<T> implements Iterable<T> {
 	}
 	
 	public void add(Collection<T> data) {
-		if(data instanceof Map) {
-			return;
-		}
 		for (T elmt : data) {
 			add(elmt);
 		}
