@@ -2,6 +2,15 @@
 
 - Works almost the same as an ArrayList, probably less optimized. Made for fun and to test the iterable and iterator interfaces.
 
+# Content Table
+- [Features]
+- [Creating the object]
+- [Adding]
+- [Removing]
+- [Convert to an object array]
+- [Size, Get item, Get index]
+- [It's printable]
+
 ## Features
 - Add/Instance with varargs, arrays and collections
 - When it adds a single element, adds to the back of the list
