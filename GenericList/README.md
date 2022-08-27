@@ -129,7 +129,7 @@ Second
 GenericList<T> gList = new GenericList<>("First", "Second");
 Iterator<String> iter = gList.iterator();
 while (iter.hasNext()) {
-    System.out.println(iter.next);
+    System.out.println(iter.next());
 }
 ```
 Output:
