@@ -11,6 +11,7 @@ Works almost the same as an ArrayList, probably less optimized. Made for fun and
 - [Size, Get item, Get index](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#size-get-item-get-index)
 - [It's printable](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#its-printable)
 - [TODO: Future ideas](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#todo-future-ideas)
+- [Iterating and iterator]
 
 ## Features
 - Add/Instance with varargs, arrays and collections
@@ -100,7 +101,7 @@ gList.getIndex("Third"); // 2
 ```
 ### It's printable
 ```sh
-GenericList<T> gList = new GenericList<>("First", "Second", "Third", "Fourth");
+GenericList<String> gList = new GenericList<>("First", "Second", "Third", "Fourth");
 System.out.println(gList)
 ```
 Output:
@@ -109,6 +110,32 @@ First
 Second
 Third
 Fourth
+```
+### Iterating and iterator
+- Supports for each
+```sh
+GenericList<String> gList = new GenericList<>("First", "Second");
+for (String elmt : gList) {
+    System.out.println(elmt);
+}
+```
+Output:
+```sh
+First
+Second
+```
+- Can manually use the iterator
+```sh
+GenericList<T> gList = new GenericList<>("First", "Second");
+Iterator<String> iter = gList.iterator();
+while (iter.hasNext()) {
+    System.out.println(iter.next);
+}
+```
+Output:
+```sh
+First
+Second
 ```
 
 # TODO: Future ideas
