@@ -11,7 +11,7 @@ Works almost the same as an ArrayList, probably less optimized. Made for fun and
 - [Size, Get item, Get index](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#size-get-item-get-index)
 - [It's printable](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#its-printable)
 - [TODO: Future ideas](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#todo-future-ideas)
-- [Iterating and iterator]
+- [Iterating and iterator](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#iterating-and-iterator)
 
 ## Features
 - Add/Instance with varargs, arrays and collections
