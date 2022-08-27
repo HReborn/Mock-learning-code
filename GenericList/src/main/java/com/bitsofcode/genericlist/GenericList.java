@@ -2,22 +2,10 @@ package com.bitsofcode.genericlist;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Objects;
 
 public class GenericList<T> implements Iterable<T> {
 	private T[] dataArray = createNsizedTarray(0);
-	
-	public Object[] getListAsArray() {
-		// return a clone to avoid disclosing the 
-		// memory address
-		// return Object[] instead of T[] to
-		// avoid type casting error in case
-		// someone forgets bc in reality that's
-		// what will really be returned even if
-		// it's T[], so just put Object[];
-		return cloneDataArrayIntoNewObject();
-	}
 	
 	GenericList() {
 	}
@@ -39,6 +27,7 @@ public class GenericList<T> implements Iterable<T> {
 		}
 	}
 	private boolean ifNullCreateDataArray(T elmt) {
+		// should only be called in the constructor to start the array with the first element
 		if (dataArray.length == 0) {
 			dataArray = createNsizedTarray(1);
 			dataArray[0] = elmt;
@@ -53,14 +42,12 @@ public class GenericList<T> implements Iterable<T> {
 			add(elmt);
 		}
 	}
-	
 	@SuppressWarnings("unchecked")
 	public void add(T... data) {
 		for (T elmt : data) {
 			add(elmt);
 		}
 	}
-	
 	public void add(T elmt) {
 		// primeiro criamos uma array temporário para armazenar valores atuais
 		// fazemos isso porque os valores são perdidos ao aumentar o array
@@ -94,6 +81,8 @@ public class GenericList<T> implements Iterable<T> {
 	}
 	
 	public void remove(int index) {
+		// create a temporary empty array with lenght-1, find left and right lenght 
+		// and use System.arraycopy to store the values into tempArray while skipping the item to be removed
 		int leftLenght = index;
 		int rightLenght = dataArray.length - index - 1;
 		T[] tempArray = createNsizedTarray(dataArray.length - 1);
@@ -104,7 +93,8 @@ public class GenericList<T> implements Iterable<T> {
 	}
 	
 	public void remove(T elmt) {
-		// remove first ocurrence of the element
+		// remove first ocurrence of the list
+		// when the index is found, use the remove method
 		int i = 0;
 		for (T temp : this) {
 			if (Objects.equals(elmt, temp)) {
@@ -113,6 +103,14 @@ public class GenericList<T> implements Iterable<T> {
 			}
 			i++;
 		}
+	}
+	
+	public Object[] getListAsArray() {
+		// return a clone to avoid disclosing the  memory address
+		// return Object[] instead of T[] to avoid type casting error in case
+		// someone forgets bc in reality that's what will really be returned even if
+		// it's T[], so just put Object[];
+		return cloneDataArrayIntoNewObject();
 	}
 	
 	public T get(int index) {
@@ -139,12 +137,6 @@ public class GenericList<T> implements Iterable<T> {
 	private T[] createNsizedTarray(int n) {
 		return (T[]) new Object[n];
 	}
-
-	@Override
-	public Iterator<T> iterator() {
-		// TODO Auto-generated method stub
-		return new GenericListIterator<T>(dataArray);
-	}
 	
 	@Override
 	public String toString() {
@@ -153,6 +145,12 @@ public class GenericList<T> implements Iterable<T> {
 			display += temp + "\n";
 		}
 		return display;
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return new GenericListIterator<T>(dataArray);
 	}
 	
 	@SuppressWarnings("hiding")
