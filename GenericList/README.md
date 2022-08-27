@@ -4,13 +4,13 @@ Works almost the same as an ArrayList, probably less optimized. Made for fun and
 
 ## Content Table
 - [Features](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#features)
-- [Creating the object](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#creating-the-object)
-- [Adding](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#adding)
-- [Removing](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#removing)
-- [Convert to an object array](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#convert-to-an-object-array)
-- [Size, Get item, Get index](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#size-get-item-get-index)
-- [It's printable](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#its-printable)
-- [Iterating and iterator](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#iterating-and-iterator)
+    - [Creating the object](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#creating-the-object)
+    - [Adding](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#adding)
+    - [Removing](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#removing)
+    - [Convert to an object array](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#convert-to-an-object-array)
+    - [Size, Get item, Get index](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#size-get-item-get-index)
+    - [It's printable](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#its-printable)
+    - [Iterating and iterator](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#iterating-and-iterator)
 - [TODO: Future ideas](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#todo-future-ideas)
 
 ## Features
