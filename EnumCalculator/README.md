@@ -1,6 +1,7 @@
 # Enum Calculator
 
 Simple calculator that uses an Enum to work. Takes 2 inputs, `x` and `y`. When the method `executarOperacao(x, y)` is called, returns the result of the operation between the two numbers of `double` type. Supports only 4 operations: sum, subtraction, multiplication and division.
+- [Source code file](https://github.com/HReborn/Random-Bits-of-Code/blob/main/EnumCalculator/src/main/java/com/bitsofcode/calculadoraenum/CalculadoraEnum.java)
 
 ## Methods
 - `executarOperacao(x, y)` that will return the result of the operation between two numbers of `double` type.
