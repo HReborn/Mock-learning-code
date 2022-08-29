@@ -1,6 +1,8 @@
 # A Generic List
 
 Works almost the same as an ArrayList, probably less optimized. Made for fun and to test the iterable and iterator interfaces.
+- [Source code file](https://github.com/HReborn/Random-Bits-of-Code/blob/main/GenericList/src/main/java/com/bitsofcode/genericlist/GenericList.java)
+- [Tests](https://github.com/HReborn/Random-Bits-of-Code/blob/main/GenericList/src/test/java/com/bitsofcode/genericlist/GenericListTest.java)
 
 ## Content Table
 - [Features](https://github.com/HReborn/Random-Bits-of-Code/tree/main/GenericList#features)
