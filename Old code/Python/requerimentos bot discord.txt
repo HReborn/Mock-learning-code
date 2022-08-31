@@ -1,0 +1,23 @@
+project - 
+
+i want a bot to do the maintenance of the chats.
+
+
+checktrigger: will check every new message in a especific chat
+trigger: new message sent
+condition: trigger must have the keyword
+whentrigered: 
+- copy the new message
+- format the new message to that of the existent list
+- edit the list // or it'll copy and edit outside and then send a whole new message
+- paste the formatted new message while editing
+- sort the list with the new info
+- complete the editing
+- create a variable to store the older list in case there's an error
+
+utilities:
+- remove an item from the list or add it
+- every time it does it's function, ask for permission with the editted list
+
+
+when a message gets sent in a specific channel, it'll check if match the keyword, and do stuff

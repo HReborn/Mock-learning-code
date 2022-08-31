@@ -1,0 +1,17 @@
+1 - mantenha o foco. em você, na sua carreira e na sua evolução. evite se comparar.
+2 - não se preocupe muit com código limpo, mas não tenha medo de refazer o código para deixar o código melhor. mas primeiro faça o código rodar e só aí tente fazer melhorias.
+3 - não tenha medo do código-fonte. entenda como funciona e não tenha medo de ver qual linguagem está por trás. não tenha medo de ir atrás do que não está entendendo nos códigos fontes de outras pessoas. saiba como sua ferramenta funciona.
+4 - se preocupe com a forma que você escreve o seu código. faça isos sua marca registrada. se destaque.
+5 - estude apenas uma coisa de cada vez e monte seu portfolio. veja projetos para fazer.
+6 - encontre um grupo e aprenda com eles por anos e só aí voe sozinho.
+7 - escolher investir dinheiro e tempo no tópico errado e desistiu achado que a tecnologia não era pra você.
+8 - encontre uma pessoa pra te mentorar e te fazer evitar erros que te desanimam ou causam muita ansiedade.
+9 - use o github como sua vitrine de exposição.
+9.1 - é importante estudar e praticar ao máximo quando se está iniciando. só qque na hora de tentar o primeiro emprego, pode ser difícil provar a quantidade de coisas que você sabe ou o quanto você é esforçado.
+9.2 - sabe os tutoriais que você assiste e lê na internet? reproduza estes tutoriais e os guarde em repositórios públicos no github. assim, qualquer pessoa vai entender o quão aplicado você é e de quebra serve como um guia de referência pra você no futuro.
+10 - compartilhe o conhecimento desde sempre não importa o quão inciante seja. sempre há alguém que irá aprender com você.
+11 - tenha a mentalidade correta. se você tem uma expectativa X, se organize, estude com foco e bastante prática. sempre se pergunte: qual é a minha expectativa?
+12(10.2) - ao invés de fazer anotações pessoais, escreva tutoriais públicos e isso vai te ajudar a entender mais o conhecimento e facilitar pra um headhunter te achar.
+13 - pratique sempre. nunca deixe de aplicar o que aprendeu. mais especificamente, faça algo que goste e os resultados vão te motivar ainda mais.
+14 - veja a linguagem que você esta fazendo e saiba o que mais tem que aprender para lançar projetos. no que python vai ser útil para você?
+16 - start learning DSA (data structures and algorithms) as soon as possible.
