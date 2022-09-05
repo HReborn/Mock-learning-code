@@ -15,6 +15,7 @@ public class Main {
 			+ "Digite abaixo um dos dígitos disponíveis: ";
 	
 	public static void main(String[] args) {
+		System.out.prinln("Estou no devLocal");
 		Agenda agenda = new Agenda("listacontatos");
 		boolean wantsToContinue = true;
 		while (wantsToContinue) {
