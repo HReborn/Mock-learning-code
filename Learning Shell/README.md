@@ -1,2 +1,2 @@
-# Mock-learning-code
-Every line of code i write to test anything new i learn i put it here. No matter how small. As long as it works and i wrote, i'll put here separated by topic.
+# Learning-Shell
+>>>>>>> 2b744b3cb69efa1bd0277762b87965fdf02125ce
