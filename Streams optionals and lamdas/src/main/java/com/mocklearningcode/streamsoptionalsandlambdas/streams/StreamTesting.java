@@ -5,6 +5,7 @@ import java.util.List;
 public class StreamTesting {
 	public static void main(String[] args) {
 		
+		@SuppressWarnings("unused")
 		List<Person> ppl = getPeople();
 		
 	}
