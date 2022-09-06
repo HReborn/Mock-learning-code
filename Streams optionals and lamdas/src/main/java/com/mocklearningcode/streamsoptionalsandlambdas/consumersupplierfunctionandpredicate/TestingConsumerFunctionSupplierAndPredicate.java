@@ -1,5 +1,0 @@
-package com.mocklearningcode.streamsoptionalsandlambdas.consumersupplierfunctionandpredicate;
-
-public class TestingConsumerFunctionSupplierAndPredicate {
-
-}
