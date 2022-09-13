@@ -1,8 +1,14 @@
 package com.krew.profitcalculator;
 
-public class Main {
+import java.util.List;
 
+import com.krew.profitcalculator.dataclasses.ProfitOption;
+
+public class Main {
+	
 	public static void main(String[] args) {
-		System.out.println("Krew here");
+		Calculator calc = new Calculator();
+		List<ProfitOption> options = calc.calculateProfitOptionsOfIslandWithCurrentBoat("brazil", "baby fancy");
+		System.out.println(options);
 	}
 }
