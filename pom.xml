@@ -1,0 +1,45 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Krew-Profit-Calculator</groupId>
+  <artifactId>Krew-Profit-Calculator</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Krew-Profit-Calculator</name>
+  <description>An executable to calculate profit taking into account the cargo characteristics like space that occupies, price to buy in an island and to sell at another. And with those, calculate the profit. The first version will have the hardcoded values like islands, prices and distance/time that it takes from an island to another. V2 will use the API to get those info. After making V1, i'll try to make the API later.</description>
+  <properties>
+  	<maven.compiler.target>11</maven.compiler.target>
+  	<maven.compiler.source>11</maven.compiler.source>
+  </properties>
+  <build>
+  	<plugins>
+		<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>2.22.0</version>
+            <dependencies>
+                <dependency>
+                    <groupId>org.junit.platform</groupId>
+                    <artifactId>junit-platform-surefire-provider</artifactId>
+                    <version>1.2.0</version>
+                </dependency>
+            </dependencies>
+        </plugin>
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>3.1</version>
+        	<configuration>
+        		<source>11</source>
+        		<target>11</target>
+        	</configuration>
+    	</plugin>
+  	</plugins>
+  </build>
+  <dependencies>
+	<dependency>
+		<groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter</artifactId>
+        <version>5.8.2</version>
+        <scope>test</scope>
+	</dependency>
+  </dependencies>
+</project>
