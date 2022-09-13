@@ -1,0 +1,2 @@
+# Krew-Profit-Calculator
+An executable to calculate profit taking into account the cargo characteristics like space that occupies, price to buy in an island and to sell at another. And with those, calculate the profit. The first version will have the hardcoded values like islands, prices and distance/time that it takes from an island to another. V2 will use the API to get those info. After making V1, i'll try to make the API later.
