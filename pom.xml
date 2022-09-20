@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>Krew-Profit-Calculator</groupId>
   <artifactId>krew-profit-calculator</artifactId>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.1.0-SNAPSHOT</version>
   <name>Krew-Profit-Calculator</name>
   <description>An executable to calculate profit taking into account the cargo characteristics like space that occupies, price to buy in an island and to sell at another. And with those, calculate the profit. The first version will have the hardcoded values like islands, prices and distance/time that it takes from an island to another. V2 will use the API to get those info. After making V1, i'll try to make the API later.</description>
   <properties>
