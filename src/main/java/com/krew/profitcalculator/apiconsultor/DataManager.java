@@ -11,6 +11,10 @@ import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
 public class DataManager {
+	// the objective of this class is to receive the brute data from the
+	// DataExtractor class and do any data transformation necessary to
+	// store the transformed data into the GameData class
+	
 	private DataExtractor extractor;
 	private Map<String, String> islandCoordinates;
 	private Map<String, String> cargoSizes;

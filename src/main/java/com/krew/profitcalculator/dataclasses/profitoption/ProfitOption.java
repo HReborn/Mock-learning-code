@@ -8,6 +8,10 @@ import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
 public class ProfitOption {
+	// class made to store the profit option info. separeted into 3 categories
+	// header, core and detailed. from the header, all info can be calculated
+	// and it's this class responsibility to allocate the resulting info from
+	// the header.
 	
 	private LevelOfDetail levelOfDetail;
 	

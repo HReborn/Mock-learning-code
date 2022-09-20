@@ -12,6 +12,12 @@ import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("unchecked")
 public class DataExtractor {
+	// objective of this class is to extract all relevant info from the game's api
+	// and ship that info to the DataManager class and then manipulate that data
+	// to achieve an objective.
+	// obs: this class shouldn't do any data transformation. the only responsability
+	// of this class should be to send brute format data to the DataManager class
+	// and only then to transform the data.
 	
 	private final String DATA = "src/main/resources/data.json";
 	private final String SHIPS = "src/main/resources/ships.json";

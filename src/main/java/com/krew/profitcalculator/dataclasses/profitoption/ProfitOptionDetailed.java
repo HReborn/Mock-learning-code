@@ -1,6 +1,7 @@
 package com.krew.profitcalculator.dataclasses.profitoption;
 
 public class ProfitOptionDetailed {
+	// this class is a part of the ProfitOption class
 	private int maxStorage;
 	private double distance;
 	private double speed;
