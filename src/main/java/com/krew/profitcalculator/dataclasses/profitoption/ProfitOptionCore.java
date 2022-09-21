@@ -1,6 +1,6 @@
 package com.krew.profitcalculator.dataclasses.profitoption;
 
-public class ProfitOptionCore {
+class ProfitOptionCore {
 	// this class is a part of the ProfitOption class
 	private int profit;
 	private double timeSpent;

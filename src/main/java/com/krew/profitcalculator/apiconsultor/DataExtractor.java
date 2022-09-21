@@ -11,7 +11,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 @SuppressWarnings("unchecked")
-public class DataExtractor {
+class DataExtractor {
 	// objective of this class is to extract all relevant info from the game's api
 	// and ship that info to the DataManager class and then manipulate that data
 	// to achieve an objective.

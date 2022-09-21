@@ -3,7 +3,7 @@ package com.krew.profitcalculator.dataclasses.profitoption;
 import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
-public class ProfitOptionHeader {
+class ProfitOptionHeader {
 	// this class is a part of the ProfitOption class
 	private Island buyIsland; 
 	private String cargoName; 
