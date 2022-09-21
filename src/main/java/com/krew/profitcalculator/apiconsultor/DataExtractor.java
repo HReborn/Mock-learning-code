@@ -24,24 +24,24 @@ class DataExtractor {
 	private final JSONObject dataJsonObj;
 	private final JSONObject shipsJsonObj;
 	
-	public DataExtractor() {
+	DataExtractor() {
 		dataJsonObj = getJsonObject(DATA).orElseThrow();
 		shipsJsonObj = getJsonObject(SHIPS).orElseThrow();
 	}
 	
-	public Map<String, String> getAllIslandsCoordinates() {
+	Map<String, String> getAllIslandsCoordinates() {
 		// while on the json i took a print and used pixel coordinates to locate island position.
 		// x and y coordinates goes from 0 to 356 pixels
 		// (0,0) starts bottom left and follows normal x, y plane rules.
 		return (Map<String, String>) dataJsonObj.get("islandsXYCoordinates");
 	}
-	public Map<String, String> getAllCargoSizes() {
+	Map<String, String> getAllCargoSizes() {
 		return (Map<String, String>) dataJsonObj.get("cargoSize");
 	}
-	public Map<String, Map<String, String>> getPriceTable() {
+	Map<String, Map<String, String>> getPriceTable() {
 		return (Map<String, Map<String, String>>) dataJsonObj.get("islandCargoPriceTable");
 	}
-	public Map<String, Map<String, String>> getShipPropertiesInfoTable() {
+	Map<String, Map<String, String>> getShipPropertiesInfoTable() {
 		return (Map<String, Map<String, String>>) shipsJsonObj;
 	}
 	

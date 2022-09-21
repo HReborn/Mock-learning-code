@@ -14,58 +14,58 @@ class ProfitOptionDetailed {
 	private int totalSold;
 	private int unitsBought;
 	
-	public int getMaxStorage() {
+	int getMaxStorage() {
 		return maxStorage;
 	}
-	public double getDistance() {
+	double getDistance() {
 		return distance;
 	}
-	public double getSpeed() {
+	double getSpeed() {
 		return speed;
 	}
-	public int getBuyPrice() {
+	int getBuyPrice() {
 		return buyPrice;
 	}
-	public int getSellPrice() {
+	int getSellPrice() {
 		return sellPrice;
 	}
-	public int getUnitSize() {
+	int getUnitSize() {
 		return unitSize;
 	}
-	public int getTotalSpent() {
+	int getTotalSpent() {
 		return totalSpent;
 	}
-	public int getTotalSold() {
+	int getTotalSold() {
 		return totalSold;
 	}
-	public int getUnitsBought() {
+	int getUnitsBought() {
 		return unitsBought;
 	}
-	public void setMaxStorage(int maxStorage) {
+	void setMaxStorage(int maxStorage) {
 		this.maxStorage = maxStorage;
 	}
-	public void setDistance(double distance) {
+	void setDistance(double distance) {
 		this.distance = distance;
 	}
-	public void setSpeed(double speed) {
+	void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	public void setBuyPrice(int buyPrice) {
+	void setBuyPrice(int buyPrice) {
 		this.buyPrice = buyPrice;
 	}
-	public void setSellPrice(int sellPrice) {
+	void setSellPrice(int sellPrice) {
 		this.sellPrice = sellPrice;
 	}
-	public void setUnitSize(int unitSize) {
+	void setUnitSize(int unitSize) {
 		this.unitSize = unitSize;
 	}
-	public void setTotalSpent(int totalSpent) {
+	void setTotalSpent(int totalSpent) {
 		this.totalSpent = totalSpent;
 	}
-	public void setTotalSold(int totalSold) {
+	void setTotalSold(int totalSold) {
 		this.totalSold = totalSold;
 	}
-	public void setUnitsBought(int unitsBought) {
+	void setUnitsBought(int unitsBought) {
 		this.unitsBought = unitsBought;
 	}
 	

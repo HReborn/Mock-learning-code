@@ -14,18 +14,17 @@ import com.krew.profitcalculator.dataclasses.Ship;
 import com.krew.profitcalculator.dataclasses.profitoption.LevelOfDetail;
 import com.krew.profitcalculator.dataclasses.profitoption.ProfitOption;
 
-public class Calculator {
+public class Calculator extends GameData {
 	// objective of this class is to query the program/database and get a list of profit options
 	
-	private GameData data;
 	private Map<String, Ship> shipPropertiesInfo;
 	private Map<String, Island> islandCargoPriceDataTable;
 	private LevelOfDetail levelOfDetail;
 	
 	public Calculator() {
-		this.data = new GameData();
-		this.shipPropertiesInfo = data.getShipPropertiesInfo();
-		this.islandCargoPriceDataTable = data.getIslandCargoPriceDataTable();
+		
+		this.shipPropertiesInfo = super.getShipPropertiesInfo();
+		this.islandCargoPriceDataTable = super.getIslandCargoPriceDataTable();
 		this.levelOfDetail = LevelOfDetail.CORE;
 	}
 	

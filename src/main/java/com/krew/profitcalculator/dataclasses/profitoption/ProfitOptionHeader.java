@@ -10,31 +10,31 @@ class ProfitOptionHeader {
 	private Island sellIsland;
 	private Ship ship;
 	
-	public Island getBuyIsland() {
+	Island getBuyIsland() {
 		return buyIsland;
 	}
-	public String getCargoName() {
+	String getCargoName() {
 		return cargoName;
 	}
-	public Island getSellIsland() {
+	Island getSellIsland() {
 		return sellIsland;
 	}
-	public Ship getShip() {
+	Ship getShip() {
 		return ship;
 	}
-	public void setBuyIsland(Island buyIsland) {
+	void setBuyIsland(Island buyIsland) {
 		this.buyIsland = buyIsland;
 	}
-	public void setCargoName(String cargoName) {
+	void setCargoName(String cargoName) {
 		this.cargoName = cargoName;
 	}
-	public void setSellIsland(Island sellIsland) {
+	void setSellIsland(Island sellIsland) {
 		this.sellIsland = sellIsland;
 	}
-	public void setShip(Ship ship) {
+	void setShip(Ship ship) {
 		this.ship = ship;
 	}
-	public ProfitOptionHeader(Island buyIsland, String cargoName, Island sellIsland, Ship ship) {
+	ProfitOptionHeader(Island buyIsland, String cargoName, Island sellIsland, Ship ship) {
 		super();
 		this.buyIsland = buyIsland;
 		this.cargoName = cargoName;

@@ -21,7 +21,7 @@ class DataManager {
 	private Map<String, Map<String, String>> priceTable;
 	private Map<String, Map<String, String>> shipPropertiesInfoTable;
 	
-	public DataManager() {
+	DataManager() {
 		this.extractor = new DataExtractor();
 		islandCoordinates = extractor.getAllIslandsCoordinates();
 		cargoSizes = extractor.getAllCargoSizes();
@@ -29,7 +29,7 @@ class DataManager {
 		shipPropertiesInfoTable = extractor.getShipPropertiesInfoTable();
 	}
 	
-	public Map<String, Island> buildIslandCargoPriceDataTable() {
+	Map<String, Island> buildIslandCargoPriceDataTable() {
 		
 		Set<String> cargoNames = cargoSizes.keySet();
 		Set<String> islandNames = islandCoordinates.keySet();
@@ -53,7 +53,7 @@ class DataManager {
 		return islandCargoPriceDataTable;
 	}
 	
-	public Map<String, Ship> buildShipPropertiesInfo() {
+	Map<String, Ship> buildShipPropertiesInfo() {
 		
 		Set<String> shipNames = shipPropertiesInfoTable.keySet();
 		Map<String, Ship> shipPropertiesInfo = new HashMap<>();

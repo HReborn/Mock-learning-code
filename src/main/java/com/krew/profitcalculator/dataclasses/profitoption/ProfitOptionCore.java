@@ -6,22 +6,22 @@ class ProfitOptionCore {
 	private double timeSpent;
 	private int profitPerSec;
 	
-	public double getTimeSpent() {
+	double getTimeSpent() {
 		return timeSpent;
 	}
-	public int getProfit() {
+	int getProfit() {
 		return profit;
 	}
-	public int getProfitPerSec() {
+	int getProfitPerSec() {
 		return profitPerSec;
 	}
-	public void setTimeSpent(double timeSpent) {
+	void setTimeSpent(double timeSpent) {
 		this.timeSpent = timeSpent;
 	}
-	public void setProfit(int profit) {
+	void setProfit(int profit) {
 		this.profit = profit;
 	}
-	public ProfitOptionCore(int profit, double timeSpent) {
+	ProfitOptionCore(int profit, double timeSpent) {
 		this.timeSpent = timeSpent;
 		this.profit = profit;
 		this.profitPerSec = (int) Math.round(Double.valueOf(profit)/timeSpent);

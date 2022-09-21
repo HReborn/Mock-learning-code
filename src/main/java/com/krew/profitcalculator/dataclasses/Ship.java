@@ -57,5 +57,4 @@ public class Ship {
 	public int getRegenaration() {
 		return regenaration;
 	}
-	
 }

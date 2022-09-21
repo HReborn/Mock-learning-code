@@ -14,16 +14,16 @@ public class GameData {
 	private Map<String, Ship> shipPropertiesInfo;
 	private DataManager manager;
 	
-	public GameData() {
+	protected GameData() {
 		this.manager = new DataManager();
 		this.islandCargoPriceDataTable = manager.buildIslandCargoPriceDataTable();
 		this.shipPropertiesInfo = manager.buildShipPropertiesInfo();
 	}
 
-	public Map<String, Island> getIslandCargoPriceDataTable() {
+	protected Map<String, Island> getIslandCargoPriceDataTable() {
 		return islandCargoPriceDataTable;
 	}
-	public Map<String, Ship> getShipPropertiesInfo() {
+	protected Map<String, Ship> getShipPropertiesInfo() {
 		return shipPropertiesInfo;
 	}
 }
