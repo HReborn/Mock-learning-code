@@ -3,7 +3,6 @@ package com.krew.profitcalculator.dataclasses.profitoption;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-import com.krew.profitcalculator.dataclasses.Cargo;
 import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
@@ -42,43 +41,38 @@ public class ProfitOption {
 	public ProfitOptionDetailed getDetailed() {
 		return detailed;
 	}
-
-	public ProfitOption(Island buyIsland, String cargoName, Island sellIsland, Ship ship, LevelOfDetail levelOfDetail) {
-		this.levelOfDetail = levelOfDetail;
-		
-		header = new ProfitOptionHeader(buyIsland, cargoName, sellIsland, ship);
-		
-		detailed = new ProfitOptionDetailed();
+	private void setHeader(Island buyIsland, String cargoName, Island sellIsland, Ship ship) {
+		this.header = new ProfitOptionHeader(buyIsland, cargoName, sellIsland, ship);
+	}
+	private void setCore(int profit, double travelTime) {
+		this.core = new ProfitOptionCore(profit, travelTime);
+	}
+	private void setDetailed(Island buyIsland, String cargoName, Island sellIsland, Ship ship) {
+		this.detailed = new ProfitOptionDetailed();
 		detailed.setMaxStorage(ship.getMaxCargoSize());
+		detailed.setDistance(calculateDistance());
 		detailed.setSpeed(ship.getSpeed());
 		detailed.setBuyPrice(buyIsland.getIslandCargoPrices().get(cargoName).getPrice());
 		detailed.setSellPrice(sellIsland.getIslandCargoPrices().get(cargoName).getPrice());
-		detailed.setSellPrice(sellIsland.getIslandCargoPrices().get(cargoName).getSize());
-		
-		// the detailed.totalspent,sold and bought are setted insie calculateProfit
-		int profit = calculateProfit();
-		// the detailed.setDistance() is setted inside calculateTravelTime
-		double travelTime = calculateTravelTime();
-		core = new ProfitOptionCore(profit, travelTime);
+		detailed.setUnitSize(sellIsland.getIslandCargoPrices().get(cargoName).getSize());
+		int maxBoatCapacity = ship.getMaxCargoSize();
+		int cargoSize = detailed.getUnitSize();
+		detailed.setUnitsBought(maxBoatCapacity/cargoSize);
+		detailed.setTotalSold(detailed.getBuyPrice()*detailed.getUnitsBought());
+		detailed.setTotalSpent(detailed.getSellPrice()*detailed.getUnitsBought());
+	}
+
+	public ProfitOption(Island buyIsland, String cargoName, Island sellIsland, Ship ship, LevelOfDetail levelOfDetail) {
+		this.levelOfDetail = levelOfDetail;
+		setHeader(buyIsland, cargoName, sellIsland, ship);
+		setDetailed(buyIsland, cargoName, sellIsland, ship);
+		setCore(calculateProfit(), calculateTravelTime());
 	}
 
 	private int calculateProfit() {
-		int maxBoatCapacity = header.getShip().getMaxCargoSize();
-		String cargoName = header.getCargoName();
-		Cargo cargoBuyPrice = header.getBuyIsland().getIslandCargoPrices().get(cargoName);
-		Cargo cargoSellPrice = header.getSellIsland().getIslandCargoPrices().get(cargoName);
-		
-		int cargoSize = cargoBuyPrice.getSize();
-		int buyPrice = cargoBuyPrice.getPrice();
-		int sellPrice = cargoSellPrice.getPrice();
-		
-		int cargoQtty = maxBoatCapacity/cargoSize;
-		
-		detailed.setUnitSize(cargoSize);
-		detailed.setTotalSpent(buyPrice*cargoQtty);
-		detailed.setTotalSold(sellPrice*cargoQtty);
-		detailed.setUnitsBought(cargoQtty);
-		
+		int buyPrice = detailed.getBuyPrice();
+		int sellPrice = detailed.getSellPrice();
+		int cargoQtty = detailed.getUnitsBought();
 		int profit = cargoQtty*(sellPrice - buyPrice);
 		return profit;
 	}
@@ -91,13 +85,16 @@ public class ProfitOption {
 		// putting into a conversion factor, x = 1/6.5;, so, we just gotta divide the speed by 6.5 and we'll have
 		// an estimate about how much time it'll take
 		
-		double distanceBetweenIslands = calculateDistance();
-		detailed.setDistance(distanceBetweenIslands);
-		//dividing by 6.5 to get the speed in pixel/second by rule of three with distance in pixels (empirically measured)
-		double boatSpeed = (header.getShip().getSpeed())/6.5;
+		double distanceBetweenIslands = detailed.getDistance();
+		double boatSpeed = convertGameSpdToPixelPerSecond(header.getShip().getSpeed());
 		double time = distanceBetweenIslands/boatSpeed;
 		
 		return time;
+	}
+	
+	private double convertGameSpdToPixelPerSecond(double gameSpeed) {
+		//dividing by 6.5 to get the speed in pixel/second by rule of three with distance in pixels (empirically measured)
+		return gameSpeed/6.5;
 	}
 	
 	private double calculateDistance() {
