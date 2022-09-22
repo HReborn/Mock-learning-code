@@ -45,10 +45,10 @@ class ProfitOptionHeader {
 	@Override
 	public String toString() {
 		// capitalize ship, island and cargo name
-		String sellIslandName = sellIsland.getIslandName().substring(0, 1).toUpperCase() + sellIsland.getIslandName().substring(1);
-		String buyIslandName = buyIsland.getIslandName().substring(0, 1).toUpperCase() + buyIsland.getIslandName().substring(1);
-		String cargoName = this.cargoName.substring(0, 1).toUpperCase() + this.cargoName.substring(1);
-		String shipName = ship.getName().substring(0, 1).toUpperCase() + ship.getName().substring(1);
+		String sellIslandName = CustomFormatter.capitalize(sellIsland.getIslandName());
+		String buyIslandName = CustomFormatter.capitalize(buyIsland.getIslandName());
+		String cargoName = CustomFormatter.capitalize(this.cargoName);
+		String shipName = CustomFormatter.capitalize(ship.getName());
 		
 		return  "\n" + buyIslandName + "(" + cargoName + ")" + " -> " + sellIslandName + 
 				"\n" + shipName;

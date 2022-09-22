@@ -71,16 +71,9 @@ class ProfitOptionDetailed {
 	
 	@Override
 	public String toString() {
-		String totalSpent = String.valueOf(this.totalSpent);
-		// format profit to 15k or keep value if less than 1000
-		if (this.totalSpent > 1000) {
-			totalSpent = String.valueOf(this.totalSpent/1000) + "k";
-		}
-		String totalSold = String.valueOf(this.totalSold);
-		// format profit to 15k or keep value if less than 1000
-		if (this.totalSold > 1000) {
-			totalSold = String.valueOf(this.totalSold/1000) + "k";
-		}
+		
+		String totalSpent = CustomFormatter.add_k_ToBigNumbers(this.totalSpent);
+		String totalSold = CustomFormatter.add_k_ToBigNumbers(this.totalSold);
 		
 		return  
 				"\n Ship's max storage: " + maxStorage + " slots" +

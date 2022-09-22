@@ -30,14 +30,11 @@ class ProfitOptionCore {
 	@Override
 	public String toString() {
 		
-		String profit = String.valueOf(this.profit);
-		// format profit to 15k or keep value if less than 1000
-		if (this.profit > 1000) {
-			profit = String.valueOf(this.profit/1000) + "k";
-		} 
+		String profit = CustomFormatter.add_k_ToBigNumbers(this.profit);
 		
 		// format time from double seconds to string minutes and seconds
-		String timeSpent = String.valueOf(((int) this.timeSpent/60) + "m" + Math.round(this.timeSpent%60) + "s");
+		String timeSpent = CustomFormatter.secondsToMinutesWithSeconds(this.timeSpent);
+		//String timeSpent = String.valueOf(((int) this.timeSpent/60) + "m" + Math.round(this.timeSpent%60) + "s");
 		
 		return 
 				"\n  Profit To Be Made: " + "$" + profit +
