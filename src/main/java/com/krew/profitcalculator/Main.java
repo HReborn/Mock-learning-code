@@ -45,15 +45,22 @@ public class Main {
 	// 
 	//
 	
+	public static List<ProfitOption> sellAttackDestination(String islandName) {
+		Calculator calc = new Calculator(LevelOfDetail.DETAILED);
+		List<ProfitOption> options = calc.calculateRoutesToAttackFromCurrentIsland(islandName, 1);
+		String targetIsland = options.get(0).getHeader().getBuyIsland().getIslandName();
+		String shipName = options.get(0).getHeader().getShip().getName();
+		List<ProfitOption> sell = calc.calculateBestCargosFromCurrentToTargetIsland(islandName, targetIsland, shipName, 1);
+		//System.out.println(options);
+		return sell;
+	}
+	
 	public static void main(String[] args) {
-		Calculator calc1 = new Calculator(LevelOfDetail.CORE);
-		List<ProfitOption> options1 = calc1.calculateSellRoutesFromCurrentIsland("spain", "trader 1", 5);
-		Calculator calc2 = new Calculator(LevelOfDetail.DETAILED);
-		List<ProfitOption> options2 = calc2.calculateBestCargosFromCurrentToTargetIsland("malaysia", "brazil", "trader 2", 2);
-		Calculator calc3 = new Calculator(LevelOfDetail.HEADER);
-		List<ProfitOption> options3 = calc3.calculateRoutesToAttackFromCurrentIsland("labrador");
-		System.out.println(options1);
-		System.out.println(options2);
-		System.out.println(options3);
+		// baby fancy 1: spain, brazil, cuba
+		// baby fancy 2: jamaica
+		//List<ProfitOption> sell = sellAttackDestination("brazil");
+		Calculator calc = new Calculator(LevelOfDetail.DETAILED);
+		List<ProfitOption> options = calc.calculateBestCargosFromCurrentToTargetIsland("brazil", "barbados", "baby fancy", 1);
+		System.out.println(options);
 	}
 }

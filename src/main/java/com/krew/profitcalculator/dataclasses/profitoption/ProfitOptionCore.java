@@ -6,13 +6,13 @@ class ProfitOptionCore {
 	private double timeSpent;
 	private int profitPerSec;
 	
-	double getTimeSpent() {
+	public double getTimeSpent() {
 		return timeSpent;
 	}
-	int getProfit() {
+	public int getProfit() {
 		return profit;
 	}
-	int getProfitPerSec() {
+	public int getProfitPerSec() {
 		return profitPerSec;
 	}
 	void setTimeSpent(double timeSpent) {

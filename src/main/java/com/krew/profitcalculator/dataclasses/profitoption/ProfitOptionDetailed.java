@@ -1,6 +1,6 @@
 package com.krew.profitcalculator.dataclasses.profitoption;
 
-class ProfitOptionDetailed {
+public class ProfitOptionDetailed {
 	// this class is a part of the ProfitOption class
 	private int maxStorage;
 	private double distance;
@@ -14,31 +14,31 @@ class ProfitOptionDetailed {
 	private int totalSold;
 	private int unitsBought;
 	
-	int getMaxStorage() {
+	public int getMaxStorage() {
 		return maxStorage;
 	}
-	double getDistance() {
+	public double getDistance() {
 		return distance;
 	}
-	double getSpeed() {
+	public double getSpeed() {
 		return speed;
 	}
-	int getBuyPrice() {
+	public int getBuyPrice() {
 		return buyPrice;
 	}
-	int getSellPrice() {
+	public int getSellPrice() {
 		return sellPrice;
 	}
-	int getUnitSize() {
+	public int getUnitSize() {
 		return unitSize;
 	}
-	int getTotalSpent() {
+	public int getTotalSpent() {
 		return totalSpent;
 	}
-	int getTotalSold() {
+	public int getTotalSold() {
 		return totalSold;
 	}
-	int getUnitsBought() {
+	public int getUnitsBought() {
 		return unitsBought;
 	}
 	void setMaxStorage(int maxStorage) {
