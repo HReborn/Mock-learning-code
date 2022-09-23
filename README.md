@@ -16,7 +16,7 @@ An executable to calculate profit taking into account the cargo characteristics 
      
 **2. Choose from one of the three options**
 
-   `displayNumber` is an optional varargs that represents how many options the user wants to be shown. Default is set as 3. If more than one option is presented, only the first will be used.
+   `displayNumber` is an optional varargs that represents how many options the user wants to be shown. Default is set as 2. If more than one option is presented, only the first will be used.
 
    - Show the best options of what and where to sell from the current island
    
@@ -52,9 +52,6 @@ An executable to calculate profit taking into account the cargo characteristics 
     Trader 1
     , 
     Spain(Gems) -> Labrador
-    Trader 1
-    , 
-    Guinea(Gems) -> Labrador
     Trader 1
     ]
     ```
