@@ -5,15 +5,18 @@ An executable to calculate profit taking into account the cargo characteristics 
 
 **1. Create a new calculator object with an optional level of detail**
    - Default level of detail set as core
-  
-     `Calculator calc = new Calculator();`
+     ```
+     Calculator calc = new Calculator();
+     ```
    - Especifying from header, core or detailed
-  
-     `Calculator calc = new Calculator(LevelOfDetail.DETAILED);`
+     ```
+     Calculator calc = new Calculator(LevelOfDetail.DETAILED);
+     ```
+*Obs: It's possible to change the level of detail to be shown with `calc.setLevelOfDetail(LevelOfDetail levelOfDetail)`*
      
 **2. Choose from one of the three options**
 
-&nbsp;&nbsp;&nbsp;&nbsp;`displayNumber` is an optional varargs that represents how many options the user wants to be shown. Default is set as 3. If more than one &nbsp;&nbsp;&nbsp;&nbsp;option is presented, only the first will be used.
+   `displayNumber` is an optional varargs that represents how many options the user wants to be shown. Default is set as 3. If more than one option is presented, only the first will be used.
 
    - Show the best options of what and where to sell from the current island
    
