@@ -21,6 +21,8 @@ public class Calculator extends GameData {
 	private Map<String, Ship> shipPropertiesInfo;
 	private Map<String, Island> islandCargoPriceDataTable;
 	private LevelOfDetail levelOfDetail;
+	private Set<String> islandNameList;
+	private Set<String> shipNameList;
 	
 	public void setLevelOfDetail(LevelOfDetail levelOfDetail) {
 		this.levelOfDetail = levelOfDetail;
@@ -30,6 +32,8 @@ public class Calculator extends GameData {
 		this.shipPropertiesInfo = super.getShipPropertiesInfo();
 		this.islandCargoPriceDataTable = super.getIslandCargoPriceDataTable();
 		this.levelOfDetail = LevelOfDetail.CORE;
+		this.islandNameList = islandCargoPriceDataTable.keySet();
+		this.shipNameList = shipPropertiesInfo.keySet();
 	}
 	
 	public Calculator(LevelOfDetail levelOfDetail) {
@@ -38,11 +42,14 @@ public class Calculator extends GameData {
 	}
 	
 	public List<ProfitOption> calculateSellRoutesFromCurrentIsland(String buyIslandName, String shipName, int... displayNumberVarargs) {
+		// should ensure that both inputs are checked independently and give errors independently too
+		boolean invalidInput = !(isInputInTheExpectedList(buyIslandName, islandNameList) & isInputInTheExpectedList(shipName, shipNameList));
+		if (invalidInput) {
+			return null;
+		}
 		// uses varargs to set up optional parameter and i use another variable to discard the array
-		
 		int displayNchoices = setWithFirstInputValueOrDefaultValueIfNull(displayNumberVarargs);
 		
-		Set<String> islandNameList = islandCargoPriceDataTable.keySet();
 		List<ProfitOption> profitOptions = new ArrayList<>();
 		for(String sellIslandName : islandNameList) {
 			profitOptions.addAll(calculateBestCargosFromCurrentToTargetIsland(buyIslandName, sellIslandName, shipName, 100));
@@ -64,10 +71,14 @@ public class Calculator extends GameData {
 		// find the top profit option from all islands to the current island and rank those options
 		// so that the most profitable options will be the most probable routes traders are gonna take
 		// so those are the routes i'm gonna intercept
+		boolean invalidInput = !(isInputInTheExpectedList(currentIslandAsSellIslandName, islandNameList));
+		if (invalidInput) {
+			return null;
+		}
+		
 		int displayNchoices = setWithFirstInputValueOrDefaultValueIfNull(displayNumberVarargs);
 		
 		String defaultShipName = "trader 1"; // most common profit target. this is the goal.
-		Set<String> islandNameList = islandCargoPriceDataTable.keySet();
 		List<ProfitOption> routesToAttack = new ArrayList<>();
 		for (String targetIslandAsBuyIslandName : islandNameList) {
 			routesToAttack.addAll(calculateBestCargosFromCurrentToTargetIsland(targetIslandAsBuyIslandName, currentIslandAsSellIslandName, defaultShipName, 1));
@@ -78,6 +89,11 @@ public class Calculator extends GameData {
 	
 	public List<ProfitOption> calculateBestCargosFromCurrentToTargetIsland(String buyIslandName, String sellIslandName, String shipName, int... displayNumberVarargs) {
 		// this method answers the question "is there any way to profit from A to B?"
+		
+		boolean invalidInput = !(isInputInTheExpectedList(buyIslandName, islandNameList) & isInputInTheExpectedList(shipName, shipNameList));
+		if (invalidInput) {
+			return null;
+		}
 		
 		// uses varargs to set up optional parameter and i use another variable to discard the array
 		int displayNchoices = setWithFirstInputValueOrDefaultValueIfNull(displayNumberVarargs);
@@ -110,6 +126,19 @@ public class Calculator extends GameData {
 			return displayNumberVarargs[0];
 		} else {
 			return 2; // default value
+		}
+	}
+	
+	private boolean isInputInTheExpectedList(String name, Set<String> nameList) {
+		try {
+			if (nameList.contains(name)) {
+				return true;
+			} else {
+				throw new InputProvidedDoesntExist("The input " + name + " isn't valid.");
+			}
+		} catch (InputProvidedDoesntExist e) {
+			
+			return false;
 		}
 	}
 }
