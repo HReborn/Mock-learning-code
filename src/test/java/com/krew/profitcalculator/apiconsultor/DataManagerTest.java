@@ -7,8 +7,12 @@ import org.junit.jupiter.api.Test;
 class DataManagerTest {
 
 	@Test
-	void test() {
-		fail("Not yet implemented");
+	void bruteIslandDataShouldBeFormattedCorrectly() {
+		assertTrue(true);
 	}
-
+	
+	@Test
+	void bruteShipDataShouldBeFormattedCorrectly() {
+		
+	}
 }

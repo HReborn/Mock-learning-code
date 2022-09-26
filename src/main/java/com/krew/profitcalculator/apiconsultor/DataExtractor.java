@@ -4,13 +4,14 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-@SuppressWarnings("unchecked")
+
 class DataExtractor {
 	// objective of this class is to extract all relevant info from the game's api
 	// and ship that info to the DataManager class and then manipulate that data
@@ -21,27 +22,46 @@ class DataExtractor {
 	
 	private final String DATA = "src/main/resources/data.json";
 	private final String SHIPS = "src/main/resources/ships.json";
-	private final JSONObject dataJsonObj;
-	private final JSONObject shipsJsonObj;
+	private JSONObject dataJsonObj = null;
+	private JSONObject shipsJsonObj = null;
+	private String errorFile = "";
+	private Exception e = null;
 	
 	DataExtractor() {
-		dataJsonObj = getJsonObject(DATA).orElseThrow();
-		shipsJsonObj = getJsonObject(SHIPS).orElseThrow();
+		try {
+			dataJsonObj = getJsonObject(DATA).orElseThrow();
+			errorFile = DATA;
+			shipsJsonObj = getJsonObject(SHIPS).orElseThrow();
+			errorFile = SHIPS;		
+		} catch (NoSuchElementException e) {
+			// the expected scenario is to always have the files correcly delivering
+			// the jsonobject. if there's an error with the file, it needs to be
+			// manually fixed.
+			throw new RuntimeException("Game info could not be loaded from " + errorFile + ".", this.e);
+		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	Map<String, String> getAllIslandsCoordinates() {
 		// while on the json i took a print and used pixel coordinates to locate island position.
 		// x and y coordinates goes from 0 to 356 pixels
 		// (0,0) starts bottom left and follows normal x, y plane rules.
+		// Map<islandName, "x y">
 		return (Map<String, String>) dataJsonObj.get("islandsXYCoordinates");
 	}
+	@SuppressWarnings("unchecked")
 	Map<String, String> getAllCargoSizes() {
+		// Map<cargoName, cargoSizeInt>
 		return (Map<String, String>) dataJsonObj.get("cargoSize");
 	}
+	@SuppressWarnings("unchecked")
 	Map<String, Map<String, String>> getPriceTable() {
+		// Map<islandName, Map<cargoName, cargoPriceInt>>
 		return (Map<String, Map<String, String>>) dataJsonObj.get("islandCargoPriceTable");
 	}
+	@SuppressWarnings("unchecked")
 	Map<String, Map<String, String>> getShipPropertiesInfoTable() {
+		// Map<shipName, Map<propertyName, propertyValueObject>>
 		return (Map<String, Map<String, String>>) shipsJsonObj;
 	}
 	
@@ -52,17 +72,13 @@ class DataExtractor {
 			reader = new FileReader(filePath);
 			JSONParser parser = new JSONParser();
 			jsonObj = (JSONObject) parser.parse(reader);
-			
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.e = e;
 		} catch (IOException e) {
-			// TODO: handle exception
-			e.printStackTrace();
+			this.e = e;
 		} catch (ParseException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+			this.e = e;
+		} 
 		return Optional.ofNullable(jsonObj);
 	}
 }
