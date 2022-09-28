@@ -2,6 +2,7 @@ package com.mocklearningcode.streamsoptionalsandlambdas.streams;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,12 @@ public class StreamTesting {
 				.map(Person::getAge)
 				.reduce((n1, n2) -> n1+n2);
 		System.out.println(ageSumFromReduce.orElseThrow());
+		
+		Map<String, List<Person>> grouperByInitial = ppl.stream()
+				.sorted(Comparator.comparing(Person::getName))
+				.collect(Collectors.groupingBy(p -> p.getName().substring(0, 1)));
+		
+		System.out.println(grouperByInitial);
 	}
 	
 	
