@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>mock-learning-code</groupId>
+  <artifactId>learning-logging</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>Learning-Logging</name>
+  <description>Created to learn and test log functionalities.</description>
+  <properties>
+  <!-- both properties ensure explicit compile java version-->
+  	<maven.compiler.target>11</maven.compiler.target>
+  	<maven.compiler.source>11</maven.compiler.source>
+  	<!-- both properties ensure explicit encoding set for project-->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+  </properties>
+  <build>
+  	<plugins>
+        <!-- Setting this plugin to tell explicitly to compile in this java version-->
+        <plugin>
+        	<groupId>org.apache.maven.plugins</groupId>
+        	<artifactId>maven-compiler-plugin</artifactId>
+        	<version>3.1</version>
+        	<configuration>
+        		<source>11</source>
+        		<target>11</target>
+        	</configuration>
+    	</plugin>
+  	</plugins>
+  </build>
+  <dependencies>
+	<!-- Logback logging framework dependency-->
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-core</artifactId>
+	    <version>1.3.0</version>
+	</dependency>
+
+	<!-- Logback also requires logback-classic.jar for runtime-->
+	<dependency>
+	    <groupId>ch.qos.logback</groupId>
+	    <artifactId>logback-classic</artifactId>
+	    <version>1.3.0</version>
+	</dependency>
+
+	<!-- dependency for logging facade slf4j(interface)-->
+	<dependency>
+	    <groupId>org.slf4j</groupId>
+	    <artifactId>slf4j-api</artifactId>
+	    <version>2.0.0</version>
+	</dependency>
+  </dependencies>
+</project>
