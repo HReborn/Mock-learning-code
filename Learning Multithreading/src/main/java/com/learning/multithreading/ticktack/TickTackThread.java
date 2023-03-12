@@ -1,4 +1,4 @@
-package com.learning.multithreading;
+package com.learning.multithreading.ticktack;
 
 public class TickTackThread implements Runnable {
 
