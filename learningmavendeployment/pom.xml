@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>mock-learning-code</groupId>
   <artifactId>learning-maven-deployment</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2-SNAPSHOT</version>
   <distributionManagement>
    <repository>
      <id>github</id>
@@ -12,7 +12,7 @@
   </distributionManagement>
   <scm>
 	  <connection>scm:git:https://github.com/HReborn/Mock-learning-code</connection>
-    <tag>learning-maven-deployment-0.0.1</tag>
+    <tag>HEAD</tag>
   </scm>
   <build>
 	  <plugins>
