@@ -9,5 +9,17 @@
      <name>GitHub HReborn Apache Maven Packages</name>
      <url>https://maven.pkg.github.com/HReborn/Mock-learning-code</url>
    </repository>
-	</distributionManagement>
+  </distributionManagement>
+  <scm>
+	  <connection>scm:git:https://github.com/HReborn/Mock-learning-code</connection>
+  </scm>
+  <build>
+	  <plugins>
+		  <plugin>
+			  <groupId>org.apache.maven.plugins</groupId>
+			  <artifactId>maven-release-plugin</artifactId>
+			  <version>2.5.2</version>
+		  </plugin>
+	  </plugins>
+  </build>
 </project>
