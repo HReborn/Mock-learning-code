@@ -13,5 +13,4 @@ public class App {
 		Tire tir = (Tire) context.getBean("tire");
 		System.out.println(tir.toString());
 	}
-
 }

@@ -3,7 +3,8 @@ package com.mock_learning_code.springframework;
 public class Tire {
 	private String brand;
 
-	public void setBrand(String brand) {
+	public Tire(String brand) {
+		super();
 		this.brand = brand;
 	}
 
