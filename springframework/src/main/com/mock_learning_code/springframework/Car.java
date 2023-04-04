@@ -1,5 +1,8 @@
 package com.mock_learning_code.springframework;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Car implements Vehicle {
 
 	@Override
