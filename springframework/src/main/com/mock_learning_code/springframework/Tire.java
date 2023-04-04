@@ -1,15 +1,13 @@
 package com.mock_learning_code.springframework;
 
-public class Tire {
-	private String brand;
+import org.springframework.stereotype.Component;
 
-	public Tire(String brand) {
-		super();
-		this.brand = brand;
-	}
+@Component
+public class Tire {
+
 
 	@Override
 	public String toString() {
-		return "Tire [brand=" + brand + "]";
+		return "a tire brand";
 	}
 }
