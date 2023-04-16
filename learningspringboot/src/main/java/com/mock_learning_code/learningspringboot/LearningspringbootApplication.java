@@ -9,6 +9,6 @@ public class LearningspringbootApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LearningspringbootApplication.class, args);
 		System.out.println("Estou aquiii!!!");
+		
 	}
-
 }
