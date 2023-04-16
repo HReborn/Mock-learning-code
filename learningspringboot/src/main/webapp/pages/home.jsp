@@ -7,6 +7,6 @@
 <title>Learning spring boot</title>
 </head>
 <body>
-	Welcome ${name}
+	Welcome ${stud.aName} of id ${stud.id} from ${stud.school}. I wish you all the best!!!
 </body>
 </html>
