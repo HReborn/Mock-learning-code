@@ -19,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class EmployeeController {
 	private final EmployeeRepo repository;
+	private final EmployeeModelAssembler modelAssembler;
 
-	public EmployeeController(EmployeeRepo repository) {
+	public EmployeeController(EmployeeRepo repository, EmployeeModelAssembler modelAssembler) {
 		super();
 		this.repository = repository;
+		this.modelAssembler = modelAssembler;
 	}
 	/*
 	@GetMapping("/employees")
