@@ -9,14 +9,16 @@ import javax.persistence.Id;
 @Entity
 public class Employee {
 	private @Id @GeneratedValue Long id;
-	private String name;
+	private String firstName;
+	private String lastName;
 	private String role;
 	
 	public Employee() {}
 	
-	public Employee(String name, String role) {
+	public Employee(String firstName, String lastName, String role) {
 		super();
-		this.name = name;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.role = role;
 	}
 	public Long getId() {
@@ -25,12 +27,28 @@ public class Employee {
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getName() {
-		return name;
+		return firstName + " " + lastName;
 	}
 	public void setName(String name) {
-		this.name = name;
+		String[] parts = name.split(" ");
+		this.firstName = parts[0];
+		this.lastName = parts[1];
 	}
+	public String getFirstName() {
+		return firstName;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public String getLastName() {
+		return lastName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+	
 	public String getRole() {
 		return role;
 	}
@@ -39,7 +57,7 @@ public class Employee {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, role);
+		return Objects.hash(firstName, id, lastName, role);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -50,12 +68,12 @@ public class Employee {
 		if (getClass() != obj.getClass())
 			return false;
 		Employee other = (Employee) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(role, other.role);
+		return Objects.equals(firstName, other.firstName) && Objects.equals(id, other.id)
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(role, other.role);
 	}
 	@Override
 	public String toString() {
-		return "Employee [id=" + id + ", name=" + name + ", role=" + role + "]";
+		return "Employee [id=" + id + ", name=" + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", role=" + role + "]";
 	}
-	
-	
 }
