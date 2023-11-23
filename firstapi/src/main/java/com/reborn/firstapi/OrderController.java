@@ -43,7 +43,7 @@ public class OrderController {
 				linkTo(methodOn(OrderController.class).all()).withSelfRel());
 	}
 	
-	@GetMapping("/orders{id}")
+	@GetMapping("/orders/{id}")
 	EntityModel<Order> one(@PathVariable Long id) {
 		Order order = orderRepo.findById(id)
 				.orElseThrow(() -> new OrderNotFoundException(id));
