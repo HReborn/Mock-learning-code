@@ -44,4 +44,10 @@ class Users {
 	public void setDraws(int draws) {
 		this.draws = draws;
 	}
+	@Override
+	public String toString() {
+		return "Users [id=" + id + ", name=" + name + ", wins=" + wins + ", losses=" + losses + ", draws=" + draws
+				+ "]";
+	}
+	
 }
