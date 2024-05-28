@@ -1,7 +1,5 @@
 <?php 
 
-use SebastianBergmann\Type\FalseType;
-
 /*
  Add these lines on php.ini file to display errors on the page, otherwise it won't load the page and will give the 500 http error.
  to locate php.ini, type the command php --ini
