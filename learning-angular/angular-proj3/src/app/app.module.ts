@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
 import { ManualComponent } from './manual-component/manual-component.component';
+import { CursosModule } from './cursos/cursos.module';
 
 @NgModule({
   declarations: [
@@ -13,11 +12,9 @@ import { ManualComponent } from './manual-component/manual-component.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    CursosModule
   ],
-  providers: [
-    provideClientHydration()
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
