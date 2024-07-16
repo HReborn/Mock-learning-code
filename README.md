@@ -12,7 +12,7 @@ How to run:
   - On the second terminal type `npm start` on the ./robot-front directory
  
 Prerequisites to run:
-(isn't ready yet for packaging so it's necessary to have the prerequisites below installed)
+<br>(isn't ready yet for packaging so it's necessary to have the prerequisites below installed)
  - For the backend:
    - Install <a href="https://www.python.org/downloads/" target="_blank">python</a> and pip (python's installer will give you the choice to install both together)
    - Install <a href="https://nodejs.org/pt" target="_blank">nodejs</a> (when node is installed, `npm` comes with it too)
