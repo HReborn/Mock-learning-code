@@ -9,8 +9,8 @@ def hello_world(request):
 
 @api_view(['GET'])
 def login(request):
-    return Response({'message': 'login'})
+    return Response({'message': 'logged in'})
 
 @api_view(['GET'])
-def cadastro(request):
-    return Response({'message': 'cadastro'})
+def register(request):
+    return Response({'message': 'registered'})

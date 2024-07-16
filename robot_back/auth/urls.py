@@ -3,5 +3,5 @@ from . import views
 
 urlspatterns = [
     path('login/', views.login, name='login'),
-    path('cadastro/', views.cadastro, name='cadastro')
+    path('register/', views.register, name='register')
 ]
