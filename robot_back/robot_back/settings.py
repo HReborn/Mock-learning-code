@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'robot_back_api',
+    'auth',
 ]
 
 MIDDLEWARE = [
