@@ -1,4 +1,4 @@
-Version 0.2
+Version 0.2.0
 
 How to use the app:
 
@@ -16,4 +16,10 @@ Prerequisites to run:
  - Install <a href="https://www.python.org/downloads/" target="_blank">python</a> and pip (python's installer will give you the choice to install both together)
  - Install <a href="https://nodejs.org/pt" target="_blank">nodejs</a> (when node is installed, `npm` comes with it too)
  - Install django (type `python -m pip install Django` on a terminal)
- - Install djangorestframeworkd and django-cors-headers (type `pip install djangorestframework django-cors-headers` on a terminal)
+ - Install djangorestframework and django-cors-headers (type `pip install djangorestframework django-cors-headers` on a terminal)
+
+Additional sources:
+
+ - https://www.w3schools.com/react/react_router.asp
+ - https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
+ - <a href="https://www.youtube.com/watch?v=gdhiA6wObw0&ab_channel=pythonando">login page<a/>
