@@ -5,7 +5,7 @@ function Login() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/robot/login/')
+        axios.get('http://localhost:8000/robot-auth/login/')
         .then(response => {
             setMessage(response.data.message);
         })

@@ -5,7 +5,7 @@ function Register() {
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:8000/robot/register/')
+        axios.get('http://localhost:8000/robot-auth/register/')
         .then(response => {
             setMessage(response.data.message);
         })
