@@ -20,3 +20,9 @@ Prerequisites to run:
    - Install djangorestframeworkd and django-cors-headers (type `pip install djangorestframework django-cors-headers` on a terminal)
  - For the frontend:
    - Install axios (type `npm install axios` on a terminal)
+
+Additional sources:
+
+ - https://www.w3schools.com/react/react_router.asp
+ - https://medium.com/@devsumitg/how-to-connect-reactjs-django-framework-c5ba268cb8be
+ - <a href="https://www.youtube.com/watch?v=gdhiA6wObw0&ab_channel=pythonando">login page<a/>
