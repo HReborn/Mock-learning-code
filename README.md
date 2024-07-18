@@ -2,7 +2,8 @@ Version 0.2.1-alpha
 
 How to use the app:
 
-Access: https://robot-qsif.onrender.com
+Front access: https://robot-qsif.onrender.com
+Back access: https://inadequate-maryjane-rebornkhr-ab1701c3.koyeb.app/
 
 Additional sources:
 
@@ -12,3 +13,5 @@ Additional sources:
  - https://blog.logrocket.com/9-ways-deploy-react-app-free/#render
    - had to explicitily create a `robot_front/build` folder to allow render to build and had to add `npm run build` build command
  - <a href="https://www.koyeb.com/docs/deploy/django">How to deploy django on koyeb<a/>
+   - had to install waitress instead of guinicorn
+   - had to set a build command `waitress-serve --port=8000 robot_back.wsgi:application` and match to the exposed port (8000) on koyeb's settings.
