@@ -2,7 +2,7 @@ Version 0.2.0
 
 How to use the app:
 
-Access on browser: `https://robot-qsif.onrender.com`
+Access: https://robot-qsif.onrender.com
 
 How to run:
 - Dowload files
