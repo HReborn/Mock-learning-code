@@ -1,4 +1,4 @@
-Version 0.2.1-alpha
+Version 0.2.2-alpha
 
 How to use the app:
 
