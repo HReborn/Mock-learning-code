@@ -1,0 +1,1 @@
+export const BASE_API_URL = "https://inadequate-maryjane-rebornkhr-ab1701c3.koyeb.app/";
