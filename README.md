@@ -16,3 +16,5 @@ Additional sources:
  - <a href="https://www.koyeb.com/docs/deploy/django">How to deploy django on koyeb<a/>
    - had to install waitress instead of guinicorn
    - had to set a build command `waitress-serve --port=8000 robot_back.wsgi:application` and match to the exposed port (8000) on koyeb's settings.
+ - <a href="https://neon.tech/docs/guides/django-migrations">How to connect django with neon postgres database</a>
+   - Had to use .properties instead of .env https://www.geeksforgeeks.org/read-properties-file-using-jproperties-in-python/
