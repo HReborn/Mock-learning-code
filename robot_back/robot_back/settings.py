@@ -11,10 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from pathlib import Path
 # Lines below added by reborn to allow connection with neon database
-import dj_database_url
 import os
-import dotenv
-dotenv.load_dotenv("./robot_back/.env")
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -94,7 +91,8 @@ WSGI_APPLICATION = 'robot_back.wsgi.application'
 
 # Edited below by reborn to allow database connection on neon.tech
 
-from jproperties import Properties 
+from jproperties import Properties # type: ignore
+import dj_database_url # type: ignore
 configs = Properties() 
 with open('./robot_back/conf.properties', 'rb') as read_prop: 
     configs.load(read_prop) 
