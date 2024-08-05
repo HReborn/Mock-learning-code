@@ -5,6 +5,8 @@ How to use the app:
 Front access: https://robot-qsif.onrender.com
 <br>
 Back access: https://inadequate-maryjane-rebornkhr-ab1701c3.koyeb.app
+<br>
+Database hosting and dashboard: https://neon.tech (log-in and request access to Reborn)
 
 Additional sources:
 
@@ -21,8 +23,8 @@ Additional sources:
 
 How to start developing the app:
 
- - Install python
- - Install node
+ - Install python 3.10.12
+ - Install node 20.16.0
  - Run `npm install`
  - Download the <a href="https://www.mediafire.com/file/occrsh10c133ny1/RobotENV.zip/file">python virtual environment folder</a>, extract and put the folder RobotENV on ./Robot/robot_back
  - <a href="https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/">Activate virtual environment</a>
