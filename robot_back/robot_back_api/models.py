@@ -3,7 +3,7 @@ from django.db import models # type: ignore
 # Create your models here.
 
 class User(models.Model):
-    id = models.BigAutoField()
+    id = models.AutoField(primary_key=True)
     username = models.CharField(20)
     password = models.CharField(64)
     role = models.BigIntegerField(64) # roles will come from rolesEnum.py
