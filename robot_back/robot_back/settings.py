@@ -9,9 +9,10 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
-
-import os
 from pathlib import Path
+# Lines below added by reborn to allow connection with neon database
+import os
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = 'django-insecure-o)o#=w_o9k^0jixz@5y3#2klyox(ckx4y^qs6070@r*ofeq8oy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# Filled value from empty array to line below by reborn
+# Filled value from empty array to line below by reborn to allow koyeb to connect
 ALLOWED_HOSTS = os.getenv("DJANGO_ALLOWED_HOSTS", "LOCALHOST,127.0.0.1,[::1]").split(",")
 
 
@@ -39,13 +40,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Added by reborn below
+    # Added by reborn below to connect with react
     'rest_framework',
     'corsheaders',
-    'robot_back_api',
-    'robot_auth',
+    # Apps created by reborn
 ]
 
+INSTALLED_APPS += [
+    'apps.robot_back_api',
+    'apps.robot_auth',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,14 +58,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Added by reborn below
+    # Added by reborn below to connect with react
     'corsheaders.middleware.CorsMiddleware',
+    # Added by reborn below to allow koyeb to deploy
     'whitenoise.middleware.WhiteNoiseMiddleware',
-
-
 ]
 
-# Added by reborn below
+# Added by reborn below to connect with react
 CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'robot_back.urls'
@@ -88,11 +91,23 @@ WSGI_APPLICATION = 'robot_back.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# Edited below by reborn to allow database connection on neon.tech
+
+from jproperties import Properties # type: ignore
+import dj_database_url # type: ignore
+configs = Properties() 
+with open('./robot_back/conf.properties', 'rb') as read_prop: 
+    configs.load(read_prop) 
+prop_view = configs.items()
+for item in prop_view: 
+    databaseURL = item[1][0]
+
+#Specification below comes from koyeb connection string
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    "default": dj_database_url.parse(
+        url=databaseURL,
+        conn_max_age=600, conn_health_checks=True
+    )
 }
 
 
@@ -131,7 +146,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
-#Two lines bellow added by reborn
+#Two lines bellow added by reborn to allow koyeb to connect
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
