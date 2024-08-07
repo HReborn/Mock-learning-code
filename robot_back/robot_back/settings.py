@@ -44,10 +44,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # Apps created by reborn
-    'robot_back_api',
-    'robot_auth',
 ]
 
+INSTALLED_APPS += [
+    'apps.robot_back_api',
+    'apps.robot_auth',
+]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
