@@ -6,6 +6,8 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import HelloWorld from './pages/HelloWold';
 
+// The routes below indicate the user's URL to access the app. If it's not mapped below, the user can't access the page.
+// The domain URL is defined at ./src/properties.js
 export default function App() {
   return (
     <BrowserRouter>
@@ -25,10 +27,3 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <App />
 );
-
-    /*
-    <div className="App">
-      <input name=""></input>
-      <HelloWorld></HelloWorld>
-    </div>
-    */
