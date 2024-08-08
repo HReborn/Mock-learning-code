@@ -27,7 +27,7 @@ How to start developing the app:
  - Install node 20.16.0
  - Run `npm install` inside the directory ./Robot/robot_front
  - Download the <a href="https://www.mediafire.com/file/occrsh10c133ny1/RobotENV.zip/file">python virtual environment folder</a>, extract and put the folder RobotENV on ./Robot/robot_back
- - <a href="https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/">Activate virtual environment</a>
+ - <a href="https://www.freecodecamp.org/news/how-to-setup-virtual-environments-in-python/">Activate virtual environment</a>: Run `source RobotENV/bin/activate` inside the ./Robot/robot_back directory. (simply run `deactivate` in any directory to get out of the python virtual env)
  - Run `pip install -r requirements.txt` on the virtual environment inside the directory ./Robot/robot_back
  - Test if it's working
    - Change backend connection URL at ./Robot/robot_front/src/properties.js to allow frontend to connect with localhost branch instead of production branch. **When pushing on main branch, always change it back to production URL.**
