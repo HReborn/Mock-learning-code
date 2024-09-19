@@ -1,6 +1,7 @@
 package com.krew.profitcalculator.dataclasses.profitoption;
 
 public class ProfitOptionDetailed {
+	// this class is a part of the ProfitOption class
 	private int maxStorage;
 	private double distance;
 	private double speed;
@@ -40,46 +41,39 @@ public class ProfitOptionDetailed {
 	public int getUnitsBought() {
 		return unitsBought;
 	}
-	public void setMaxStorage(int maxStorage) {
+	void setMaxStorage(int maxStorage) {
 		this.maxStorage = maxStorage;
 	}
-	public void setDistance(double distance) {
+	void setDistance(double distance) {
 		this.distance = distance;
 	}
-	public void setSpeed(double speed) {
+	void setSpeed(double speed) {
 		this.speed = speed;
 	}
-	public void setBuyPrice(int buyPrice) {
+	void setBuyPrice(int buyPrice) {
 		this.buyPrice = buyPrice;
 	}
-	public void setSellPrice(int sellPrice) {
+	void setSellPrice(int sellPrice) {
 		this.sellPrice = sellPrice;
 	}
-	public void setUnitSize(int unitSize) {
+	void setUnitSize(int unitSize) {
 		this.unitSize = unitSize;
 	}
-	public void setTotalSpent(int totalSpent) {
+	void setTotalSpent(int totalSpent) {
 		this.totalSpent = totalSpent;
 	}
-	public void setTotalSold(int totalSold) {
+	void setTotalSold(int totalSold) {
 		this.totalSold = totalSold;
 	}
-	public void setUnitsBought(int unitsBought) {
+	void setUnitsBought(int unitsBought) {
 		this.unitsBought = unitsBought;
 	}
 	
 	@Override
 	public String toString() {
-		String totalSpent = String.valueOf(this.totalSpent);
-		// format profit to 15k or keep value if less than 1000
-		if (this.totalSpent > 1000) {
-			totalSpent = String.valueOf(this.totalSpent/1000) + "k";
-		}
-		String totalSold = String.valueOf(this.totalSold);
-		// format profit to 15k or keep value if less than 1000
-		if (this.totalSold > 1000) {
-			totalSold = String.valueOf(this.totalSold/1000) + "k";
-		}
+		
+		String totalSpent = CustomFormatter.add_k_ToBigNumbers(this.totalSpent);
+		String totalSold = CustomFormatter.add_k_ToBigNumbers(this.totalSold);
 		
 		return  
 				"\n Ship's max storage: " + maxStorage + " slots" +

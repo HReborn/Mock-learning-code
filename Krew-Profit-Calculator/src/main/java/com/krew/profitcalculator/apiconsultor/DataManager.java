@@ -10,14 +10,18 @@ import com.krew.profitcalculator.dataclasses.Cargo;
 import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
-public class DataManager {
+class DataManager {
+	// the objective of this class is to receive the brute data from the
+	// DataExtractor class and do any data transformation necessary to
+	// store the transformed data into the GameData class
+	
 	private DataExtractor extractor;
 	private Map<String, String> islandCoordinates;
 	private Map<String, String> cargoSizes;
 	private Map<String, Map<String, String>> priceTable;
 	private Map<String, Map<String, String>> shipPropertiesInfoTable;
 	
-	public DataManager() {
+	DataManager() {
 		this.extractor = new DataExtractor();
 		islandCoordinates = extractor.getAllIslandsCoordinates();
 		cargoSizes = extractor.getAllCargoSizes();
@@ -25,7 +29,7 @@ public class DataManager {
 		shipPropertiesInfoTable = extractor.getShipPropertiesInfoTable();
 	}
 	
-	public Map<String, Island> buildIslandCargoPriceDataTable() {
+	Map<String, Island> buildIslandCargoPriceDataTable() {
 		
 		Set<String> cargoNames = cargoSizes.keySet();
 		Set<String> islandNames = islandCoordinates.keySet();
@@ -49,7 +53,7 @@ public class DataManager {
 		return islandCargoPriceDataTable;
 	}
 	
-	public Map<String, Ship> buildShipPropertiesInfo() {
+	Map<String, Ship> buildShipPropertiesInfo() {
 		
 		Set<String> shipNames = shipPropertiesInfoTable.keySet();
 		Map<String, Ship> shipPropertiesInfo = new HashMap<>();

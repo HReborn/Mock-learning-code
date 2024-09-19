@@ -3,11 +3,14 @@ package com.krew.profitcalculator.dataclasses.profitoption;
 import static java.lang.Math.pow;
 import static java.lang.Math.sqrt;
 
-import com.krew.profitcalculator.dataclasses.Cargo;
 import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
 public class ProfitOption {
+	// class made to store the profit option info. separeted into 3 categories
+	// header, core and detailed. from the header, all info can be calculated
+	// and it's this class responsibility to allocate the resulting info from
+	// the header.
 	
 	private LevelOfDetail levelOfDetail;
 	
@@ -18,65 +21,44 @@ public class ProfitOption {
 	public int getProfitPerSec() {
 		return core.getProfitPerSec();
 	}
-	
 	public int getProfit() {
 		return core.getProfit();
 	}
-	
 	public LevelOfDetail getLevelOfDetail() {
 		return levelOfDetail;
 	}
-
 	public ProfitOptionHeader getHeader() {
 		return header;
 	}
-
 	public ProfitOptionCore getCore() {
 		return core;
 	}
-
 	public ProfitOptionDetailed getDetailed() {
 		return detailed;
+	}
+	
+	private void setDetailed(Island buyIsland, String cargoName, Island sellIsland, Ship ship) {
+		this.detailed = new ProfitOptionDetailed();
+		detailed.setMaxStorage(ship.getMaxCargoSize());
+		detailed.setDistance(calculateDistance());
+		detailed.setSpeed(ship.getSpeed());
+		detailed.setBuyPrice(buyIsland.getIslandCargoPrices().get(cargoName).getPrice());
+		detailed.setSellPrice(sellIsland.getIslandCargoPrices().get(cargoName).getPrice());
+		detailed.setUnitSize(sellIsland.getIslandCargoPrices().get(cargoName).getSize());
+		detailed.setUnitsBought(ship.getMaxCargoSize()/detailed.getUnitSize());
+		detailed.setTotalSold(detailed.getSellPrice()*detailed.getUnitsBought());
+		detailed.setTotalSpent(detailed.getBuyPrice()*detailed.getUnitsBought());
 	}
 
 	public ProfitOption(Island buyIsland, String cargoName, Island sellIsland, Ship ship, LevelOfDetail levelOfDetail) {
 		this.levelOfDetail = levelOfDetail;
-		
-		header = new ProfitOptionHeader(buyIsland, cargoName, sellIsland, ship);
-		
-		detailed = new ProfitOptionDetailed();
-		detailed.setMaxStorage(ship.getMaxCargoSize());
-		detailed.setSpeed(ship.getSpeed());
-		detailed.setBuyPrice(buyIsland.getIslandCargoPrices().get(cargoName).getPrice());
-		detailed.setSellPrice(sellIsland.getIslandCargoPrices().get(cargoName).getPrice());
-		detailed.setSellPrice(sellIsland.getIslandCargoPrices().get(cargoName).getSize());
-		
-		// the detailed.totalspent,sold and bought are setted insie calculateProfit
-		int profit = calculateProfit();
-		// the detailed.setDistance() is setted inside calculateTravelTime
-		double travelTime = calculateTravelTime();
-		core = new ProfitOptionCore(profit, travelTime);
+		this.header = new ProfitOptionHeader(buyIsland, cargoName, sellIsland, ship);
+		setDetailed(buyIsland, cargoName, sellIsland, ship);
+		this.core = new ProfitOptionCore(calculateProfit(), calculateTravelTime());
 	}
 
 	private int calculateProfit() {
-		int maxBoatCapacity = header.getShip().getMaxCargoSize();
-		String cargoName = header.getCargoName();
-		Cargo cargoBuyPrice = header.getBuyIsland().getIslandCargoPrices().get(cargoName);
-		Cargo cargoSellPrice = header.getSellIsland().getIslandCargoPrices().get(cargoName);
-		
-		int cargoSize = cargoBuyPrice.getSize();
-		int buyPrice = cargoBuyPrice.getPrice();
-		int sellPrice = cargoSellPrice.getPrice();
-		
-		int cargoQtty = maxBoatCapacity/cargoSize;
-		
-		detailed.setUnitSize(cargoSize);
-		detailed.setTotalSpent(buyPrice*cargoQtty);
-		detailed.setTotalSold(sellPrice*cargoQtty);
-		detailed.setUnitsBought(cargoQtty);
-		
-		int profit = cargoQtty*(sellPrice - buyPrice);
-		return profit;
+		return detailed.getUnitsBought()*(detailed.getSellPrice() - detailed.getBuyPrice());
 	}
 	
 	private double calculateTravelTime() {
@@ -87,21 +69,20 @@ public class ProfitOption {
 		// putting into a conversion factor, x = 1/6.5;, so, we just gotta divide the speed by 6.5 and we'll have
 		// an estimate about how much time it'll take
 		
-		double distanceBetweenIslands = calculateDistance();
-		detailed.setDistance(distanceBetweenIslands);
+		double boatSpeed = convertGameSpdToPixelPerSecond(header.getShip().getSpeed());
+		return detailed.getDistance()/boatSpeed;
+	}
+	
+	private double convertGameSpdToPixelPerSecond(double gameSpeed) {
 		//dividing by 6.5 to get the speed in pixel/second by rule of three with distance in pixels (empirically measured)
-		double boatSpeed = (header.getShip().getSpeed())/6.5;
-		double time = distanceBetweenIslands/boatSpeed;
-		
-		return time;
+		return gameSpeed/6.5;
 	}
 	
 	private double calculateDistance() {
 		Double[] startingCoordinate = header.getBuyIsland().getCoordinatesXY();
 		Double[] destinationCoordinate = header.getSellIsland().getCoordinatesXY();
 		// formula to distance between two points in a cartesian plane
-		double distanceBetweenIslands = sqrt(pow(destinationCoordinate[0] - startingCoordinate[0], 2) + pow(destinationCoordinate[1] - startingCoordinate[1], 2));
-		return distanceBetweenIslands;
+		return sqrt(pow(destinationCoordinate[0] - startingCoordinate[0], 2) + pow(destinationCoordinate[1] - startingCoordinate[1], 2));
 	}
 	
 	@Override

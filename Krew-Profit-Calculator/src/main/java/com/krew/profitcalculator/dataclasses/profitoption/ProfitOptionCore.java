@@ -1,6 +1,7 @@
 package com.krew.profitcalculator.dataclasses.profitoption;
 
-public class ProfitOptionCore {
+class ProfitOptionCore {
+	// this class is a part of the ProfitOption class
 	private int profit;
 	private double timeSpent;
 	private int profitPerSec;
@@ -14,13 +15,13 @@ public class ProfitOptionCore {
 	public int getProfitPerSec() {
 		return profitPerSec;
 	}
-	public void setTimeSpent(double timeSpent) {
+	void setTimeSpent(double timeSpent) {
 		this.timeSpent = timeSpent;
 	}
-	public void setProfit(int profit) {
+	void setProfit(int profit) {
 		this.profit = profit;
 	}
-	public ProfitOptionCore(int profit, double timeSpent) {
+	ProfitOptionCore(int profit, double timeSpent) {
 		this.timeSpent = timeSpent;
 		this.profit = profit;
 		this.profitPerSec = (int) Math.round(Double.valueOf(profit)/timeSpent);
@@ -29,14 +30,11 @@ public class ProfitOptionCore {
 	@Override
 	public String toString() {
 		
-		String profit = String.valueOf(this.profit);
-		// format profit to 15k or keep value if less than 1000
-		if (this.profit > 1000) {
-			profit = String.valueOf(this.profit/1000) + "k";
-		} 
+		String profit = CustomFormatter.add_k_ToBigNumbers(this.profit);
 		
 		// format time from double seconds to string minutes and seconds
-		String timeSpent = String.valueOf(((int) this.timeSpent/60) + "m" + Math.round(this.timeSpent%60) + "s");
+		String timeSpent = CustomFormatter.secondsToMinutesWithSeconds(this.timeSpent);
+		//String timeSpent = String.valueOf(((int) this.timeSpent/60) + "m" + Math.round(this.timeSpent%60) + "s");
 		
 		return 
 				"\n  Profit To Be Made: " + "$" + profit +

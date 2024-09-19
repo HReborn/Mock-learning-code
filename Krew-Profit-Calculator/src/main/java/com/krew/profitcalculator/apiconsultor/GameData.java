@@ -6,20 +6,24 @@ import com.krew.profitcalculator.dataclasses.Island;
 import com.krew.profitcalculator.dataclasses.Ship;
 
 public class GameData {
+	// the objective of this class is to store the necessary data that
+	// the program needs to make queries, comparations, simulations and 
+	// calculations.
+	
 	private Map<String, Island> islandCargoPriceDataTable;
 	private Map<String, Ship> shipPropertiesInfo;
 	private DataManager manager;
 	
-	public GameData() {
+	protected GameData() {
 		this.manager = new DataManager();
 		this.islandCargoPriceDataTable = manager.buildIslandCargoPriceDataTable();
 		this.shipPropertiesInfo = manager.buildShipPropertiesInfo();
 	}
 
-	public Map<String, Island> getIslandCargoPriceDataTable() {
+	protected Map<String, Island> getIslandCargoPriceDataTable() {
 		return islandCargoPriceDataTable;
 	}
-	public Map<String, Ship> getShipPropertiesInfo() {
+	protected Map<String, Ship> getShipPropertiesInfo() {
 		return shipPropertiesInfo;
 	}
 }
