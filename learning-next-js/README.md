@@ -7,18 +7,20 @@
 <div>
     <h2 style=display:inline>04/10/2024</h3>
     <br>
-    Start ----------- 10:00
+    Start ----------- 13:00
     <br>
-    Time spent -- 00:00
+    Time spent -- 00:30
 </div>
 
 <h3 style=font-weight:normal>Objectives:</h3>
 
-- Attempting to start a new project via youtube video about node and express to create a new CRUD app. The video uses sequelize and MySQL. After applying the video, try to change to TypeORM and PostgreSQL.
+- Continue to implement video project
 
 <h3 style=font-weight:normal>Achievements:</h3>
 
   - `npm init -y // npm install express`
+  - Setup
+  - Initial test with simple get request
 
 <h3 style=font-weight:normal>TO-DO:</h3>
 
