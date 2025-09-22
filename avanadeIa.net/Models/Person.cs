@@ -7,12 +7,13 @@ namespace avanadeIa.net.Models
 {
     public class Person
     {
-        public int age { get; set; }
-        public int name { get; set; }
+        public int Age { get; set; }
+        public string Name { get; set; }
 
-          public void greet()
+          public void Greet()
         {
-            Console.WriteLine($"Hello, my name is {name} and i am {age} years old.");
+            Console.WriteLine("Hello, my name is " +
+            $"{Name} and i am {Age} years old."); //this works
         }
     }
   
