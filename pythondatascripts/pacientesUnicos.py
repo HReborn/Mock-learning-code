@@ -17,31 +17,51 @@ def retornarDado(pandasDataFrame, linha, colunaEnum):
     column = cast(Enum, colunaEnum)
     return str(df.iloc[line, column.value])
 
-df=pd.read_csv("prontuariosUnicos.csv", usecols=["Nome", "Nascimento", "Prontuario"])
+df=pd.read_csv("data/prontuariosUnicos.csv", usecols=["Nome", "Nascimento", "Prontuario"])
 
-duplicados = [()]
-quantidadeDuplicados = 0
-totalDfLines = len(df)-1
-for busca in range(totalDfLines):
-    print(busca)
-    nascimentoBusca=retornarDado(df, busca, Coluna.NASCIMENTO)
+pacientesUnicos = list(df.itertuples(index=False))
+pacientesUnicosSorted = sorted(pacientesUnicos, key=lambda paciente:paciente[Coluna.NOME.value])
+sorted = pacientesUnicos == pacientesUnicosSorted
+#pacientesUnicos.sort(key=lambda paciente:paciente[Coluna.NOME.value])
+
+if not sorted:
+    print("não está sorteado")
+    outputColumns = ["Nome", "Nascimento", "Prontuario"]
+    outputDf = pd.DataFrame(pacientesUnicosSorted, columns=outputColumns)
+    outputFile = "data/prontuariosUnicos.csv"
+    outputDf.to_csv(outputFile, index=False)
+
+print(pacientesUnicos[1].Nome)
+
+# duplicados = [(retornarDado(df, 0, Coluna.NOME), 
+#                retornarDado(df, 0, Coluna.NASCIMENTO),
+#                retornarDado(df, 0, Coluna.PRONTUARIO))]
+# quantidadeDuplicados = 0
+# totalDfLines = len(df)-1
+# for busca in range(totalDfLines):
+#     print(busca)
+#     nascimentoBusca=retornarDado(df, busca, Coluna.NASCIMENTO)
     
-    for linha in range(busca+1,totalDfLines):
-        nascimentoAtual=retornarDado(df, busca, Coluna.NASCIMENTO)
-        inseridoLista = nascimentoAtual in duplicados[quantidadeDuplicados]
-        if nascimentoBusca == nascimentoAtual and inseridoLista:
-            prontuarioAtual=retornarDado(df, busca, Coluna.PRONTUARIO)
-            duplicados[quantidadeDuplicados] + (prontuarioAtual,)
-            quantidadeDuplicados = quantidadeDuplicados + 1
+#     for linha in range(busca,totalDfLines):
+#         nascimentoAtual=retornarDado(df, linha, Coluna.NASCIMENTO)
+#         prontuarioAtual=retornarDado(df, busca, Coluna.PRONTUARIO)
+#         inseridoLista = nascimentoAtual in duplicados[quantidadeDuplicados]
+#         nascIgualProntNaoInserido = nascimentoBusca == nascimentoAtual and prontuarioAtual not in duplicados[quantidadeDuplicados]
+#         if nascIgualProntNaoInserido and inseridoLista:
+#             print(f"duplicado com prontuarios {duplicados[quantidadeDuplicados][2:]}")
+#             duplicados[quantidadeDuplicados] =  duplicados[quantidadeDuplicados] + (prontuarioAtual,)
+            
+#             print(duplicados[quantidadeDuplicados])
+#             print("------------------------------")
 
-        if nascimentoBusca == nascimentoAtual and not inseridoLista:
-            nomeAtual = retornarDado(df, busca, Coluna.NOME)
-            prontuarioAtual=retornarDado(df, busca, Coluna.PRONTUARIO)
-            duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
+#         if nascIgualProntNaoInserido and not inseridoLista:
+#             nomeAtual = retornarDado(df, busca, Coluna.NOME)
+#             duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
+#             quantidadeDuplicados = quantidadeDuplicados + 1
 
-        if linha == totalDfLines and not inseridoLista:
-            nomeAtual = retornarDado(df, busca, Coluna.NOME)
-            prontuarioAtual=retornarDado(df, busca, Coluna.PRONTUARIO)
-            duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
+#         if linha == totalDfLines and not inseridoLista:
+#             nomeAtual = retornarDado(df, busca, Coluna.NOME)
+#             duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
+#             quantidadeDuplicados = quantidadeDuplicados + 1
 
-print(duplicados)
+# print(quantidadeDuplicados)

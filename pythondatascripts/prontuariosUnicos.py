@@ -47,5 +47,5 @@ for linha in range(totalDfLines):
 
 outputColumns = ["Nome", "Nascimento", "Prontuario"]
 outputDf = pd.DataFrame(pacientes, columns=outputColumns)
-outputFile = "prontuariosUnicos.csv"
+outputFile = "data/prontuariosUnicos.csv"
 outputDf.to_csv(outputFile, index=False)
