@@ -5,7 +5,6 @@ import pandas as pd
 from pandas import DataFrame
 from enum import Enum
 from typing import cast
-import sys
 
 class Coluna(Enum):
     NOME = 0
