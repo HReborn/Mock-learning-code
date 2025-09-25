@@ -5,11 +5,11 @@ import pandas as pd
 from pandas import DataFrame
 from enum import Enum
 from typing import cast
+import sys
 
 class Coluna(Enum):
     NOME = 0
-    NASCIMENTO = 1
-    PRONTUARIO = 2
+    PRIMEIRA_LETRA_DO_NOME = 0
 
 def retornarDado(pandasDataFrame, linha, colunaEnum):
     df = cast(DataFrame, pandasDataFrame)
@@ -31,37 +31,37 @@ if not sorted:
     outputFile = "data/prontuariosUnicos.csv"
     outputDf.to_csv(outputFile, index=False)
 
-print(pacientesUnicos[1].Nome)
+duplicados = []
+linha = -1
+tamanhoDuplicado = len(duplicados)
+tamanhoListaPacientes = len(pacientesUnicos)
+while linha < len(pacientesUnicos)-2:
+    tamanhoListaPacientes = len(pacientesUnicos)
+    if len(duplicados) == tamanhoDuplicado:
+        linha+=1
+    tamanhoDuplicado = len(duplicados)
+    i=0 # iterador para rastrear quantas iterações se passaram no while para poder saber qual index usar no pop
+    listaDuplicadosPorLetra = [linha]
+    pacienteAtual = pacientesUnicos[linha]
+    indexLetra = linha+1
+    pacienteSeguinte = pacientesUnicos[indexLetra]
 
-# duplicados = [(retornarDado(df, 0, Coluna.NOME), 
-#                retornarDado(df, 0, Coluna.NASCIMENTO),
-#                retornarDado(df, 0, Coluna.PRONTUARIO))]
-# quantidadeDuplicados = 0
-# totalDfLines = len(df)-1
-# for busca in range(totalDfLines):
-#     print(busca)
-#     nascimentoBusca=retornarDado(df, busca, Coluna.NASCIMENTO)
+    while pacienteAtual.Nome[Coluna.PRIMEIRA_LETRA_DO_NOME.value] == pacienteSeguinte.Nome[Coluna.PRIMEIRA_LETRA_DO_NOME.value] and indexLetra < len(pacientesUnicos)-1:
+        i+=1
+        indexLetra = linha+i
+        pacienteSeguinte=pacientesUnicos[indexLetra]
+        # Se o nascimento for igual e se as três primeiras letras do nome forem iguais
+        if pacienteAtual.Nascimento == pacienteSeguinte.Nascimento and pacienteAtual.Nome[:3] == pacienteSeguinte.Nome[:3]:
+            listaDuplicadosPorLetra.append(indexLetra)
     
-#     for linha in range(busca,totalDfLines):
-#         nascimentoAtual=retornarDado(df, linha, Coluna.NASCIMENTO)
-#         prontuarioAtual=retornarDado(df, busca, Coluna.PRONTUARIO)
-#         inseridoLista = nascimentoAtual in duplicados[quantidadeDuplicados]
-#         nascIgualProntNaoInserido = nascimentoBusca == nascimentoAtual and prontuarioAtual not in duplicados[quantidadeDuplicados]
-#         if nascIgualProntNaoInserido and inseridoLista:
-#             print(f"duplicado com prontuarios {duplicados[quantidadeDuplicados][2:]}")
-#             duplicados[quantidadeDuplicados] =  duplicados[quantidadeDuplicados] + (prontuarioAtual,)
-            
-#             print(duplicados[quantidadeDuplicados])
-#             print("------------------------------")
+    popNumber = 0
+    if len(listaDuplicadosPorLetra) > 1:
+        for index in listaDuplicadosPorLetra:
+            duplicados.append(pacientesUnicos.pop(index-popNumber))
+            popNumber+=1
+    listaDuplicadosPorLetra.clear()
 
-#         if nascIgualProntNaoInserido and not inseridoLista:
-#             nomeAtual = retornarDado(df, busca, Coluna.NOME)
-#             duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
-#             quantidadeDuplicados = quantidadeDuplicados + 1
-
-#         if linha == totalDfLines and not inseridoLista:
-#             nomeAtual = retornarDado(df, busca, Coluna.NOME)
-#             duplicados.append((nomeAtual, nascimentoAtual, prontuarioAtual))
-#             quantidadeDuplicados = quantidadeDuplicados + 1
-
-# print(quantidadeDuplicados)
+outputColumns = ["Nome", "Nascimento", "Prontuario"]
+outputDf = pd.DataFrame(duplicados, columns=outputColumns)
+outputFile = "data/prontuariosDuplicados.csv"
+outputDf.to_csv(outputFile, index=False)
