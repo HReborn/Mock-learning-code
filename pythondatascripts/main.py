@@ -9,8 +9,8 @@
 # - Se houver banco, adiciona os determinados únicos no banco
 # - Identifica os duplicados e gera o .csv (o programa termina quando gera o .csv)
 
-from pacientesUnicos import removerProntuariosDuplicados
-from prontuariosUnicos import removerBoletinsDuplicados
+from removerProntuariosDuplicados import removerProntuariosDuplicados
+from removerBoletinsDuplicados import removerBoletinsDuplicados
 
 removerBoletinsDuplicados("TiMedReportExport.csv")
 removerProntuariosDuplicados("data/prontuariosUnicos.csv")
