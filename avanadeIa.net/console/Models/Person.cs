@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace avanadeIa.net.Models
+namespace console.avanadeIa.net.Models
 {
     public class Person
     {

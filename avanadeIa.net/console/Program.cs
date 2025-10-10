@@ -1,5 +1,5 @@
 ﻿
-using avanadeIa.net.Models; // this works
+using console.avanadeIa.net.Models; // this works
 
 // See https://aka.ms/new-console-template for more information
 Console.WriteLine("Hello, " + 
@@ -11,7 +11,7 @@ person.Name = "Lorena";
 person.Greet();
 
 //you can import statically
-avanadeIa.net.Models.Person copyPerson = new avanadeIa.net.Models.Person();
+console.avanadeIa.net.Models.Person copyPerson = new console.avanadeIa.net.Models.Person();
 copyPerson.Age = 26;
 copyPerson.Name = "Breno";
 copyPerson.Greet();
