@@ -7,9 +7,8 @@ import lombok.Data;
 
 @Data
 @Builder
-// A DTO tl;dr is when you want to hide certain fields from the client/user. Like a password.
 public class ClubDto {
-	
+	// A DTO tl;dr is when you want to hide certain fields from the client/user. Like a password.
 	private Long id;
 	private String title;
 	private String photoURL;
