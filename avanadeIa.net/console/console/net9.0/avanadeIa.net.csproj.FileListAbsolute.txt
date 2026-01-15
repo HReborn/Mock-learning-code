@@ -1,0 +1,15 @@
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/bin/Debug/net9.0/avanadeIa.net
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/bin/Debug/net9.0/avanadeIa.net.deps.json
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/bin/Debug/net9.0/avanadeIa.net.runtimeconfig.json
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/bin/Debug/net9.0/avanadeIa.net.dll
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/bin/Debug/net9.0/avanadeIa.net.pdb
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.GeneratedMSBuildEditorConfig.editorconfig
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.AssemblyInfoInputs.cache
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.AssemblyInfo.cs
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.csproj.CoreCompileInputs.cache
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.sourcelink.json
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.dll
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/refint/avanadeIa.net.dll
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.pdb
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/avanadeIa.net.genruntimeconfig.cache
+/home/Reborn/Repositories/Mock-learning-code/avanadeIa.net/console/console/net9.0/ref/avanadeIa.net.dll
