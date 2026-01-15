@@ -3,15 +3,15 @@ package com.mock.spring_boot.services.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import lombok.Builder;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.services.ClubService;
 
+@Service
 public class ClubServiceImpl implements ClubService {
 
 	@Autowired
