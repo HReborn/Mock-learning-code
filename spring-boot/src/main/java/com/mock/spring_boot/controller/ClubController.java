@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mock.spring_boot.dto.ClubDto;
+import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.services.ClubService;
 
 
@@ -31,5 +32,10 @@ public class ClubController {
 		return "clubs-list";
 	}
 	
-
+	@GetMapping("/clubs/new")
+	public String createClubForm(Model model) {
+		Club club = new Club();
+		model.addAttribute("club", club);
+		return "create-club";
+	}
 }
