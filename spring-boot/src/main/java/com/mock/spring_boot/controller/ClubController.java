@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
@@ -37,5 +39,11 @@ public class ClubController {
 		Club club = new Club();
 		model.addAttribute("club", club);
 		return "create-club";
+	}
+	
+	@PostMapping("/clubs/new")
+	public String saveClub (@ModelAttribute("club") Club club) {
+		clubService.saveClub(club);
+		return "redirect:/clubs";
 	}
 }
