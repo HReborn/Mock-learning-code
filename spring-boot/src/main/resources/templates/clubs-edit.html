@@ -7,7 +7,7 @@
 	    <!-- Page Content-->
 	    <section layout:fragment="body" class="py-5">
 	   		<div class="container">
-		        <form role="form" method="post" th:action="@{{clubId}/edit(clubId=${club.id})}" th:object="${club}">
+		        <form role="form" method="post" th:action="@{/clubs/{clubId}/edit(clubId=${club.id})}" th:object="${club}">
 		          <input type="hidden" th:field="*{id}">	
 				  <div class="form-row">
 				    <div class="form-group col-md-6">

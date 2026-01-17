@@ -7,6 +7,7 @@
 	    <!-- Page Content-->
 	    <section layout:fragment="body" class="py-5">
 	   		<div class="container">
+	   				<!-- Esse action não está @{/clubs/new} porque estava duplicando a URL -->
 		        <form role="form" method="post" th:action="@{new}" th:object="${club}">
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
