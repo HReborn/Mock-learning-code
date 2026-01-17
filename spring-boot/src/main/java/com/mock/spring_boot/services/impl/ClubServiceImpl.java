@@ -1,6 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +40,32 @@ public class ClubServiceImpl implements ClubService {
 				.build();
 		return clubDto;
 	}
+	private Club mapToClub(ClubDto clubDto) {
+		Club club = Club.builder()
+				.id(clubDto.getId())
+				.title(clubDto.getTitle())
+				.photoURL(clubDto.getPhotoURL())
+				.content(clubDto.getContent())
+				.createdOn(clubDto.getCreatedOn())
+				.updatedOn(clubDto.getUpdatedOn())
+				.build();
+		return club;
+	}
 
 	@Override
 	public Club saveClub(Club club) {
-		// TODO Auto-generated method stub
 		return clubRepository.save(club);
 	}
 
+	@Override
+	public ClubDto findById(Long id) {
+		Optional<Club> club = clubRepository.findById(id);
+		ClubDto clubDto = mapToClubDto(club.get());
+		return clubDto;
+	}
+
+	@Override
+	public void updateClub(ClubDto club) {
+		clubRepository.save(mapToClub(club));
+	}
 }

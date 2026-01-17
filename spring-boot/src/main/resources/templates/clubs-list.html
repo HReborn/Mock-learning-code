@@ -13,11 +13,12 @@
 	            </div>
 	            <div class="row gx-5">
 	                <!-- The "th:each" is a loop from thymeleaf that'll iterate through the clubs object and will also feed the th:src -->
-	                <div th:each="club :${clubs}" class="col-lg-6">
+	                <div th:each="club :${clubs}" class="col-lg-6 mb-3">
 	                    <div class="position-relative mb-5">
 	                        <img class="img-fluid rounded-3 mb-3" th:src="${club.photoURL}" alt="..." />
 	                        <a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" href="#!">Project name</a>
 	                    </div>
+	                    <a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Editar</a>
 	                </div>
 	            </div>
 	        </div>
