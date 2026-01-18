@@ -46,8 +46,18 @@ public class ClubController {
 	}
 	
 	@PostMapping("/clubs/new")
-	public String saveClub (@ModelAttribute("club") Club club) {
-		clubService.saveClub(club);
+	public String saveClub (@Valid @ModelAttribute("club") ClubDto clubDto,
+							BindingResult result,
+							Model model) {
+		
+		if (result.hasErrors()) {
+			// I don't know why he didn't put the model on the club edit
+			// Probably because the model var already existed and we were editing
+			// on this one, it doesn't exist.
+			model.addAttribute("club", clubDto);
+			return "create-club";
+		}
+		clubService.saveClub(clubDto);
 		return "redirect:/clubs";
 	}
 	
