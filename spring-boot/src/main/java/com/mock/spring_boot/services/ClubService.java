@@ -7,7 +7,7 @@ import com.mock.spring_boot.models.Club;
 
 public interface ClubService {
 	List<ClubDto> findAllClubs();
-	Club saveClub(Club club);
+	Club saveClub(ClubDto clubDto);
 	ClubDto findById(Long id);
 	void updateClub(ClubDto club);
 }
