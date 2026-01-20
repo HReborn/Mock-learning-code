@@ -65,7 +65,7 @@ public class ClubController {
 	public String editClubForm(@PathVariable("clubId")Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("club",club);
-		return "clubs-edit";
+		return "clubs-detail";
 	}
 	
 	@PostMapping("/clubs/{clubId}/edit")
@@ -78,5 +78,12 @@ public class ClubController {
 		club.setId(clubId);
 		clubService.updateClub(club);
 		return "redirect:/clubs";
+	}
+	
+	@GetMapping("/clubs/{clubId}")
+	public String getClubs (@PathVariable("clubId") Long clubId, Model model) {
+		ClubDto club = clubService.findById(clubId);
+		model.addAttribute(club);
+		return null;
 	}
 }
