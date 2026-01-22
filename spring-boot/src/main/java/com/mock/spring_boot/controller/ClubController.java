@@ -65,7 +65,7 @@ public class ClubController {
 	public String editClubForm(@PathVariable("clubId")Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("club",club);
-		return "clubs-detail";
+		return "clubs-edit";
 	}
 	
 	@PostMapping("/clubs/{clubId}/edit")
