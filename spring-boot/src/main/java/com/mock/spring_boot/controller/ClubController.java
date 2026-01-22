@@ -80,10 +80,10 @@ public class ClubController {
 		return "redirect:/clubs";
 	}
 	
-	@GetMapping("/clubs/{clubId}")
+	@GetMapping("/clubs/{clubId}/")
 	public String getClubs (@PathVariable("clubId") Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute(club);
-		return null;
+		return "clubs-detail";
 	}
 }
