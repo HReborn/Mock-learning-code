@@ -11,10 +11,11 @@ import com.mock.spring_boot.services.EventService;
 
 public class EventServiceImpl implements EventService {
 
-	private EventRepository eventRepository;	
+	@Autowired
+	private EventRepository eventRepository;
+	@Autowired
 	private ClubRepository clubRepository;
 
-	@Autowired
 	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository) {
 		super();
 		this.eventRepository = eventRepository;
