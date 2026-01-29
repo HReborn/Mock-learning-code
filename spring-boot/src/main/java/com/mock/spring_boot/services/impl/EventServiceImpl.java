@@ -1,6 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Club;
@@ -9,6 +10,7 @@ import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
 import com.mock.spring_boot.services.EventService;
 
+@Service
 public class EventServiceImpl implements EventService {
 
 	@Autowired
@@ -41,6 +43,11 @@ public class EventServiceImpl implements EventService {
 				.createdOn(eventDto.getCreatedOn())
 				.updatedOn(eventDto.getUpdatedOn())
 				.build();
+	}
+
+	@Override
+	public Event saveEvent(EventDto eventDto) {
+		return eventRepository.save(mapToEvent(eventDto));
 	}
 
 }
