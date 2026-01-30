@@ -12,6 +12,9 @@ import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.services.ClubService;
 
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
+
 @Service
 public class ClubServiceImpl implements ClubService {
 
@@ -27,29 +30,6 @@ public class ClubServiceImpl implements ClubService {
 	public List<ClubDto> findAllClubs() {
 		List<Club> clubs =  clubRepository.findAll();
 		return clubs.stream().map((club) -> mapToClubDto(club)).collect(Collectors.toList());
-	}
-	
-	private ClubDto mapToClubDto(Club club) {
-		ClubDto clubDto = ClubDto.builder()
-				.id(club.getId())
-				.title(club.getTitle())
-				.photoURL(club.getPhotoURL())
-				.content(club.getContent())
-				.createdOn(club.getCreatedOn())
-				.updatedOn(club.getUpdatedOn())
-				.build();
-		return clubDto;
-	}
-	private Club mapToClub(ClubDto clubDto) {
-		Club club = Club.builder()
-				.id(clubDto.getId())
-				.title(clubDto.getTitle())
-				.photoURL(clubDto.getPhotoURL())
-				.content(clubDto.getContent())
-				.createdOn(clubDto.getCreatedOn())
-				.updatedOn(clubDto.getUpdatedOn())
-				.build();
-		return club;
 	}
 
 	@Override
