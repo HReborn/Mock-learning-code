@@ -7,44 +7,65 @@
 	    <!-- Page Content-->
 	    <section layout:fragment="body" class="py-5">
 	   		<div class="container">
-	   				<!-- Esse action não está @{/clubs/new} porque estava duplicando a URL -->
-		        <form role="form" method="post" th:action="@{events/{clubId}/new}(clubId=${clubId})" th:object="${event}">
+		        <form role="form" method="post" th:action="@{/events/{clubId}(clubId=${clubId})}" th:object="${event}">
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
-				      <label for="title">Title</label>
+				      <label for="name">Name</label>
 				      <input 
 					      type="text" 
 					      class="form-control"
-					      id="title"
-					      name="title"
-					      th:field="*{title}" 
-					      placeholder="Title">
-					      <p th:if="${#fields.hasErrors('title')}" class="text-danger" th:errors="*{title}"></p>
+					      id="name"
+					      name="name"
+					      th:field="*{name}" 
+					      placeholder="Name">
+					      <p th:if="${#fields.hasErrors('name')}" class="text-danger" th:errors="*{name}"></p>
 				    </div>
 				    <div class="form-group col-md-6">
-				      <label for="photoURL">Paisagem URL</label>
+				      <label for="type">Type</label>
 				      <input 
 					      type="text" 
 					      class="form-control" 
-					      id="photoURL" 
-					      name="photoURL"
-					      th:field="*{photoURL}"
-					      placeholder="Paisagem URL">
-					      <p th:if="${#fields.hasErrors('photoURL')}" class="text-danger" th:errors="*{photoURL}"></p>
+					      id="type" 
+					      name="type"
+					      th:field="*{type}"
+					      placeholder="Type">
+					      <p th:if="${#fields.hasErrors('type')}" class="text-danger" th:errors="*{type}"></p>
 				    </div>
 				  </div>
 				  <div class="form-group mb-3">
-				    <label for="content">Content</label>
+				    <label for="photoURL">Photo URL</label>
 				    <input 
 					    type="text" 
 					    class="form-control" 
-					    id="conent"
-					    name="content"
-						th:field="*{content}"
-					    placeholder="Content">
-					    <p th:if="${#fields.hasErrors('content')}" class="text-danger" th:errors="*{content}"></p>
+					    id="photoURL"
+					    name="photoURL"
+						th:field="*{photoURL}"
+					    placeholder="Photo URL">
+					    <p th:if="${#fields.hasErrors('photoURL')}" class="text-danger" th:errors="*{photoURL}"></p>
 				  </div>
-				  <button type="submit" class="btn btn-primary">Criar paisagem</button>
+				  <div class="form-group mb-3">
+				    <label for="startTime">Start Time</label>
+				    <input 
+					    type="datetime-local" 
+					    class="form-control" 
+					    id="startTime"
+					    name="startTime"
+						th:field="*{startTime}"
+					    placeholder="Start Time">
+					    <p th:if="${#fields.hasErrors('startTime')}" class="text-danger" th:errors="*{startTime}"></p>
+				  </div>
+				  <div class="form-group mb-3">
+				    <label for="endTime">End Time</label>
+				    <input 
+					    type="datetime-local" 
+					    class="form-control" 
+					    id="endTime"
+					    name="endTime"
+						th:field="*{endTime}"
+					    placeholder="End Time">
+					    <p th:if="${#fields.hasErrors('endTime')}" class="text-danger" th:errors="*{endTime}"></p>
+				  </div>
+				  <button type="submit" class="btn btn-primary">Criar Evento</button>
 				</form>
 			</div>
 	    </section>
