@@ -13,10 +13,11 @@ public class ClubMapper {
 				.content(club.getContent())
 				.createdOn(club.getCreatedOn())
 				.updatedOn(club.getUpdatedOn())
+				.events(club.getEvents())
 				.build();
 		return clubDto;
 	}
-	
+
 	public static Club mapToClub(ClubDto clubDto) {
 		Club club = Club.builder()
 				.id(clubDto.getId())
@@ -25,8 +26,8 @@ public class ClubMapper {
 				.content(clubDto.getContent())
 				.createdOn(clubDto.getCreatedOn())
 				.updatedOn(clubDto.getUpdatedOn())
+				.events(clubDto.getEvents())
 				.build();
 		return club;
 	}
-
 }
