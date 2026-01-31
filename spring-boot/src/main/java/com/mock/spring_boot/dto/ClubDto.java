@@ -1,6 +1,9 @@
 package com.mock.spring_boot.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
+
+import com.mock.spring_boot.models.Event;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
@@ -19,5 +22,5 @@ public class ClubDto {
 	private String content;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
-
+	private List<Event> events;
 }
