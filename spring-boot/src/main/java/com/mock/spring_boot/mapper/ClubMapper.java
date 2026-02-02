@@ -3,6 +3,12 @@ package com.mock.spring_boot.mapper;
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
 
+import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+
+import java.util.stream.Collectors;
+
+import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
+
 public class ClubMapper {
 	
 	public static ClubDto mapToClubDto(Club club) {
@@ -13,7 +19,7 @@ public class ClubMapper {
 				.content(club.getContent())
 				.createdOn(club.getCreatedOn())
 				.updatedOn(club.getUpdatedOn())
-				.events(club.getEvents())
+				.events(club.getEvents().stream().map(event -> mapToEventDto(event)).collect(Collectors.toList()))
 				.build();
 		return clubDto;
 	}
@@ -26,7 +32,7 @@ public class ClubMapper {
 				.content(clubDto.getContent())
 				.createdOn(clubDto.getCreatedOn())
 				.updatedOn(clubDto.getUpdatedOn())
-				.events(clubDto.getEvents())
+				.events(clubDto.getEvents().stream().map(eventDto->mapToEvent(eventDto)).collect(Collectors.toList()))
 				.build();
 		return club;
 	}

@@ -2,6 +2,8 @@ package com.mock.spring_boot.mapper;
 
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Event;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
 
 public class EventMapper {
 	
@@ -15,6 +17,21 @@ public class EventMapper {
 				.photoURL(eventDto.getPhotoURL())
 				.createdOn(eventDto.getCreatedOn())
 				.updatedOn(eventDto.getUpdatedOn())
+				.club(mapToClub(eventDto.getClubDto()))
+				.build();
+	}
+	
+	public static EventDto mapToEventDto(Event event) {
+		return EventDto.builder()
+				.id(event.getId())
+				.name(event.getName())
+				.startTime(event.getStartTime())
+				.endTime(event.getEndTime())
+				.type(event.getType())
+				.photoURL(event.getPhotoURL())
+				.createdOn(event.getCreatedOn())
+				.updatedOn(event.getUpdatedOn())
+				.clubDto(mapToClubDto(event.getClub()))
 				.build();
 	}
 }
