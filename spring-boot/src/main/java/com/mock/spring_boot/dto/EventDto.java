@@ -4,17 +4,11 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.mock.spring_boot.models.Club;
-
-import groovy.transform.builder.Builder;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-@Builder
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class EventDto {
 	private Long id;
 	private String name;
@@ -26,5 +20,5 @@ public class EventDto {
 	private String photoURL;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
-	private Club club;
+	private ClubDto clubDto;
 }
