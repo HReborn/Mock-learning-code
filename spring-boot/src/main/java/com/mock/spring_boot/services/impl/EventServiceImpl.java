@@ -1,5 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
+import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +11,6 @@ import com.mock.spring_boot.models.Event;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
 import com.mock.spring_boot.services.EventService;
-
-import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
 
 @Service
 public class EventServiceImpl implements EventService {
