@@ -20,5 +20,4 @@ public class EventDto {
 	private String photoURL;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
-	private Long clubId;
 }

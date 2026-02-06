@@ -7,8 +7,6 @@ import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
 
 import java.util.stream.Collectors;
 
-import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
-
 public class ClubMapper {
 	
 	public static ClubDto mapToClubDto(Club club) {
@@ -32,7 +30,6 @@ public class ClubMapper {
 				.content(clubDto.getContent())
 				.createdOn(clubDto.getCreatedOn())
 				.updatedOn(clubDto.getUpdatedOn())
-				.events(clubDto.getEvents().stream().map(eventDto->mapToEvent(eventDto)).collect(Collectors.toList()))
 				.build();
 		return club;
 	}
