@@ -29,7 +29,7 @@ public class ClubController {
 		this.clubService = clubService;
 	}
 	
-	@GetMapping("/clubs")
+	@GetMapping({"/clubs", "/"})
 	public String listClubs(Model model) {
 		List<ClubDto> clubs = clubService.findAllClubs();
 		model.addAttribute("clubs", clubs);
