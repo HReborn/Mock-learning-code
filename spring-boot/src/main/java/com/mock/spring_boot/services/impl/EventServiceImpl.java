@@ -1,6 +1,9 @@
 package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
+import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +40,11 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event saveEvent(EventDto eventDto) {
 		return eventRepository.save(mapToEvent(eventDto));
+	}
+
+	@Override
+	public List<EventDto> findAllEvents() {
+		return eventRepository.findAll().stream().map(event-> mapToEventDto(event)).toList();
 	}
 
 }
