@@ -27,10 +27,8 @@
                             <p class="card-text" th:text="${event.type}"></p>
                             <p class="card-text" th:text="${event.startTime}"></p>
                             <p class="card-text" th:text="${event.endTime}"></p>
-                           <!-- 
-                            <a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
-                            <a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
-                             -->
+                            <a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
+                            <a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Deletar</a>
                         </div>
                     </div>
 
