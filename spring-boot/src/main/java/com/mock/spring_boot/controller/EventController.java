@@ -2,6 +2,7 @@ package com.mock.spring_boot.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Event;
 import com.mock.spring_boot.services.EventService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class EventController {
@@ -39,6 +42,23 @@ public class EventController {
 	public String getEvent(@PathVariable Long eventId, Model model) {
 		model.addAttribute("event", eventService.findEventById(eventId));
 		return "events-detail";
+	}
+	
+	@GetMapping("/events/{eventId}/edit")
+	public String editEvent(@PathVariable Long eventId, Model model) {
+		model.addAttribute("event", eventService.findEventById(eventId));
+		return "events-edit";
+	}
+	
+	@PostMapping("/events/{eventId}/edit")
+	public String updateEvent(@PathVariable Long eventId, 
+							  @Valid @ModelAttribute EventDto event,
+							  BindingResult result) {
+		if (result.hasErrors()) {
+			return "event-edit";
+		}
+		eventService.updateEvent(event);
+		return "redirect:/events/" + eventId;
 	}
 	
 	@PostMapping("/events/{clubId}")
