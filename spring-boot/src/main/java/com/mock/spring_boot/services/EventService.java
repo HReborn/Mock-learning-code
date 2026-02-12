@@ -10,5 +10,6 @@ public interface EventService {
 	void createEvent(Long clubId, EventDto eventDto);
 	Event saveEvent(EventDto eventDto);
 	List<EventDto> findAllEvents();
+	EventDto findEventById(Long eventId);
 
 }
