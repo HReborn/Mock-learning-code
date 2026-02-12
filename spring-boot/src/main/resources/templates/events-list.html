@@ -17,6 +17,8 @@
 	                    <div class="position-relative mb-5">
 	                        <img class="img-fluid rounded-3 mb-3" th:src="${event.photoURL}" alt="..." />
 	                    </div>
+	                    <a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
+	                    <a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
 	                </div>
 	            </div>
 	        </div>
