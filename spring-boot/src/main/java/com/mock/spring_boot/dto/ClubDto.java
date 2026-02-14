@@ -20,5 +20,6 @@ public class ClubDto {
 	private String content;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
+	//This field can be empty if the clubMapper is called from the eventMapper to avoid an infinite loop.
 	private List<EventDto> events;
 }
