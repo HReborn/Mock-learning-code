@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 public class EventController {
 	
 	private EventService eventService;
-
+	
 	public EventController(EventService eventService) {
 		super();
 		this.eventService = eventService;
@@ -40,7 +40,9 @@ public class EventController {
 	
 	@GetMapping("/events/{eventId}")
 	public String getEvent(@PathVariable Long eventId, Model model) {
-		model.addAttribute("event", eventService.findEventById(eventId));
+		EventDto event = eventService.findEventById(eventId);
+		model.addAttribute("event", event);
+		model.addAttribute("club", event.getClub());
 		return "events-detail";
 	}
 	
@@ -73,5 +75,11 @@ public class EventController {
 	public String deleteEvent(@PathVariable Long eventId) {
 		eventService.deleteEvent(eventId);
 		return "redirect:/events";
+	}
+	
+	@GetMapping("/events/search")
+	public String searchEvents(String query, Model model) {
+		model.addAttribute("events", eventService.searchEvent(query));
+		return "events-list";
 	}
 }

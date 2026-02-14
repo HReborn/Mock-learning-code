@@ -13,5 +13,6 @@ public interface EventService {
 	EventDto findEventById(Long eventId);
 	void updateEvent(EventDto eventDto);
 	void deleteEvent(Long eventId);
+	List<EventDto> searchEvent(String query);
 
 }

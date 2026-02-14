@@ -21,6 +21,21 @@ public class ClubMapper {
 				.build();
 		return clubDto;
 	}
+	
+	// This method exists to avoid infinite calls between the mappers.
+	// Unless there's a business rule change, the events won't reference each other
+	// So, we'll use this mapper inside the EventMapper only.
+	public static ClubDto mapToClubDtoWithoutEvents(Club club) {
+		ClubDto clubDto = ClubDto.builder()
+				.id(club.getId())
+				.title(club.getTitle())
+				.photoURL(club.getPhotoURL())
+				.content(club.getContent())
+				.createdOn(club.getCreatedOn())
+				.updatedOn(club.getUpdatedOn())
+				.build();
+		return clubDto;
+	}
 
 	public static Club mapToClub(ClubDto clubDto) {
 		Club club = Club.builder()

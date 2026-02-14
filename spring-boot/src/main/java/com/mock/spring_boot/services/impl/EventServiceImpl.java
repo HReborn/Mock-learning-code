@@ -55,6 +55,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void updateEvent(EventDto eventDto) {
 		Event event = mapToEvent(eventDto);
+		// This is here because the eventDto doesn't have the clubId, so we need to set it before saving the event
 		event.setClub(eventRepository.findById(eventDto.getId()).get().getClub());
 		eventRepository.save(event);
 	}
@@ -62,6 +63,11 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void deleteEvent(Long eventId) {
 		eventRepository.deleteById(eventId);		
+	}
+
+	@Override
+	public List<EventDto> searchEvent(String query) {
+		return eventRepository.searchEvents(query).stream().map(event-> mapToEventDto(event)).toList();
 	}
 
 }
