@@ -41,14 +41,19 @@ public class AuthController {
 			result.rejectValue("username", "error.user", "An account already exists for this email/username.");
 			result.rejectValue("email", "error.user", "An account already exists for this email/username.");
 		}
-		
 		if (result.hasErrors()) {
 			model.addAttribute("user", registrationDto);
+			//return "redirect:/register?registerFailed";
 			return "register";
 		}
 		userService.registerUser(registrationDto);
 		// the ?success is a query parameter and will link to the view with th:if="${param.success}" to show a success message
 		// on the clubs page. With this return, the URL becomes http://localhost:8080/clubs?success
 		return "redirect:/clubs?success";
+	}
+	
+	@GetMapping("/login")
+	public String getLoginForm() {
+		return "login";
 	}
 }

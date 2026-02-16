@@ -9,6 +9,9 @@
 	    <!-- Page Content-->
 	    <section layout:fragment="body" class="py-5">
 	   		<div class="container">
+	   			<div th:if="${param.registerFailed}" class="alert alert-success">
+	        	    Invalid username and password!
+	        	</div>
 		        <form role="form" method="post" th:action="@{/register/save}" th:object="${user}">
 				  <div class="form-row">
 				    <div class="form-group col-md-6">
@@ -38,7 +41,7 @@
 				    <label for="password">Password</label>
 				    <input 
 					    type="text" 
-					    class="form-control" 
+					    class="form-control"
 					    id="password"
 					    name="password"
 						th:field="*{password}"
@@ -46,6 +49,7 @@
 					    <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Registrar</button>
+				  <button type="submit" th:href="@{/login}" class="btn btn-primary">Já tem uma conta? Entre aqui.</button>
 				</form>
 			</div>
 	    </section>
