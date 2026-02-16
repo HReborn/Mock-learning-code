@@ -6,6 +6,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mock.spring_boot.dto.RegistrationDto;
 import com.mock.spring_boot.models.UserEntity;
@@ -25,16 +26,19 @@ public class AuthController {
 
 	@GetMapping("/register")
 	public String getRegisterForm(Model model) {
-		RegistrationDto registrationDto = new RegistrationDto();
-		model.addAttribute("user", registrationDto);
+		// If there's an error in the registration form, the user will be redirected to the registration page with the error message.
+		// This redirect will carry the user with the error message in the model.
+		if (!model.containsAttribute("user")) {
+	        model.addAttribute("user", new RegistrationDto());
+	    }
 		return "register";
 	}
 	
 	@PostMapping("/register/save")
 	public String registerUser(
-								Model model, 
 								@Valid @ModelAttribute("user") RegistrationDto registrationDto, 
-								BindingResult result) {
+								BindingResult result,
+								RedirectAttributes redirectAttributes) {
 		UserEntity existingEmail = userService.findByEmail(registrationDto.getEmail());
 		UserEntity existingUsername = userService.findByUsername(registrationDto.getUsername());
 		if (existingEmail != null || existingUsername != null) {
@@ -42,9 +46,11 @@ public class AuthController {
 			result.rejectValue("email", "error.user", "An account already exists for this email/username.");
 		}
 		if (result.hasErrors()) {
-			model.addAttribute("user", registrationDto);
-			//return "redirect:/register?registerFailed";
-			return "register";
+			// These two lines link the error from result to the registrationDto and make it available in the redirect.
+			// This way, the url will remain http://localhost:8080/register and the error message will be shown on the registration page.
+			redirectAttributes.addFlashAttribute("user", registrationDto);
+			redirectAttributes.addFlashAttribute("org.springframework.validation.BindingResult.user", result);
+			return "redirect:/register?registerFailed";
 		}
 		userService.registerUser(registrationDto);
 		// the ?success is a query parameter and will link to the view with th:if="${param.success}" to show a success message
