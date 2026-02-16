@@ -71,7 +71,7 @@ public class AuthController {
 	}
 	
 	@GetMapping("/login")
-	public String getLoginForm() {
+	public String login() {
 		return "login";
 	}
 }
