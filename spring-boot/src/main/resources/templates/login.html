@@ -1,0 +1,48 @@
+<html xmlns:th="http://thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layout}">
+<head>
+	<title>Login</title>
+</head>
+<body class="d-flex flex-column h-100">
+	<main class="flex-shrink-0">
+	    <!-- Page Content-->
+	    <section layout:fragment="body" class="py-5">
+	   		<div class="container">
+	   			<div th:if="${param.error}" class="alert alert-success">
+	        	    Invalid username and password!
+	        	</div>
+	        	<div th:if="${param.logout}" class="alert alert-success">
+	        	    You have logged out successfully!
+	        	</div>
+		        <form role="form" method="post" th:action="@{/login/auth}">
+				  <div class="form-row">
+				    <div class="form-group col-md-6">
+				      <label for="username">Username</label>
+					  <!-- For spring security to automatically recognize the fields, you gotta have id and name as password and username. -->
+				      <input 
+					      type="text" 
+					      class="form-control"
+					      id="username"
+					      name="username"
+					      placeholder="username">
+				      <div class="form-group mb-3">
+				      <label for="password">Password</label>
+				      <input 
+					    type="password" 
+					    class="form-control" 
+					    id="password"
+					    name="password"
+					    placeholder="password">
+				      </div>
+				  </div>
+				</div>
+				<!-- For spring security to recognize the auth, gotta have the submit type and log in value. -->
+				<button type="submit" value="Log in" class="btn btn-primary">Entrar</button>
+				<button type="submit" th:href="@{/register}" class="btn btn-primary">Não tem conta? Registre-se aqui.</button>
+			  </form>
+			</div>
+	    </section>
+	</main>
+</body>
+</html>
