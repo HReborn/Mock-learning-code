@@ -9,7 +9,7 @@
 	    <!-- Page Content-->
 	    <section layout:fragment="body" class="py-5">
 	   		<div class="container">
-	   			<div th:if="${param.error}" class="alert alert-success">
+	   			<div th:if="${param.error}" class="alert alert-warning">
 	        	    Invalid username and password!
 	        	</div>
 	        	<div th:if="${param.logout}" class="alert alert-success">
