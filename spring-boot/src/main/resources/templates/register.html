@@ -49,7 +49,7 @@
 					    <p th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></p>
 				  </div>
 				  <button type="submit" class="btn btn-primary">Registrar</button>
-				  <button type="submit" th:href="@{/login}" class="btn btn-primary">Já tem uma conta? Entre aqui.</button>
+				  <a type="button" th:href="@{/login}" class="btn btn-primary">Já tem uma conta? Entre aqui.</a>
 				</form>
 			</div>
 	    </section>
