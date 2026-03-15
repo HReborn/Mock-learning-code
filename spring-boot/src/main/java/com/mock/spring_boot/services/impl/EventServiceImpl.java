@@ -2,31 +2,35 @@ package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
 import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.models.Event;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
+import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.EventService;
 
 @Service
 public class EventServiceImpl implements EventService {
 
-	@Autowired
 	private EventRepository eventRepository;
-	@Autowired
 	private ClubRepository clubRepository;
+	private UserRepository userRepository;
+	private String sessionUsername = getSessionUsername();
+	private UserEntity sessionUser = sessionUsername != null ? userRepository.findByUsername(sessionUsername) : null;
 
-	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository) {
+	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserRepository userRepository) {
 		super();
 		this.eventRepository = eventRepository;
 		this.clubRepository = clubRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -34,6 +38,7 @@ public class EventServiceImpl implements EventService {
 		Club club = clubRepository.findById(clubId).get();
 		Event event = mapToEvent(eventDto);
 		event.setClub(club);
+		event.setCreatedBy(sessionUser);
 		eventRepository.save(event);
 	}
 
@@ -57,6 +62,7 @@ public class EventServiceImpl implements EventService {
 		Event event = mapToEvent(eventDto);
 		// This is here because the eventDto doesn't have the clubId, so we need to set it before saving the event
 		event.setClub(eventRepository.findById(eventDto.getId()).get().getClub());
+		event.setCreatedBy(eventRepository.findById(eventDto.getId()).get().getCreatedBy());
 		eventRepository.save(event);
 	}
 
