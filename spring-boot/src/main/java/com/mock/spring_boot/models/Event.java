@@ -36,6 +36,10 @@ public class Event {
 	private LocalDateTime updatedOn;
 	
 	@ManyToOne
+	@JoinColumn(name="created_by", nullable=false)
+	private UserEntity createdBy;
+	
+	@ManyToOne
 	@JoinColumn(name="club_id", nullable=false)
 	private Club club;
 }

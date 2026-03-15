@@ -3,6 +3,8 @@ package com.mock.spring_boot.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.mock.spring_boot.models.UserEntity;
+
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,7 @@ public class ClubDto {
 	@NotEmpty(message = "O conteúdo não pode ser vazio, paizão.")
 	private String content;
 	private LocalDateTime createdOn;
+	private UserEntity createdBy;
 	private LocalDateTime updatedOn;
 	//This field can be empty if the clubMapper is called from the eventMapper to avoid an infinite loop.
 	private List<EventDto> events;

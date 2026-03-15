@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.mock.spring_boot.models.UserEntity;
+
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,6 +20,7 @@ public class EventDto {
 	private LocalDateTime endTime;
 	private String type;
 	private String photoURL;
+	private UserEntity createdBy;
 	private LocalDateTime createdOn;
 	private LocalDateTime updatedOn;
 	private ClubDto club;

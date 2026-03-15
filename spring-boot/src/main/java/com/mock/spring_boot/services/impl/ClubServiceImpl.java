@@ -1,5 +1,9 @@
 package com.mock.spring_boot.services.impl;
 
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -9,21 +13,24 @@ import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
+import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.ClubService;
-
-import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
-import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
 
 @Service
 public class ClubServiceImpl implements ClubService {
 
 	@Autowired
 	private ClubRepository clubRepository;
+	private UserRepository userRepository;
+	private String sessionUsername = getSessionUsername();
+	private UserEntity sessionUser = sessionUsername != null ? userRepository.findByUsername(sessionUsername) : null;
 	
-	public ClubServiceImpl(ClubRepository clubRepository) {
+	public ClubServiceImpl(ClubRepository clubRepository, UserRepository userRepository) {
 		super();
 		this.clubRepository = clubRepository;
+		this.userRepository = userRepository;
 	}
 
 	@Override
@@ -35,6 +42,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Club saveClub(ClubDto clubDto) {
 		Club club = mapToClub(clubDto);
+		club.setCreatedBy(sessionUser);
 		return clubRepository.save(club);
 	}
 
