@@ -12,12 +12,14 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-	private CustomUserDetailsService userDetailsService;
 	
-	public SecurityConfig(CustomUserDetailsService userDetailsService) {
+	private CustomUserDetailsService userDetailsService;
+	private AdminUserDetailsService adminUserDetailsService;
+	
+	public SecurityConfig(CustomUserDetailsService userDetailsService, AdminUserDetailsService adminUserDetailsService) {
 		super();
 		this.userDetailsService = userDetailsService;
+		this.adminUserDetailsService = adminUserDetailsService;
 	}
 
 	// We'll bring a decoder to avoid storing passwords in plain text.
@@ -27,8 +29,16 @@ public class SecurityConfig {
 	}
 	
 	@Bean
+    DaoAuthenticationProvider adminAuthenticationProvider() {
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
+        System.out.println("Admin authentication provider created with admin username");
+        return authProvider;
+    }
+	
+	@Bean
     DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
+		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(userDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
         return authProvider;
     }
@@ -52,6 +62,7 @@ public class SecurityConfig {
 					.permitAll()
 			).logout(logout -> logout
 					.logoutSuccessUrl("/login?logout=true")
+			).authenticationProvider(adminAuthenticationProvider()
 			).authenticationProvider(authenticationProvider());
 		return http.build();
 	}
