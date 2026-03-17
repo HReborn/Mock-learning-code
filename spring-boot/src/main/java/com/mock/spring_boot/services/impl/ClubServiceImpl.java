@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.ClubDto;
@@ -21,7 +21,8 @@ import com.mock.spring_boot.services.ClubService;
 @Service
 public class ClubServiceImpl implements ClubService {
 
-	@Autowired
+	@Value("${spring.security.user.name}")
+	private String adminUsername;
 	private ClubRepository clubRepository;
 	private UserRepository userRepository;
 	private String sessionUsername = getSessionUsername();
@@ -36,7 +37,17 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubDto> findAllClubs() {
 		List<Club> clubs =  clubRepository.findAll();
-		return clubs.stream().map((club) -> mapToClubDto(club)).collect(Collectors.toList());
+		List<ClubDto> clubDtos = clubs.stream().map(club -> {
+			ClubDto clubDto = mapToClubDto(club);
+			if (clubDto.getCreatedBy() == null) {
+				UserEntity adminUser = userRepository.findByUsername(adminUsername);
+				clubDto.setCreatedBy(adminUser);
+				this.updateClub(clubDto);
+			}
+			return clubDto;
+		
+		}).toList(); 
+		return clubDtos;
 	}
 
 	@Override
