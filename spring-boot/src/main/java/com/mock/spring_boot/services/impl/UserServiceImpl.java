@@ -34,6 +34,19 @@ public class UserServiceImpl implements UserService {
 		user.getRoles().add(role);
 		userRepository.save(user);
 	}
+	
+	// Even though it is duplicated, i think it would be better to have a separate method for registering super admin
+	// to track any possible shady stuff.
+	@Override
+	public void registerSuperAdminUser(RegistrationDto registrationDto) {
+		UserEntity user = new UserEntity();
+		user.setUsername(registrationDto.getUsername());
+		user.setEmail(registrationDto.getEmail());
+		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+		Role role = roleRepository.findByName("SUPER_ADMIN");
+		user.getRoles().add(role);
+		userRepository.save(user);
+	}
 
 	@Override
 	public UserEntity findByEmail(String email) {
@@ -42,6 +55,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity findByUsername(String username) {
+		System.out.println("Finding user by username: " + username);
 		return userRepository.findByUsername(username);
 	}
+
+	@Override
+	public void alterPassword(String username, String newPassword) {
+		UserEntity user = userRepository.findByUsername(username);
+		user.setPassword(passwordEncoder.encode(newPassword));
+		// The .save() from jparepository will only create a new user if the id is null.
+		userRepository.save(user);
+	}
+
+	@Override
+	public void updateUser(UserEntity user) {
+		userRepository.save(user);
+	}
+
 }
