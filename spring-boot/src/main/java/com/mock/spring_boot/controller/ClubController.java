@@ -13,26 +13,36 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.services.ClubService;
+import com.mock.spring_boot.services.UserService;
+
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import jakarta.validation.Valid;
-
-
 
 @Controller
 public class ClubController {
 	
 	private ClubService clubService;
+	private UserService userService;
 
-	public ClubController(ClubService clubService) {
+	public ClubController(ClubService clubService, UserService userService) {
 		super();
 		this.clubService = clubService;
+		this.userService = userService;
+	}
+	
+	private UserEntity getCurrentUser() {
+		return userService.findByUsername(getSessionUsername());
 	}
 	
 	@GetMapping({"/clubs", "/"})
 	public String listClubs(Model model) {
 		List<ClubDto> clubs = clubService.findAllClubs();
+		model.addAttribute("currentUser", getCurrentUser());
 		model.addAttribute("clubs", clubs);
+		System.out.println("UserId: " + getCurrentUser().getId());
 		return "clubs-list";
 	}
 	
@@ -40,6 +50,7 @@ public class ClubController {
 	public String createClubForm(Model model) {
 		Club club = new Club();
 		model.addAttribute("club", club);
+		model.addAttribute("currentUser", getCurrentUser());
 		return "create-club";
 	}
 	
@@ -62,6 +73,7 @@ public class ClubController {
 	@GetMapping("/clubs/{clubId}/edit")
 	public String editClubForm(@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
+		model.addAttribute("currentUser", getCurrentUser());
 		model.addAttribute("club",club);
 		return "clubs-edit";
 	}
@@ -82,6 +94,7 @@ public class ClubController {
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("club", club);
+		model.addAttribute("currentUser", getCurrentUser());
 		return "clubs-detail";
 	}
 	
@@ -95,6 +108,7 @@ public class ClubController {
 	public String searchClub(@RequestParam String query, Model model) {
 		List<ClubDto> clubs = clubService.searchClubs(query);
 		model.addAttribute("clubs", clubs);
+		model.addAttribute("currentUser", getCurrentUser());
 		return "clubs-list";
 	}
 }
