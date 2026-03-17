@@ -13,6 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mock.spring_boot.dto.RegistrationDto;
+import com.mock.spring_boot.models.UserEntity;
+import com.mock.spring_boot.services.UserService;
+
 @Service
 public class AdminUserDetailsService implements UserDetailsService {
 		
@@ -20,12 +24,42 @@ public class AdminUserDetailsService implements UserDetailsService {
 	private String adminUsername;
 	@Value("${spring.security.user.password}")
 	private String adminPassword;
+	@Value("${spring.security.user.email}")
+	private String adminEmail;
+	private UserService userService;
 	private static PasswordEncoder passwordEncoder = passwordEncoder();
 
+	public AdminUserDetailsService(UserService userService) {
+		super();
+		this.userService = userService;
+	}
+	
+	private void registerAdminUser() {
+		RegistrationDto adminUser = new RegistrationDto();
+		adminUser.setUsername(adminUsername);
+		adminUser.setPassword(passwordEncoder.encode(adminPassword));
+		adminUser.setEmail(adminEmail);
+		userService.registerUser(adminUser);
+	}
+	
+	private void alterAdminPassword(UserEntity adminUser) {
+		adminUser.setPassword(passwordEncoder.encode(adminPassword));
+		userService.updateUser(adminUser);
+	}
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserEntity adminUser = userService.findByUsername(adminUsername);
+		// You need to register admin in the database because you gonna need to check the created by club.
+		// If there isn't an admin in the database, you won't be able to create a club because the created by club is admin.
+		if (adminUser == null) {
+			registerAdminUser();
+		}
+		// Formality's sake. The admin password will be determined by the application-admin.properties
+		if (adminUser.getPassword() != passwordEncoder.encode(adminPassword)) {
+			alterAdminPassword(adminUser);
+		}
 		if (!username.equals(adminUsername)) {
-			System.out.println("Admin username not found: " + username);
 	        throw new UsernameNotFoundException("Not admin user");
 	    }
 		System.out.println("Admin user found: " + username);
