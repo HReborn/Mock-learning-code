@@ -6,6 +6,7 @@ import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.mock.spring_boot.dto.EventDto;
@@ -20,6 +21,8 @@ import com.mock.spring_boot.services.EventService;
 @Service
 public class EventServiceImpl implements EventService {
 
+	@Value("${spring.security.user.name}")
+	private String adminUsername;
 	private EventRepository eventRepository;
 	private ClubRepository clubRepository;
 	private UserRepository userRepository;
@@ -49,7 +52,16 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<EventDto> findAllEvents() {
-		return eventRepository.findAll().stream().map(event-> mapToEventDto(event)).toList();
+		List<EventDto> events = eventRepository.findAll().stream().map(event-> {
+			EventDto eventDto = mapToEventDto(event);
+			if (eventDto.getCreatedBy() == null) {
+				UserEntity adminUser = userRepository.findByUsername(adminUsername);
+				eventDto.setCreatedBy(adminUser);
+				this.updateEvent(eventDto);
+			}
+			return eventDto;
+		}).toList();
+		return events;
 	}
 
 	@Override
