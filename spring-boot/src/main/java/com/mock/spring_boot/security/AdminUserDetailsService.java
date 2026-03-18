@@ -21,7 +21,7 @@ import com.mock.spring_boot.services.UserService;
 public class AdminUserDetailsService implements UserDetailsService {
 		
 	@Value("${spring.security.user.name}")
-	private String adminUsername;
+	private String superAdminUsername;
 	@Value("${spring.security.user.password}")
 	private String adminPassword;
 	@Value("${spring.security.user.email}")
@@ -34,37 +34,37 @@ public class AdminUserDetailsService implements UserDetailsService {
 		this.userService = userService;
 	}
 	
-	private void registerAdminUser() {
+	private UserEntity registerSuperAdminUser() {
 		RegistrationDto adminUser = new RegistrationDto();
-		adminUser.setUsername(adminUsername);
+		adminUser.setUsername(superAdminUsername);
 		adminUser.setPassword(passwordEncoder.encode(adminPassword));
 		adminUser.setEmail(adminEmail);
-		userService.registerUser(adminUser);
+		return userService.registerSuperAdminUser(adminUser);
 	}
 	
-	private void alterAdminPassword(UserEntity adminUser) {
+	private void alterSuperAdminPassword(UserEntity adminUser) {
 		adminUser.setPassword(passwordEncoder.encode(adminPassword));
 		userService.updateUser(adminUser);
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserEntity adminUser = userService.findByUsername(adminUsername);
+		UserEntity adminUser = userService.findByUsername(superAdminUsername);
 		// You need to register admin in the database because you gonna need to check the created by club.
 		// If there isn't an admin in the database, you won't be able to create a club because the created by club is admin.
 		if (adminUser == null) {
-			registerAdminUser();
+			adminUser = registerSuperAdminUser();
 		}
 		// Formality's sake. The admin password will be determined by the application-admin.properties
 		if (adminUser.getPassword() != passwordEncoder.encode(adminPassword)) {
-			alterAdminPassword(adminUser);
+			alterSuperAdminPassword(adminUser);
 		}
-		if (!username.equals(adminUsername)) {
+		if (!username.equals(superAdminUsername)) {
 	        throw new UsernameNotFoundException("Not admin user");
 	    }
 		System.out.println("Admin user found: " + username);
 	    return new User(
-	        adminUsername,
+	        superAdminUsername,
 	        // If you do not encode the password, Spring Security will not be able to authenticate the admin user.
 	        // This happens because Spring Security expects the password to be encoded when it compares it to the password provided during login.
 	        passwordEncoder.encode(adminPassword),
