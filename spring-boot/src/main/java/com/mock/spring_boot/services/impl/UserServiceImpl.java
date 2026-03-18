@@ -25,27 +25,27 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void registerUser(RegistrationDto registrationDto) {
+	public UserEntity registerUser(RegistrationDto registrationDto) {
 		UserEntity user = new UserEntity();
 		user.setUsername(registrationDto.getUsername());
 		user.setEmail(registrationDto.getEmail());
 		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
 		Role role = roleRepository.findByName("USER");
 		user.getRoles().add(role);
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 	
 	// Even though it is duplicated, i think it would be better to have a separate method for registering super admin
 	// to track any possible shady stuff.
 	@Override
-	public void registerSuperAdminUser(RegistrationDto registrationDto) {
+	public UserEntity registerSuperAdminUser(RegistrationDto registrationDto) {
 		UserEntity user = new UserEntity();
 		user.setUsername(registrationDto.getUsername());
 		user.setEmail(registrationDto.getEmail());
 		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
 		Role role = roleRepository.findByName("SUPER_ADMIN");
 		user.getRoles().add(role);
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 
 	@Override
