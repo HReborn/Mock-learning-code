@@ -25,13 +25,15 @@ public class ClubServiceImpl implements ClubService {
 	private String adminUsername;
 	private ClubRepository clubRepository;
 	private UserRepository userRepository;
-	private String sessionUsername = getSessionUsername();
-	private UserEntity sessionUser = sessionUsername != null ? userRepository.findByUsername(sessionUsername) : null;
 	
 	public ClubServiceImpl(ClubRepository clubRepository, UserRepository userRepository) {
 		super();
 		this.clubRepository = clubRepository;
 		this.userRepository = userRepository;
+	}
+	
+	private UserEntity getSessionUser() {
+		return userRepository.findByUsername(getSessionUsername());
 	}
 
 	@Override
@@ -53,7 +55,8 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public Club saveClub(ClubDto clubDto) {
 		Club club = mapToClub(clubDto);
-		club.setCreatedBy(sessionUser);
+		club.setCreatedBy(getSessionUser());
+		System.out.println("Session user:" + club.getCreatedBy());
 		return clubRepository.save(club);
 	}
 
