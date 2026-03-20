@@ -56,7 +56,8 @@ public class AdminUserDetailsService implements UserDetailsService {
 			adminUser = registerSuperAdminUser();
 		}
 		// Formality's sake. The admin password will be determined by the application-admin.properties
-		if (adminUser.getPassword() != passwordEncoder.encode(adminPassword)) {
+		// The only way to compare encrypted with non-encrypted passwords, otherwise, it'll always return false
+		if (!passwordEncoder.matches(adminPassword, adminUser.getPassword())) {
 			alterSuperAdminPassword(adminUser);
 		}
 		if (!username.equals(superAdminUsername)) {
