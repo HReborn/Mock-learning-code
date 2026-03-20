@@ -1,4 +1,6 @@
-<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 	<head>
 		<title>Lista de paisagens</title>
 	</head>
@@ -20,10 +22,10 @@
 						<div th:each="club :${clubs}" class="col-lg-6 mb-3">
 							<div class="position-relative mb-5">
 								<img class="img-fluid rounded-3 mb-3" th:src="${club.photoURL}" alt="..." />
-								<a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" th:href="@{/clubs/{clubId}(clubId=${club.id})}"></a>
+								<a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" ></a>
 							</div>
-							<div th:if="${currentUser.id} == ${club.createdBy.id}">
-								<a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Editar</a>
+							<div sec:authorize="isAuthenticated()">
+								<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
 							</div>	
 						</div>
 					</div>
