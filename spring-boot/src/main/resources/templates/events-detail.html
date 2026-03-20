@@ -1,4 +1,4 @@
-<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
 	<head>
 		<title>Detalhes do evento</title>
 	</head>
@@ -27,8 +27,10 @@
 								<p class="card-text" th:text="${event.type}"></p>
 								<p class="card-text" th:text="${event.startTime}"></p>
 								<p class="card-text" th:text="${event.endTime}"></p>
-								<a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
-								<a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Deletar</a>
+								<div sec:authorize="isAuthenticated()" th:if="${currentUser.id} == ${club.createdBy.id}">
+									<a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
+									<a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Deletar</a>
+								</div>
 							</div>
 						</div>
 						<div class="row">

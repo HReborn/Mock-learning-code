@@ -1,4 +1,4 @@
-<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
 	<head>
 		<title>Lista de eventos</title>
 	</head>
@@ -18,8 +18,8 @@
 						<!-- The "th:each" is a loop from thymeleaf that'll iterate through the clubs object and will also feed the th:src -->
 						<div th:each="event :${events}" class="col-lg-6 mb-3">
 							<div class="position-relative mb-5">
-								<img class="img-fluid rounded-3 mb-3" th:src="${event.photoURL}" alt="..." />
 								<a th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link"></a>
+								<img class="img-fluid rounded-3 mb-3" th:src="${event.photoURL}" alt="..." />
 							</div>
 							<a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
 						</div>
