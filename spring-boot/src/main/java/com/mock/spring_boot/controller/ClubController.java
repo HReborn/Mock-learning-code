@@ -35,9 +35,6 @@ public class ClubController {
 	
 	private UserEntity getCurrentUser() {
 		UserEntity currentUser = userService.findByUsername(getSessionUsername());
-		if (currentUser == null) {
-			
-		}
 		return currentUser;
 	}
 	

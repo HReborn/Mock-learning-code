@@ -24,9 +24,7 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 								<img class="img-fluid rounded-3 mb-3" th:src="${club.photoURL}" alt="..." />
 								<a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" ></a>
 							</div>
-							<div sec:authorize="isAuthenticated()">
-								<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
-							</div>	
+							<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
 						</div>
 					</div>
 				</div>

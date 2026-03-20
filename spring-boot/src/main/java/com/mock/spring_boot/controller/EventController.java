@@ -1,5 +1,7 @@
 package com.mock.spring_boot.controller;
 
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Event;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.services.EventService;
+import com.mock.spring_boot.services.UserService;
 
 import jakarta.validation.Valid;
 
@@ -18,15 +22,26 @@ import jakarta.validation.Valid;
 public class EventController {
 	
 	private EventService eventService;
+	private UserService userService;
 	
-	public EventController(EventService eventService) {
+	public EventController(EventService eventService, UserService userService) {
 		super();
 		this.eventService = eventService;
+		this.userService = userService;
+	}
+	
+	private UserEntity getCurrentUser() {
+		UserEntity currentUser = userService.findByUsername(getSessionUsername());
+		return currentUser;
 	}
 	
 	@GetMapping("/events")
 	public String listEvents(Model model) {
 		model.addAttribute("events", eventService.findAllEvents());
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		return "events-list";
 	}
 	
@@ -43,6 +58,10 @@ public class EventController {
 		EventDto event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 		model.addAttribute("club", event.getClub());
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		return "events-detail";
 	}
 	
@@ -80,6 +99,10 @@ public class EventController {
 	@GetMapping("/events/search")
 	public String searchEvents(String query, Model model) {
 		model.addAttribute("events", eventService.searchEvent(query));
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		return "events-list";
 	}
 }
