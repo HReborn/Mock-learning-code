@@ -48,7 +48,7 @@ public class SecurityConfig {
 		// gonna disable because it's not production. For simplicity's sake.
 		http.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/login", "/register", "/register/save", "/clubs", "/css/**", "/js/**").permitAll()
+					.requestMatchers("/login", "/register", "/register/save", "/clubs", "/css/**", "/js/**", "/", "/clubs", "/events").permitAll()
 					.anyRequest().authenticated()
 			)
 			// This line allows anyone to access the login, register, clubs, css, and js endpoints without authentication. You can adjust this 
