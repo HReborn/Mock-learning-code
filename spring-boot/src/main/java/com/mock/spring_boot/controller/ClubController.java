@@ -34,15 +34,21 @@ public class ClubController {
 	}
 	
 	private UserEntity getCurrentUser() {
-		return userService.findByUsername(getSessionUsername());
+		UserEntity currentUser = userService.findByUsername(getSessionUsername());
+		if (currentUser == null) {
+			
+		}
+		return currentUser;
 	}
 	
 	@GetMapping({"/clubs", "/"})
 	public String listClubs(Model model) {
 		List<ClubDto> clubs = clubService.findAllClubs();
-		model.addAttribute("currentUser", getCurrentUser());
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		model.addAttribute("clubs", clubs);
-		System.out.println("UserId: " + getCurrentUser().getId());
 		return "clubs-list";
 	}
 	
@@ -94,7 +100,10 @@ public class ClubController {
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("club", club);
-		model.addAttribute("currentUser", getCurrentUser());
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		return "clubs-detail";
 	}
 	
@@ -108,7 +117,10 @@ public class ClubController {
 	public String searchClub(@RequestParam String query, Model model) {
 		List<ClubDto> clubs = clubService.searchClubs(query);
 		model.addAttribute("clubs", clubs);
-		model.addAttribute("currentUser", getCurrentUser());
+		UserEntity currentUser = getCurrentUser();
+		if (currentUser != null) {
+			model.addAttribute("currentUser", currentUser);
+		}
 		return "clubs-list";
 	}
 }
