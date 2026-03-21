@@ -27,7 +27,7 @@
 								<p class="card-text" th:text="${event.type}"></p>
 								<p class="card-text" th:text="${event.startTime}"></p>
 								<p class="card-text" th:text="${event.endTime}"></p>
-								<div sec:authorize="isAuthenticated()" th:if="${currentUser.id} == ${club.createdBy.id}">
+								<div sec:authorize="isAuthenticated()" th:if="${isEventOwner}">
 									<a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
 									<a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Deletar</a>
 								</div>
