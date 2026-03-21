@@ -38,10 +38,6 @@ public class EventController {
 	@GetMapping("/events")
 	public String listEvents(Model model) {
 		model.addAttribute("events", eventService.findAllEvents());
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
-		}
 		return "events-list";
 	}
 	
@@ -56,12 +52,14 @@ public class EventController {
 	@GetMapping("/events/{eventId}")
 	public String getEvent(@PathVariable Long eventId, Model model) {
 		EventDto event = eventService.findEventById(eventId);
+		boolean isEventOwner = false;
+		// Must check if session user is null because currentUser will be null too and it'll give a runtime exception
+		if (getSessionUsername() != null && getCurrentUser().getId() == event.getCreatedBy().getId()) {
+			isEventOwner = true;
+		}
+		model.addAttribute("isEventOwner", isEventOwner);
 		model.addAttribute("event", event);
 		model.addAttribute("club", event.getClub());
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
-		}
 		return "events-detail";
 	}
 	
@@ -99,10 +97,6 @@ public class EventController {
 	@GetMapping("/events/search")
 	public String searchEvents(String query, Model model) {
 		model.addAttribute("events", eventService.searchEvent(query));
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
-		}
 		return "events-list";
 	}
 }

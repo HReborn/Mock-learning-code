@@ -36,10 +36,6 @@ public class ClubController {
 	@GetMapping({"/clubs", "/"})
 	public String listClubs(Model model) {
 		List<ClubDto> clubs = clubService.findAllClubs();
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
-		}
 		model.addAttribute("clubs", clubs);
 		return "clubs-list";
 	}
@@ -48,7 +44,6 @@ public class ClubController {
 	public String createClubForm(Model model) {
 		Club club = new Club();
 		model.addAttribute("club", club);
-		model.addAttribute("currentUser", getCurrentUser());
 		return "create-club";
 	}
 	
@@ -72,7 +67,6 @@ public class ClubController {
 	public String editClubForm(@PathVariable Long clubId, Model model) {
 		
 		ClubDto club = clubService.findById(clubId);
-		model.addAttribute("currentUser", getCurrentUser());
 		model.addAttribute("club",club);
 		return "clubs-edit";
 	}
@@ -92,11 +86,15 @@ public class ClubController {
 	@GetMapping("/clubs/{clubId}")
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
-		model.addAttribute("club", club);
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
+		
+		boolean isClubOwner = false;
+		// Must check if session user is null because currentUser will be null too and it'll give a runtime exception
+		if (getSessionUsername() != null && getCurrentUser().getId() == club.getCreatedBy().getId()) {
+			isClubOwner = true;
 		}
+		
+		model.addAttribute("isEventOwner", isClubOwner);
+		model.addAttribute("club", club);
 		return "clubs-detail";
 	}
 	
@@ -110,10 +108,6 @@ public class ClubController {
 	public String searchClub(@RequestParam String query, Model model) {
 		List<ClubDto> clubs = clubService.searchClubs(query);
 		model.addAttribute("clubs", clubs);
-		UserEntity currentUser = getCurrentUser();
-		if (currentUser != null) {
-			model.addAttribute("currentUser", currentUser);
-		}
 		return "clubs-list";
 	}
 	
