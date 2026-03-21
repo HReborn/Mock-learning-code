@@ -1,5 +1,7 @@
 package com.mock.spring_boot.controller;
 
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -17,8 +19,6 @@ import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.UserService;
 
-import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
-
 import jakarta.validation.Valid;
 
 @Controller
@@ -31,11 +31,6 @@ public class ClubController {
 		super();
 		this.clubService = clubService;
 		this.userService = userService;
-	}
-	
-	private UserEntity getCurrentUser() {
-		UserEntity currentUser = userService.findByUsername(getSessionUsername());
-		return currentUser;
 	}
 	
 	@GetMapping({"/clubs", "/"})
@@ -75,6 +70,7 @@ public class ClubController {
 	
 	@GetMapping("/clubs/{clubId}/edit")
 	public String editClubForm(@PathVariable Long clubId, Model model) {
+		
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("currentUser", getCurrentUser());
 		model.addAttribute("club",club);
@@ -120,4 +116,11 @@ public class ClubController {
 		}
 		return "clubs-list";
 	}
+	
+	private UserEntity getCurrentUser() {
+		UserEntity currentUser = userService.findByUsername(getSessionUsername());
+		return currentUser;
+	}
+	
+	
 }
