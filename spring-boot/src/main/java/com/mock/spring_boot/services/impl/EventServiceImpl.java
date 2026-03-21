@@ -29,8 +29,6 @@ public class EventServiceImpl implements EventService {
 	private EventRepository eventRepository;
 	private ClubRepository clubRepository;
 	private UserRepository userRepository;
-	private String sessionUsername = getSessionUsername();
-	private UserEntity sessionUser = sessionUsername != null ? userRepository.findByUsername(sessionUsername) : null;
 
 	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserRepository userRepository) {
 		super();
@@ -39,13 +37,17 @@ public class EventServiceImpl implements EventService {
 		this.userRepository = userRepository;
 	}
 	
+	private UserEntity getSessionUser() {
+		return userRepository.findByUsername(getSessionUsername());
+	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@Override
 	public void createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
 		Event event = mapToEvent(eventDto);
 		event.setClub(club);
-		event.setCreatedBy(sessionUser);
+		event.setCreatedBy(getSessionUser());
 		eventRepository.save(event);
 	}
 	@PreAuthorize("isAuthenticated()")
@@ -56,15 +58,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<EventDto> findAllEvents() {
-		List<EventDto> events = eventRepository.findAll().stream().map(event-> {
-			EventDto eventDto = mapToEventDto(event);
-			if (eventDto.getCreatedBy() == null) {
-				UserEntity adminUser = userRepository.findByUsername(adminUsername);
-				eventDto.setCreatedBy(adminUser);
-				this.updateEvent(eventDto);
-			}
-			return eventDto;
-		}).toList();
+		List<EventDto> events = eventRepository.findAll().stream().map(event-> mapToEventDto(event)).toList();
 		return events;
 	}
 

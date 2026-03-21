@@ -41,16 +41,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	public List<ClubDto> findAllClubs() {
 		List<Club> clubs =  clubRepository.findAll();
-		List<ClubDto> clubDtos = clubs.stream().map(club -> {
-			ClubDto clubDto = mapToClubDto(club);
-			if (clubDto.getCreatedBy() == null) {
-				UserEntity adminUser = userRepository.findByUsername(adminUsername);
-				clubDto.setCreatedBy(adminUser);
-				this.updateClub(clubDto);
-			}
-			return clubDto;
-		
-		}).toList(); 
+		List<ClubDto> clubDtos = clubs.stream().map(club -> mapToClubDto(club)).toList(); 
 		return clubDtos;
 	}
 
