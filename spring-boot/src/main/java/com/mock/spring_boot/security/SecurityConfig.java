@@ -3,13 +3,19 @@ package com.mock.spring_boot.security;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.access.AccessDeniedException;
+
 @EnableWebSecurity
+@EnableMethodSecurity
 @Configuration
 public class SecurityConfig {
 	
@@ -50,11 +56,19 @@ public class SecurityConfig {
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/login", "/register", "/register/save", "/clubs", "/css/**", "/js/**", "/", "/clubs", "/events").permitAll()
 					.anyRequest().authenticated()
-			)
+			).exceptionHandling(ex -> ex
+					// This here will handler the exception from the @PreAuthorized
+					.accessDeniedHandler((HttpServletRequest request,
+										  HttpServletResponse response,
+										  AccessDeniedException exception) -> {
+											  	request.getSession().setAttribute("errorMessage", "You are not allowed to acess this page");
+											  	response.sendRedirect("/");
+										  }
+										)
 			// This line allows anyone to access the login, register, clubs, css, and js endpoints without authentication. You can adjust this 
 			// as needed for your application. Gotta permit js and css because otherwise, the login and register pages won't be styled and 
 			// won't work properly.
-			.formLogin(form -> form
+			).formLogin(form -> form
 					.loginPage("/login")
 					.defaultSuccessUrl("/clubs")
 					.loginProcessingUrl("/login/auth")

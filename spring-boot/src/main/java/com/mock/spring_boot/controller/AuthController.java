@@ -1,5 +1,6 @@
 package com.mock.spring_boot.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,7 +23,7 @@ public class AuthController {
 		super();
 		this.userService = userService;
 	}
-
+	@PreAuthorize("isAnonymous()")
 	@GetMapping("/register")
 	public String getRegisterForm(Model model) {
 		// If there's an error in the registration form, the user will be redirected to the registration page with the error message.
@@ -33,12 +34,12 @@ public class AuthController {
 		return "register";
 	}
 	
+	@PreAuthorize("isAnonymous")
 	@PostMapping("/register/save")
 	public String registerUser(
 								@Valid @ModelAttribute("user") RegistrationDto registrationDto, 
 								BindingResult result,
 								RedirectAttributes redirectAttributes) {
-		System.out.println("Received registration data: " + registrationDto);
 		boolean fieldsNotEmpty = !result.hasFieldErrors();
 		if (fieldsNotEmpty) {
 			System.out.println("Fields are not empty, checking uniqueness...");
@@ -74,6 +75,7 @@ public class AuthController {
 		}
 	}
 	
+	@PreAuthorize("isAnonymous()")
 	@GetMapping("/login")
 	public String login() {
 		return "login";
