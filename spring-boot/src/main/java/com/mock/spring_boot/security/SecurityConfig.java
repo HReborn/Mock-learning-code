@@ -54,7 +54,11 @@ public class SecurityConfig {
 		// gonna disable because it's not production. For simplicity's sake.
 		http.csrf(csrf -> csrf.disable())
 			.authorizeHttpRequests(auth -> auth
-					.requestMatchers("/login", "/register", "/register/save", "/clubs", "/css/**", "/js/**", "/", "/clubs", "/events").permitAll()
+					.requestMatchers("/login", "/register", "/register/save").anonymous()
+					.requestMatchers(
+							"/clubs", "/clubs/*",
+							 "/events", "/events/*",
+							"/css/**", "/js/**", "/").permitAll()
 					.anyRequest().authenticated()
 			).exceptionHandling(ex -> ex
 					// This here will handler the exception from the @PreAuthorized
