@@ -25,7 +25,11 @@
 			</div>
 		</div>
 	</nav>
-	<body layout:fragment="body"></body>
+	<body layout:fragment="body">
+		<div th:if="${errorMessage}" class="alert alert-danger">
+    		<span th:text="${errorMessage}"></span>
+		</div>
+	</body>
 	<section class="py-5 bg-light">
 		<div class="container px-5 my-5">
 			<h2 class="display-4 fw-bolder mb-4">Let's build something together</h2>
