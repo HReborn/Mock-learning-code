@@ -2,17 +2,21 @@ package com.mock.spring_boot.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.servlet.FlashMap;
+import org.springframework.web.servlet.FlashMapManager;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.security.access.AccessDeniedException;
 
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -65,16 +69,21 @@ public class SecurityConfig {
 					.accessDeniedHandler((HttpServletRequest request,
 										  HttpServletResponse response,
 										  AccessDeniedException exception) -> {
-											  	request.getSession().setAttribute("errorMessage", "You are not allowed to acess this page");
+											  	addErrorMessageToView("You are not allowed to access this page.", request, response);
 											  	response.sendRedirect("/");
-										  }
-										)
+										})
+					.authenticationEntryPoint((HttpServletRequest request,
+											   HttpServletResponse response,
+											   AuthenticationException exception) -> {
+												   addErrorMessageToView("You aren't logged in to access this page.", request, response);
+												   response.sendRedirect("/login");
+							})
 			// This line allows anyone to access the login, register, clubs, css, and js endpoints without authentication. You can adjust this 
 			// as needed for your application. Gotta permit js and css because otherwise, the login and register pages won't be styled and 
 			// won't work properly.
 			).formLogin(form -> form
 					.loginPage("/login")
-					.defaultSuccessUrl("/clubs")
+					.defaultSuccessUrl("/clubs", true)
 					.loginProcessingUrl("/login/auth")
 					.failureUrl("/login?error=true")
 					.permitAll()
@@ -83,5 +92,18 @@ public class SecurityConfig {
 			).authenticationProvider(authenticationProvider()
 			).authenticationProvider(adminAuthenticationProvider());
 		return http.build();
+	}
+	
+	private void addErrorMessageToView(String message, HttpServletRequest request, HttpServletResponse response) {
+		FlashMap flashMap = new FlashMap();
+		flashMap.put("errorMessage", message);
+		FlashMapManager mapManager = RequestContextUtils.getFlashMapManager(request);
+		// tem que ter esse null check, porque algumas vezes o flash manager pode ser nulo.
+		if (mapManager != null) {
+			mapManager.saveOutputFlashMap(flashMap, request, response);
+		} else {
+			// o cleanup irá acontecer no GlobalViewAttributes
+			request.getSession().setAttribute("errorMessage", message);
+		}
 	}
 }
