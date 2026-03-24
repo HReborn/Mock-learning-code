@@ -42,7 +42,6 @@ public class SecurityConfig {
     DaoAuthenticationProvider adminAuthenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider(adminUserDetailsService);
         authProvider.setPasswordEncoder(passwordEncoder());
-        System.out.println("Admin authentication provider created with admin username");
         return authProvider;
     }
 	

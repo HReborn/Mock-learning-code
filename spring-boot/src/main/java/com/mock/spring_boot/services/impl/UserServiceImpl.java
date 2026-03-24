@@ -1,9 +1,14 @@
 package com.mock.spring_boot.services.impl;
 
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.mock.spring_boot.dto.ChangePasswordDto;
 import com.mock.spring_boot.dto.RegistrationDto;
+import com.mock.spring_boot.dto.UserDto;
 import com.mock.spring_boot.models.Role;
 import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.RoleRepository;
@@ -37,39 +42,32 @@ public class UserServiceImpl implements UserService {
 	
 	// Even though it is duplicated, i think it would be better to have a separate method for registering super admin
 	// to track any possible shady stuff.
+
 	@Override
-	public UserEntity registerSuperAdminUser(RegistrationDto registrationDto) {
-		UserEntity user = new UserEntity();
-		user.setUsername(registrationDto.getUsername());
-		user.setEmail(registrationDto.getEmail());
-		user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
-		Role role = roleRepository.findByName("SUPER_ADMIN");
-		user.getRoles().add(role);
-		return userRepository.save(user);
+	public UserDto findByEmail(String email) {
+		return mapToUserDto(userRepository.findByEmail(email));
 	}
 
 	@Override
-	public UserEntity findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
-	@Override
-	public UserEntity findByUsername(String username) {
+	public UserDto findByUsername(String username) {
 		System.out.println("Finding user by username: " + username);
-		return userRepository.findByUsername(username);
+		return mapToUserDto(userRepository.findByUsername(username));
 	}
 
 	@Override
-	public void alterPassword(String username, String newPassword) {
-		UserEntity user = userRepository.findByUsername(username);
-		user.setPassword(passwordEncoder.encode(newPassword));
+	public void alterPassword(ChangePasswordDto changePasswordDto) {
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		String currentPassword = passwordEncoder.encode(changePasswordDto.getCurrentPassword());
+		String newPassword = passwordEncoder.encode(changePasswordDto.getNewPassword());
+		if (passwordEncoder.matches(currentPassword, currentUser.getPassword())) {
+			currentUser.setPassword(newPassword);
+		}
 		// The .save() from jparepository will only create a new user if the id is null.
-		userRepository.save(user);
+		userRepository.save(currentUser);
 	}
 
 	@Override
 	public void updateUser(UserEntity user) {
 		userRepository.save(user);
 	}
-
 }
