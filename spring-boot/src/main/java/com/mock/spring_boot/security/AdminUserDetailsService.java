@@ -13,9 +13,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.mock.spring_boot.dto.RegistrationDto;
+import com.mock.spring_boot.models.Role;
 import com.mock.spring_boot.models.UserEntity;
-import com.mock.spring_boot.services.UserService;
+import com.mock.spring_boot.repositories.RoleRepository;
+import com.mock.spring_boot.repositories.UserRepository;
 
 @Service
 public class AdminUserDetailsService implements UserDetailsService {
@@ -23,53 +24,58 @@ public class AdminUserDetailsService implements UserDetailsService {
 	@Value("${spring.security.user.name}")
 	private String superAdminUsername;
 	@Value("${spring.security.user.password}")
-	private String adminPassword;
+	private String superAdminPassword;
 	@Value("${spring.security.user.email}")
-	private String adminEmail;
-	private UserService userService;
+	private String superAdminEmail;
+	private UserRepository userRepository;
+	private RoleRepository roleRepository;
 	private static PasswordEncoder passwordEncoder = passwordEncoder();
 
-	public AdminUserDetailsService(UserService userService) {
+	public AdminUserDetailsService(UserRepository userRepository, RoleRepository roleRepository) {
 		super();
-		this.userService = userService;
-	}
-	
-	private UserEntity registerSuperAdminUser() {
-		RegistrationDto adminUser = new RegistrationDto();
-		adminUser.setUsername(superAdminUsername);
-		adminUser.setPassword(passwordEncoder.encode(adminPassword));
-		adminUser.setEmail(adminEmail);
-		return userService.registerSuperAdminUser(adminUser);
-	}
-	
-	private void alterSuperAdminPassword(UserEntity adminUser) {
-		adminUser.setPassword(passwordEncoder.encode(adminPassword));
-		userService.updateUser(adminUser);
+		this.userRepository = userRepository;
+		this.roleRepository = roleRepository;
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		UserEntity adminUser = userService.findByUsername(superAdminUsername);
-		// You need to register admin in the database because you gonna need to check the created by club.
-		// If there isn't an admin in the database, you won't be able to create a club because the created by club is admin.
-		if (adminUser == null) {
-			adminUser = registerSuperAdminUser();
-		}
-		// Formality's sake. The admin password will be determined by the application-admin.properties
-		// The only way to compare encrypted with non-encrypted passwords, otherwise, it'll always return false
-		if (!passwordEncoder.matches(adminPassword, adminUser.getPassword())) {
-			alterSuperAdminPassword(adminUser);
-		}
 		if (!username.equals(superAdminUsername)) {
 	        throw new UsernameNotFoundException("Not admin user");
 	    }
-		System.out.println("Admin user found: " + username);
+		ifNeededUpdateAdminUserInsideDatabase();
 	    return new User(
 	        superAdminUsername,
 	        // If you do not encode the password, Spring Security will not be able to authenticate the admin user.
 	        // This happens because Spring Security expects the password to be encoded when it compares it to the password provided during login.
-	        passwordEncoder.encode(adminPassword),
+	        passwordEncoder.encode(superAdminPassword),
 	        Arrays.asList(new SimpleGrantedAuthority("SUPER_ADMIN"))
 	    );
+	}
+	
+	private UserEntity ifNeededUpdateAdminUserInsideDatabase() {
+		UserEntity superAdminUser = userRepository.findByUsername(superAdminUsername);
+		boolean isPropertiesAdminCredentialsEqualToDatabase = 
+				superAdminUser != null ?
+						passwordEncoder.matches(superAdminPassword, superAdminUser.getPassword()) &&
+						superAdminUser.getEmail().equals(superAdminEmail) &&
+						superAdminUser.getUsername().equals(superAdminUsername)
+				:true;
+		// null -> true !true
+		// not null but equal -> false !true (only one i don't wanna save)
+		// not null but diff -> false !false
+		if (superAdminUser == null || !isPropertiesAdminCredentialsEqualToDatabase) {
+			return updateAdminUser();
+		} 
+		return null;
+	}
+	
+	private UserEntity updateAdminUser() {
+		UserEntity user = new UserEntity();
+		user.setUsername(superAdminUsername);
+		user.setEmail(superAdminEmail);
+		user.setPassword(passwordEncoder.encode(superAdminPassword));
+		Role role = roleRepository.findByName("SUPER_ADMIN");
+		user.getRoles().add(role);
+		return userRepository.save(user);
 	}
 }
