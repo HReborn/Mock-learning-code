@@ -13,6 +13,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +23,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity(name = "users") // We specify the name to follow good practices.
+@Builder
 public class UserEntity {
 // This name because "User" is a reserved keyword in SQL, so we can't name the table "User".
 	@Id
@@ -44,5 +46,6 @@ public class UserEntity {
 	// If you don't initialize the list, you will get a NullPointerException when you try to add a role to the user.
 	// Hibernate doesn't initialize the collection for you, so you need to do it yourself.
 	// And every time you need to create a user, you'd need to initialize the list of roles, which is not a good practice. Code duplication.
+	@Builder.Default
 	private List<Role> roles = new ArrayList<>();
 }
