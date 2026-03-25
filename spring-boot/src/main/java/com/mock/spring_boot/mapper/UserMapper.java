@@ -9,13 +9,15 @@ public class UserMapper {
 		return UserDto.builder()
 				.id(user.getId())
 				.email(user.getEmail())
-				.username(user.getUsername()).build();
+				.username(user.getUsername())
+				.roles(user.getRoles()).build();
 	}
 	
 	public static UserEntity mapToUserEntity(UserDto userDto) {
 		return UserEntity.builder()
 				.id(userDto.getId())
 				.email(userDto.getEmail())
-				.username(userDto.getUsername()).build();
+				.username(userDto.getUsername())
+				.roles(userDto.getRoles()).build();
 	}
 }

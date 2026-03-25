@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mock.spring_boot.dto.ClubDto;
+import com.mock.spring_boot.dto.UserDto;
 import com.mock.spring_boot.models.Club;
-import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.UserService;
 
@@ -111,8 +111,8 @@ public class ClubController {
 		return "clubs-list";
 	}
 	
-	private UserEntity getCurrentUser() {
-		UserEntity currentUser = userService.findByUsername(getSessionUsername());
+	private UserDto getCurrentUser() {
+		UserDto currentUser = userService.findByUsername(getSessionUsername());
 		return currentUser;
 	}
 	

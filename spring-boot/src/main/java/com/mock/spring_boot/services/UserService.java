@@ -10,5 +10,7 @@ public interface UserService {
 	UserDto findByEmail(String email);
 	UserDto findByUsername(String username);
 	void alterPassword(ChangePasswordDto changePasswordDto);
-	void updateUser(UserEntity user);
+	void alterEmail(UserDto user);
+	void updateUser(UserDto user);
+	void deleteUser(Long userId);
 }

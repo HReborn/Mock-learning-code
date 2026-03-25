@@ -39,11 +39,9 @@ public class AuthController {
 								RedirectAttributes redirectAttributes) {
 		boolean fieldsNotEmpty = !result.hasFieldErrors();
 		if (fieldsNotEmpty) {
-			System.out.println("Fields are not empty, checking uniqueness...");
 			checkUserUniqueness(registrationDto, result);
 		}
 		if (result.hasErrors()) {
-			System.out.println("Validation errors found: " + result.getAllErrors());
 			// These two lines link the error from result to the registrationDto and make it available in the redirect.
 			// This way, the url will remain http://localhost:8080/register and the error message will be shown on the registration page.
 			redirectAttributes.addFlashAttribute("user", registrationDto);
