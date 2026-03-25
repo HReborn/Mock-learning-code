@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mock.spring_boot.dto.EventDto;
+import com.mock.spring_boot.dto.UserDto;
 import com.mock.spring_boot.models.Event;
-import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.services.EventService;
 import com.mock.spring_boot.services.UserService;
 
@@ -30,8 +30,8 @@ public class EventController {
 		this.userService = userService;
 	}
 	
-	private UserEntity getCurrentUser() {
-		UserEntity currentUser = userService.findByUsername(getSessionUsername());
+	private UserDto getCurrentUser() {
+		UserDto currentUser = userService.findByUsername(getSessionUsername());
 		return currentUser;
 	}
 	

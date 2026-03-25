@@ -1,6 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserEntity;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -65,9 +66,23 @@ public class UserServiceImpl implements UserService {
 		// The .save() from jparepository will only create a new user if the id is null.
 		userRepository.save(currentUser);
 	}
+	
+	public void alterEmail(UserDto userDto) {
+		UserEntity userEntity = userRepository.findById(userDto.getId()).get();
+		userEntity.setEmail(userDto.getEmail());
+		userRepository.save(userEntity);
+	}
 
 	@Override
-	public void updateUser(UserEntity user) {
-		userRepository.save(user);
+	public void updateUser(UserDto userDto) {
+		UserEntity mappedUserEntity = mapToUserEntity(userDto);
+		UserEntity userEntity = userRepository.findById(userDto.getId()).get();
+		mappedUserEntity.setPassword(userEntity.getPassword());
+		userRepository.save(mappedUserEntity);
+	}
+
+	@Override
+	public void deleteUser(Long userId) {
+		userRepository.deleteById(userId);
 	}
 }

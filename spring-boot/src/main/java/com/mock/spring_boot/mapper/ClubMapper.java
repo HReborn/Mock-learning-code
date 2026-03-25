@@ -4,6 +4,8 @@ import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserEntity;
 
 import java.util.stream.Collectors;
 
@@ -16,7 +18,7 @@ public class ClubMapper {
 				.photoURL(club.getPhotoURL())
 				.content(club.getContent())
 				.createdOn(club.getCreatedOn())
-				.createdBy(club.getCreatedBy())
+				.createdBy(mapToUserDto(club.getCreatedBy()))
 				.updatedOn(club.getUpdatedOn())
 				.events(club.getEvents().stream().map(event -> mapToEventDto(event)).collect(Collectors.toList()))
 				.build();
@@ -33,7 +35,7 @@ public class ClubMapper {
 				.photoURL(club.getPhotoURL())
 				.content(club.getContent())
 				.createdOn(club.getCreatedOn())
-				.createdBy(club.getCreatedBy())
+				.createdBy(mapToUserDto(club.getCreatedBy()))
 				.updatedOn(club.getUpdatedOn())
 				.build();
 		return clubDto;
@@ -45,7 +47,7 @@ public class ClubMapper {
 				.title(clubDto.getTitle())
 				.photoURL(clubDto.getPhotoURL())
 				.content(clubDto.getContent())
-				.createdBy(clubDto.getCreatedBy())
+				.createdBy(mapToUserEntity(clubDto.getCreatedBy()))
 				.createdOn(clubDto.getCreatedOn())
 				.updatedOn(clubDto.getUpdatedOn())
 				.build();
