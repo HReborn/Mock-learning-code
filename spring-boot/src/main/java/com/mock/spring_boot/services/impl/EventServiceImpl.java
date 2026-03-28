@@ -2,6 +2,7 @@ package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
 import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import java.util.List;
@@ -45,9 +46,10 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public void createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
+		eventDto.setCreatedBy(mapToUserDto(getSessionUser()));
 		Event event = mapToEvent(eventDto);
 		event.setClub(club);
-		event.setCreatedBy(getSessionUser());
+		
 		eventRepository.save(event);
 	}
 	@PreAuthorize("isAuthenticated()")
