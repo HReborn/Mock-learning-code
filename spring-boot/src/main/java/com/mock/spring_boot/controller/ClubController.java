@@ -1,7 +1,5 @@
 package com.mock.spring_boot.controller;
 
-import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
-
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -14,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mock.spring_boot.dto.ClubDto;
-import com.mock.spring_boot.dto.UserDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.UserService;
@@ -109,12 +106,5 @@ public class ClubController {
 		List<ClubDto> clubs = clubService.searchClubs(query);
 		model.addAttribute("clubs", clubs);
 		return "clubs-list";
-	}
-	
-	private UserDto getCurrentUser() {
-		UserDto currentUser = userService.findByUsername(getSessionUsername());
-		return currentUser;
-	}
-	
-	
+	}	
 }
