@@ -52,12 +52,7 @@ public class EventController {
 	@GetMapping("/events/{eventId}")
 	public String getEvent(@PathVariable Long eventId, Model model) {
 		EventDto event = eventService.findEventById(eventId);
-		boolean isEventOwner = false;
-		// Must check if session user is null because currentUser will be null too and it'll give a runtime exception
-		if (getSessionUsername() != null && getCurrentUser().getId() == event.getCreatedBy().getId()) {
-			isEventOwner = true;
-		}
-		model.addAttribute("isEventOwner", isEventOwner);
+		model.addAttribute("canEditEvent", eventService.canCurrentUserEditEvent(event));
 		model.addAttribute("event", event);
 		model.addAttribute("club", event.getClub());
 		return "events-detail";
