@@ -58,7 +58,7 @@ public class SecurityConfig {
 		http
 			//.csrf(csrf -> csrf.disable()) -> CSRF is enabled by default
 			.csrf(csrf -> csrf
-			    .ignoringRequestMatchers("/events/**", "/clubs/**", "/login/**", "/register/**")) // Won't request CSRF token when coming from these mappings
+			    .ignoringRequestMatchers("/events/**", "/clubs/**", "/login/**", "/register/**", "/logout/**")) // Won't request CSRF token when coming from these mappings
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/login", "/register", "/register/save").anonymous()
 					.requestMatchers(
