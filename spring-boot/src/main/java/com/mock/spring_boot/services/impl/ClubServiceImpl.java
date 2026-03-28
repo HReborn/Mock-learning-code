@@ -3,6 +3,7 @@ package com.mock.spring_boot.services.impl;
 import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
 import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -48,8 +49,8 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	@PreAuthorize("isAuthenticated()")
 	public Club saveClub(ClubDto clubDto) {
+		clubDto.setCreatedBy(mapToUserDto(getSessionUser()));
 		Club club = mapToClub(clubDto);
-		club.setCreatedBy(getSessionUser());
 		System.out.println("Session user:" + club.getCreatedBy());
 		return clubRepository.save(club);
 	}
