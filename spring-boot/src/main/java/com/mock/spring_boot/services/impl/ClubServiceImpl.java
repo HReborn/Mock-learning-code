@@ -2,8 +2,6 @@ package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
 import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
-import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
-import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,9 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
-import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
-import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.ClubService;
 
 @Service
@@ -27,18 +23,12 @@ public class ClubServiceImpl implements ClubService {
 	@Value("${spring.security.user.name}")
 	private String adminUsername;
 	private ClubRepository clubRepository;
-	private UserRepository userRepository;
 	
-	public ClubServiceImpl(ClubRepository clubRepository, UserRepository userRepository) {
+	public ClubServiceImpl(ClubRepository clubRepository) {
 		super();
 		this.clubRepository = clubRepository;
-		this.userRepository = userRepository;
 	}
 	
-	private UserEntity getSessionUser() {
-		return userRepository.findByUsername(getSessionUsername());
-	}
-
 	@Override
 	public List<ClubDto> findAllClubs() {
 		List<Club> clubs =  clubRepository.findAll();
@@ -49,9 +39,7 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	@PreAuthorize("isAuthenticated()")
 	public Club saveClub(ClubDto clubDto) {
-		clubDto.setCreatedBy(mapToUserDto(getSessionUser()));
 		Club club = mapToClub(clubDto);
-		System.out.println("Session user:" + club.getCreatedBy());
 		return clubRepository.save(club);
 	}
 
