@@ -55,7 +55,10 @@ public class SecurityConfig {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		// gonna disable because it's not production. For simplicity's sake.
-		http.csrf(csrf -> csrf.disable())
+		http
+			//.csrf(csrf -> csrf.disable()) -> CSRF is enabled by default
+			.csrf(csrf -> csrf
+			    .ignoringRequestMatchers("/events/**", "/clubs/**", "/login/**", "/register/**")) // Won't request CSRF token when coming from these mappings
 			.authorizeHttpRequests(auth -> auth
 					.requestMatchers("/login", "/register", "/register/save").anonymous()
 					.requestMatchers(
