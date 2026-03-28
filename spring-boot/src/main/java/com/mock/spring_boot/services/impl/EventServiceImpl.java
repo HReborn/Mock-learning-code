@@ -2,10 +2,11 @@ package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
 import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -17,19 +18,20 @@ import com.mock.spring_boot.models.Event;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
 import com.mock.spring_boot.services.EventService;
+import com.mock.spring_boot.services.UserService;
 
 @Service
 public class EventServiceImpl implements EventService {
 
-	@Value("${spring.security.user.name}")
-	private String adminUsername;
 	private EventRepository eventRepository;
 	private ClubRepository clubRepository;
+	private UserService userService;
 
-	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository) {
+	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserService userService) {
 		super();
 		this.eventRepository = eventRepository;
 		this.clubRepository = clubRepository;
+		this.userService = userService;
 	}
 	
 	@PreAuthorize("isAuthenticated()")
@@ -79,4 +81,19 @@ public class EventServiceImpl implements EventService {
 		return eventRepository.searchEvents(query).stream().map(event-> mapToEventDto(event)).toList();
 	}
 
+	@Override
+	public boolean canCurrentUserEditEvent(EventDto eventDto) {
+		// This means that the user isn't authenticated
+		if (getSessionUsername() == null) {
+			return false;
+		}
+		// This means that the current user is the owner
+		if (userService.getCurrentUser().getId() == eventDto.getCreatedBy().getId()) {
+			return true;
+		}
+		if (isSuperAdmin()) {
+			return true;
+		}	
+		return false;
+	}
 }

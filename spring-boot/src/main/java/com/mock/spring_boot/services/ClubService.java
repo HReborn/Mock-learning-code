@@ -12,4 +12,5 @@ public interface ClubService {
 	void updateClub(ClubDto club);
 	void deleteClub(Long id);
 	List<ClubDto> searchClubs(String query);
+	boolean canCurrentUserEditClub(ClubDto clubDto);
 }

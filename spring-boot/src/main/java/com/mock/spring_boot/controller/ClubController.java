@@ -48,7 +48,7 @@ public class ClubController {
 	public String saveClub (@Valid @ModelAttribute("club") ClubDto clubDto,
 							BindingResult result,
 							Model model) {
-		clubDto.setCreatedBy(getCurrentUser());
+		clubDto.setCreatedBy(userService.getCurrentUser());
 		if (result.hasErrors()) {
 			// I don't know why he didn't put the model on the club edit
 			// Probably because the model var already existed and we were editing
@@ -83,14 +83,7 @@ public class ClubController {
 	@GetMapping("/clubs/{clubId}")
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
-		
-		boolean isClubOwner = false;
-		// Must check if session user is null because currentUser will be null too and it'll give a runtime exception
-		if (getSessionUsername() != null && getCurrentUser().getId() == club.getCreatedBy().getId()) {
-			isClubOwner = true;
-		}
-		
-		model.addAttribute("isEventOwner", isClubOwner);
+		model.addAttribute("canEditClub", clubService.canCurrentUserEditClub(club));
 		model.addAttribute("club", club);
 		return "clubs-detail";
 	}
