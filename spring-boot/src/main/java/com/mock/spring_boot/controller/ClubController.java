@@ -51,7 +51,7 @@ public class ClubController {
 	public String saveClub (@Valid @ModelAttribute("club") ClubDto clubDto,
 							BindingResult result,
 							Model model) {
-		
+		clubDto.setCreatedBy(getCurrentUser());
 		if (result.hasErrors()) {
 			// I don't know why he didn't put the model on the club edit
 			// Probably because the model var already existed and we were editing

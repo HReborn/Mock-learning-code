@@ -84,6 +84,7 @@ public class EventController {
 	public String saveEvent(@PathVariable Long clubId, 
 			Model model, 
 			@ModelAttribute("event") EventDto eventDto ) {
+		eventDto.setCreatedBy(getCurrentUser());
 		eventService.createEvent(clubId, eventDto);
 		return "redirect:/clubs/" + clubId;
 	}

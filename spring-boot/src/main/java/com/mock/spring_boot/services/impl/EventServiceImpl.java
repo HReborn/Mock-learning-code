@@ -2,8 +2,6 @@ package com.mock.spring_boot.services.impl;
 
 import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
 import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
-import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
-import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 
 import java.util.List;
 
@@ -16,10 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.models.Event;
-import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
-import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.EventService;
 
 @Service
@@ -29,24 +25,17 @@ public class EventServiceImpl implements EventService {
 	private String adminUsername;
 	private EventRepository eventRepository;
 	private ClubRepository clubRepository;
-	private UserRepository userRepository;
 
-	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserRepository userRepository) {
+	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository) {
 		super();
 		this.eventRepository = eventRepository;
 		this.clubRepository = clubRepository;
-		this.userRepository = userRepository;
-	}
-	
-	private UserEntity getSessionUser() {
-		return userRepository.findByUsername(getSessionUsername());
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@Override
 	public void createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
-		eventDto.setCreatedBy(mapToUserDto(getSessionUser()));
 		Event event = mapToEvent(eventDto);
 		event.setClub(club);
 		
