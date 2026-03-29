@@ -10,6 +10,8 @@ public class UserMapper {
 				.id(user.getId())
 				.email(user.getEmail())
 				.username(user.getUsername())
+				.createdOn(user.getCreatedOn())
+				.updatedOn(user.getUpdatedOn())
 				.roles(user.getRoles()).build();
 	}
 	
@@ -18,6 +20,8 @@ public class UserMapper {
 				.id(userDto.getId())
 				.email(userDto.getEmail())
 				.username(userDto.getUsername())
+				.createdOn(userDto.getCreatedOn())
+				.updatedOn(userDto.getUpdatedOn())
 				.roles(userDto.getRoles()).build();
 	}
 }

@@ -46,6 +46,10 @@ public class Club {
 	@ManyToOne
 	private UserEntity createdBy;
 	
+	@JoinColumn(name = "last_updated_by", nullable = false)
+	@ManyToOne
+	private UserEntity lastUpdatedBy;
+
 	@OneToMany(mappedBy = "club", cascade = CascadeType.REMOVE)
 	@Builder.Default
 	private List<Event> events = new ArrayList<>();
