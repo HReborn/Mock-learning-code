@@ -1,7 +1,6 @@
 package com.mock.spring_boot.services.impl;
 
-import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
-import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
+import static com.mock.spring_boot.mapper.ClubMapper.*;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
 
@@ -15,6 +14,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.ClubService;
@@ -44,11 +44,12 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	@PreAuthorize("isAuthenticated()")
 	public Club saveClub(ClubDto clubDto) {
-		Club club = mapToClub(clubDto);
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		Club club = mapToClubWhileCreatingClub(clubDto);
 		// Intentionally duplicating code. This will be deleted after implementing @Component or MapStruct
 		// TODO: Implement @Component to avoid code duplication
-			club.setCreatedBy(userRepository.findById(club.getCreatedBy().getId()).get());
-			club.setLastUpdatedBy(userRepository.findById(club.getLastUpdatedBy().getId()).get());
+			club.setCreatedBy(currentUser);
+			club.setLastUpdatedBy(currentUser);
 		return clubRepository.save(club);
 	}
 

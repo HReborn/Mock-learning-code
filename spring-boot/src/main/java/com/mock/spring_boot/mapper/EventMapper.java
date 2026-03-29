@@ -41,4 +41,17 @@ public class EventMapper {
 				.lastUpdatedBy(mapToUserDto(event.getLastUpdatedBy()))
 				.build();
 	}
+	
+	public static Event mapToEventWhileCreatingEvent(EventDto eventDto) {
+		return Event.builder()
+				.id(eventDto.getId())
+				.name(eventDto.getName())
+				.startTime(eventDto.getStartTime())
+				.endTime(eventDto.getEndTime())
+				.type(eventDto.getType())
+				.photoURL(eventDto.getPhotoURL())
+				.createdOn(eventDto.getCreatedOn())
+				.updatedOn(eventDto.getUpdatedOn())
+				.build();
+	}
 }
