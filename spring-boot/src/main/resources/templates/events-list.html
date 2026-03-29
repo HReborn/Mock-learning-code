@@ -18,10 +18,12 @@
 						<!-- The "th:each" is a loop from thymeleaf that'll iterate through the clubs object and will also feed the th:src -->
 						<div th:each="event :${events}" class="col-lg-6 mb-3">
 							<div class="position-relative mb-5">
-								<a th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark stretched-link"></a>
-								<img class="img-fluid rounded-3 mb-3" th:src="${event.photoURL}" alt="..." />
+								<img class="img-fluid rounded-3 mb-2" th:src="${event.photoURL}" style="height:350px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
+								<a th:text="${event.name}" class="h3 fw-bolder text-decoration-none link-dark"></a>
+								<div class="small text-muted" th:text="'Start: ' + ${event.startTime}"></div>
+								<div class="small text-muted mb-2" th:text="'Ending: ' + ${event.endTime}"></div>
+								<a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
 							</div>
-							<a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
 						</div>
 					</div>
 				</div>
