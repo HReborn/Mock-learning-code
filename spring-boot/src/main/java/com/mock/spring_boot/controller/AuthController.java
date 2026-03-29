@@ -61,8 +61,8 @@ public class AuthController {
 	// The meaning of the variable emailExists is ambiguous because it could be false if the email isn't registered but also if we never checked DB because the validation failed.
 	// Single responsibility of Variables: A variable should represent one clear, unambiguous state.
 	private void checkUserUniqueness(RegistrationDto registrationDto, BindingResult result) {
-		boolean emailRegistered = userService.findByEmail(registrationDto.getEmail()) != null;
-		boolean userRegistered = userService.findByUsername(registrationDto.getUsername()) != null;
+		boolean emailRegistered = userService.isEmailTaken(registrationDto.getEmail());
+		boolean userRegistered = userService.isUsernameTaken(registrationDto.getUsername());
 		if (emailRegistered || userRegistered) {
 			String errorMessage = "An account already exists for this email/username.";
 			result.rejectValue("username", "error.user", errorMessage);

@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
 		user.getRoles().add(role);
 		return userRepository.save(user);
 	}
-
 	@Override
 	public UserDto findByEmail(String email) {
 		return mapToUserDto(userRepository.findByEmail(email));
@@ -89,5 +88,23 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDto getCurrentUser() {
 		return this.findByUsername(getSessionUsername());
+	}
+
+	@Override
+	public boolean isEmailTaken(String email) {
+		UserEntity user = userRepository.findByEmail(email);
+		if (user == null) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public boolean isUsernameTaken(String username) {
+		UserEntity user = userRepository.findByUsername(username);
+		if (user == null) {
+			return false;
+		}
+		return true;
 	}
 }

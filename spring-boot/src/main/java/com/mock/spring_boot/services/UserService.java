@@ -14,4 +14,6 @@ public interface UserService {
 	void updateUser(UserDto user);
 	void deleteUser(Long userId);
 	UserDto getCurrentUser();
+	boolean isEmailTaken(String email);
+	boolean isUsernameTaken(String username);
 }
