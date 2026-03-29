@@ -39,6 +39,10 @@ public class Event {
 	@JoinColumn(name="created_by", nullable=false)
 	private UserEntity createdBy;
 	
+	@JoinColumn(name = "last_updated_by", nullable=false)
+	@ManyToOne
+	private UserEntity lastUpdatedBy;
+	
 	@ManyToOne
 	@JoinColumn(name="club_id", nullable=false)
 	private Club club;

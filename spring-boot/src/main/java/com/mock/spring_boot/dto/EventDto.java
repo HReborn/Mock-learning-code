@@ -19,7 +19,10 @@ public class EventDto {
 	private String type;
 	private String photoURL;
 	private UserDto createdBy;
-	private LocalDateTime createdOn;
+	private UserDto lastUpdatedBy;
+	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime updatedOn;
+	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
+	private LocalDateTime createdOn;	
 	private ClubDto club;
 }

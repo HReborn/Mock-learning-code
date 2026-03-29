@@ -3,6 +3,7 @@ package com.mock.spring_boot.dto;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.format.annotation.DateTimeFormat;
 
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Builder;
@@ -19,9 +20,12 @@ public class ClubDto {
 	private String photoURL;
 	@NotEmpty(message = "O conteúdo não pode ser vazio, paizão.")
 	private String content;
+	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime createdOn;
-	private UserDto createdBy;
+	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime updatedOn;
+	private UserDto createdBy;
+	private UserDto lastUpdatedBy;
 	//This field can be empty if the clubMapper is called from the eventMapper to avoid an infinite loop.
 	private List<EventDto> events;
 }

@@ -1,7 +1,11 @@
 package com.mock.spring_boot.models;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -32,6 +36,11 @@ public class UserEntity {
 	private String username;
 	private String email;
 	private String password;
+	
+	@CreationTimestamp // Will initialize the date object and assign it to the entry based on the actual time
+	private LocalDateTime createdOn;
+	@UpdateTimestamp // Will change the date object and assign it to the entry based on the actual time
+	private LocalDateTime updatedOn;
 	// Do not use cascade ALL because we don't want to delete the roles when we delete a user.
 	// As cascade propagates the operations to the entities on the persistence context.
 	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
