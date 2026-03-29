@@ -20,9 +20,12 @@
 					<div class="col-lg-8">
 						<!-- Featured blog post-->
 						<div class="card mb-4">
-							<a><img class="card-img-top" th:src="${club.photoURL}" alt="Foto de paisagem" /></a>
+							<a><img class="card-img-top" th:src="${club.photoURL}" alt="Foto de paisagem" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/></a>
 							<div class="card-body">
-								<div class="small text-muted" th:text="${club.createdOn}"></div>
+								<div class="small text-muted" th:text="'Created on: ' + ${club.createdOn}"></div>
+								<div class="small text-muted" th:text="'Created by: ' + ${club.createdBy.username}"></div>
+								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated by: ' + ${club.lastUpdatedBy.username}"></div>
+								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated on: ' + ${club.updatedOn.username}"></div>
 								<h2 class="card-title" th:text="${club.title}"></h2>
 								<p class="card-text" th:text="${club.content}"></p>
 								<div sec:authorized="isAuthorized()" >
@@ -39,11 +42,11 @@
 							<div class="col-lg-6">
 								<!-- Blog post-->
 								<div th:each="event :${club.events}" class="card mb-4">
-									<a href="#!"><img class="card-img-top" th:src="${event.photoURL}" alt="..." /></a>
+									<img class="card-img-top" th:src="${event.photoURL}" alt="..." style="height:300px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
 									<div class="card-body">
-										<div class="small text-muted">January 1, 2023</div>
-										<h2 th:text="${event.name}" class="card-title h4">Post Title</h2>
-										<p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla.</p>
+										<h2 th:text="${event.name}" class="card-title h4"></h2>
+										<div class="small text-muted" th:text="'Start: ' + ${event.startTime}"></div>
+										<div class="small text-muted mb-2" th:text="'End: ' + ${event.endTime}"></div>
 										<a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
 									</div>
 								</div>

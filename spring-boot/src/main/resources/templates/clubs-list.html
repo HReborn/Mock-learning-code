@@ -22,12 +22,12 @@ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layo
 							<input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Pesquisar paisagem" aria-label="Search" />
 						</form>
 						<!-- The "th:each" is a loop from thymeleaf that'll iterate through the clubs object and will also feed the th:src -->
-						<div th:each="club :${clubs}" class="col-lg-6 mb-3">
-							<div class="position-relative mb-5">
-								<img class="img-fluid rounded-3 mb-3" th:src="${club.photoURL}" alt="..." />
-								<a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" ></a>
+						<div th:each="club :${clubs}" class="col-lg-6">
+							<div class="position-relative mb-3">
+								<img class="img-fluid rounded-3 mb-2" th:src="${club.photoURL}" alt="..." style="height:350px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
+								<p th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark mb-2" ></p>
+								<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
 							</div>
-							<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
 						</div>
 					</div>
 				</div>

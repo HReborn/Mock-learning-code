@@ -20,13 +20,16 @@
 					<div class="col-lg-8">
 						<!-- Featured blog post-->
 						<div class="card mb-4">
-							<a><img class="card-img-top" th:src="${event.photoURL}" alt="Foto do evento" /></a>
+							<a><img class="card-img-top" th:src="${event.photoURL}" alt="Foto do evento" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/></a>
 							<div class="card-body">
-								<div class="small text-muted" th:text="${event.createdOn}"></div>
+								<div class="small text-muted" th:text="'Created on: ' + ${event.createdOn}"></div>
+								<div class="small text-muted" th:text="'Created by: ' + ${event.createdBy.username}"></div>
+								<div th:if="${canEditEvent}" class="small text-muted" th:text="'Last updated by: ' + ${event.lastUpdatedBy.username}"></div>
+								<div th:if="${canEditEvent}" class="small text-muted" th:text="'Last updated on: ' + ${event.updatedOn.username}"></div>
 								<h2 class="card-title" th:text="${event.name}"></h2>
-								<p class="card-text" th:text="${event.type}"></p>
-								<p class="card-text" th:text="${event.startTime}"></p>
-								<p class="card-text" th:text="${event.endTime}"></p>
+								<p class="card-text mb-0" th:text="'Type: ' + ${event.type}"></p>
+								<p class="card-text mb-0" th:text="'Start: ' + ${event.startTime}"></p>
+								<p class="card-text mb-0" th:text="'End: ' + ${event.endTime}"></p>
 								<div sec:authorize="isAuthenticated()" th:if="${canEditEvent}">
 									<a class="btn btn-primary" th:href="@{/events/{eventId}/edit(eventId=${event.id})}">Editar</a>
 									<a class="btn btn-primary" th:href="@{/events/{eventId}/delete(eventId=${event.id})}">Deletar</a>
@@ -37,8 +40,8 @@
 							<div class="col-lg-6">
 								<div class="card mb-4">
 									<div class="card-body">
-										<a><img class="card-img-top" th:src="${club.photoURL}" alt="..." /></a>
-										<a th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark stretched-link" th:href="@{/clubs/{clubId}(clubId=${club.id})}"></a>
+										<img class="card-img-top mb-2" th:src="${club.photoURL}" style="height:300px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
+										<p th:text="${club.title}" class="card-title h4"></p>
 										<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
 									</div>
 								</div>
