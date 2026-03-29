@@ -58,4 +58,18 @@ public class ClubMapper {
 				.build();
 		return club;
 	}
+	
+	public static Club mapToClubWhileCreatingClub(ClubDto clubDto) {
+		Club club = Club.builder()
+				.id(clubDto.getId())
+				.title(clubDto.getTitle())
+				.photoURL(clubDto.getPhotoURL())
+				.content(clubDto.getContent())
+				.createdOn(clubDto.getCreatedOn())
+				.updatedOn(clubDto.getUpdatedOn())
+				.build();
+		return club;
+	}
+	
+
 }

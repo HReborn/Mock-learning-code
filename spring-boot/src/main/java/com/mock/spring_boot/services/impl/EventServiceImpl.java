@@ -1,7 +1,6 @@
 package com.mock.spring_boot.services.impl;
 
-import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
-import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
+import static com.mock.spring_boot.mapper.EventMapper.*;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
 
@@ -42,9 +41,10 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Event createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
-		Event mappedEvent = mapToEvent(eventDto);
-		// TODO: Implement @Component to avoid code duplication
 		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		Event mappedEvent = mapToEventWhileCreatingEvent(eventDto);
+		// TODO: Implement @Component to avoid code duplication
+		
 		mappedEvent.setClub(club);
 		mappedEvent.setCreatedBy(currentUser);
 		mappedEvent.setLastUpdatedBy(currentUser);
