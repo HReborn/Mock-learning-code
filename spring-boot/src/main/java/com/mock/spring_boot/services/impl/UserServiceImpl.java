@@ -40,9 +40,6 @@ public class UserServiceImpl implements UserService {
 		user.getRoles().add(role);
 		return userRepository.save(user);
 	}
-	
-	// Even though it is duplicated, i think it would be better to have a separate method for registering super admin
-	// to track any possible shady stuff.
 
 	@Override
 	public UserDto findByEmail(String email) {
@@ -51,7 +48,6 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserDto findByUsername(String username) {
-		System.out.println("Finding user by username: " + username);
 		return mapToUserDto(userRepository.findByUsername(username));
 	}
 
@@ -67,17 +63,21 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(currentUser);
 	}
 	
+	@Override
 	public void alterEmail(UserDto userDto) {
-		UserEntity userEntity = userRepository.findById(userDto.getId()).get();
-		userEntity.setEmail(userDto.getEmail());
-		userRepository.save(userEntity);
+		UserEntity mappedUserEntity = mapToUserEntity(userDto);
+		UserEntity databaseUserEntity = userRepository.findById(userDto.getId()).get();
+		// TODO: Implement @Component to avoid code duplication
+		mappedUserEntity.setPassword(databaseUserEntity.getPassword());
+		userRepository.save(mappedUserEntity);
 	}
 
 	@Override
 	public void updateUser(UserDto userDto) {
 		UserEntity mappedUserEntity = mapToUserEntity(userDto);
-		UserEntity userEntity = userRepository.findById(userDto.getId()).get();
-		mappedUserEntity.setPassword(userEntity.getPassword());
+		UserEntity databaseUserEntity = userRepository.findById(userDto.getId()).get();
+		// TODO: Implement @Component to avoid code duplication
+		mappedUserEntity.setPassword(databaseUserEntity.getPassword());
 		userRepository.save(mappedUserEntity);
 	}
 
