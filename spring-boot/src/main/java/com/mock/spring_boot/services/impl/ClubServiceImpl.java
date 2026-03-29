@@ -16,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mock.spring_boot.dto.ClubDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.repositories.ClubRepository;
+import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.UserService;
 
@@ -23,12 +24,14 @@ import com.mock.spring_boot.services.UserService;
 public class ClubServiceImpl implements ClubService {
 
 	private ClubRepository clubRepository;
+	private UserRepository userRepository;
 	private UserService userService; 
 	
-	public ClubServiceImpl(ClubRepository clubRepository, UserService userService) {
+	public ClubServiceImpl(ClubRepository clubRepository, UserService userService, UserRepository userRepository) {
 		super();
 		this.userService = userService;
 		this.clubRepository = clubRepository;
+		this.userRepository = userRepository;
 	}
 	
 	@Override
@@ -42,6 +45,10 @@ public class ClubServiceImpl implements ClubService {
 	@PreAuthorize("isAuthenticated()")
 	public Club saveClub(ClubDto clubDto) {
 		Club club = mapToClub(clubDto);
+		// Intentionally duplicating code. This will be deleted after implementing @Component or MapStruct
+		// TODO: Implement @Component to avoid code duplication
+			club.setCreatedBy(userRepository.findById(club.getCreatedBy().getId()).get());
+			club.setLastUpdatedBy(userRepository.findById(club.getLastUpdatedBy().getId()).get());
 		return clubRepository.save(club);
 	}
 
@@ -56,8 +63,12 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	@PreAuthorize("isAuthenticated()")
-	public void updateClub(ClubDto club) {
-		clubRepository.save(mapToClub(club));
+	public void updateClub(ClubDto clubDto) {
+		Club club = mapToClub(clubDto);
+		// TODO: Implement @Component to avoid code duplication
+			club.setCreatedBy(userRepository.findById(club.getCreatedBy().getId()).get());
+			club.setLastUpdatedBy(userRepository.findById(club.getLastUpdatedBy().getId()).get());
+		clubRepository.save(club);
 	}
 
 	@Override

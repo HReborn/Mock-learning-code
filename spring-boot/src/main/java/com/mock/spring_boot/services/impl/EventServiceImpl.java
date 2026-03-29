@@ -15,38 +15,40 @@ import org.springframework.web.server.ResponseStatusException;
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.models.Event;
+import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
 import com.mock.spring_boot.repositories.EventRepository;
+import com.mock.spring_boot.repositories.UserRepository;
 import com.mock.spring_boot.services.EventService;
 import com.mock.spring_boot.services.UserService;
 
 @Service
 public class EventServiceImpl implements EventService {
 
+	private final UserRepository userRepository;
 	private EventRepository eventRepository;
 	private ClubRepository clubRepository;
 	private UserService userService;
 
-	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserService userService) {
+	public EventServiceImpl(EventRepository eventRepository, ClubRepository clubRepository, UserService userService, UserRepository userRepository) {
 		super();
 		this.eventRepository = eventRepository;
 		this.clubRepository = clubRepository;
 		this.userService = userService;
+		this.userRepository = userRepository;
 	}
 	
 	@PreAuthorize("isAuthenticated()")
 	@Override
-	public void createEvent(Long clubId, EventDto eventDto) {
+	public Event createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
-		Event event = mapToEvent(eventDto);
-		event.setClub(club);
-		
-		eventRepository.save(event);
-	}
-	@PreAuthorize("isAuthenticated()")
-	@Override
-	public Event saveEvent(EventDto eventDto) {
-		return eventRepository.save(mapToEvent(eventDto));
+		Event mappedEvent = mapToEvent(eventDto);
+		// TODO: Implement @Component to avoid code duplication
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		mappedEvent.setClub(club);
+		mappedEvent.setCreatedBy(currentUser);
+		mappedEvent.setLastUpdatedBy(currentUser);
+		return eventRepository.save(mappedEvent);
 	}
 
 	@Override
@@ -64,11 +66,12 @@ public class EventServiceImpl implements EventService {
 	@PreAuthorize("isAuthenticated()")
 	@Override
 	public void updateEvent(EventDto eventDto) {
-		Event event = mapToEvent(eventDto);
-		// This is here because the eventDto doesn't have the clubId, so we need to set it before saving the event
-		event.setClub(eventRepository.findById(eventDto.getId()).get().getClub());
-		event.setCreatedBy(eventRepository.findById(eventDto.getId()).get().getCreatedBy());
-		eventRepository.save(event);
+		Event mappedEvent = mapToEvent(eventDto);
+		// TODO: Implement @Component to avoid code duplication
+		mappedEvent.setClub(clubRepository.findById(mappedEvent.getClub().getId()).get());
+		mappedEvent.setCreatedBy(userRepository.findById(mappedEvent.getCreatedBy().getId()).get());
+		mappedEvent.setLastUpdatedBy(userRepository.findById(mappedEvent.getLastUpdatedBy().getId()).get());
+		eventRepository.save(mappedEvent);
 	}
 	@PreAuthorize("isAuthenticated()")
 	@Override
