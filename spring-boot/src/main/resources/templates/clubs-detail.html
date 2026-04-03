@@ -22,16 +22,18 @@
 							<a><img class="card-img-top" th:src="${club.photoURL}" alt="Foto de paisagem" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/></a>
 							<div class="card-body">
 								<div class="small text-muted" th:text="'Created on: ' + ${club.createdOn}"></div>
-								<div class="small text-muted" th:text="'Created by: ' + ${club.createdBy.username}"></div>
-								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated by: ' + ${club.lastUpdatedBy.username}"></div>
+								<div class="small text-muted" th:text="'Created by: ' + ${club.createdByUsername}"></div>
+								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated by: ' + ${club.lastUpdatedByUsername}"></div>
 								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated on: ' + ${club.updatedOn}"></div>
 								<h2 class="card-title" th:text="${club.title}"></h2>
 								<p class="card-text" th:text="${club.content}"></p>
 								<div sec:authorized="isAuthorized()" >
-									<div th:if="${canEditClub}">
-										<a class="btn btn-primary" th:href="@{/clubs/{clubId}/delete(clubId=${club.id})}">Delete</a>
+									<div th:if="${canEditClub}" class="d-flex gap-2">
 										<a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
 										<a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Editar</a>
+										<form method="post" th:action="@{/clubs/{clubId}/delete(clubId=${club.id})}">
+											<button type="submit" class="btn btn-primary">Delete</button>
+										</form>
 									</div>
 								</div>
 							</div>

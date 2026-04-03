@@ -1,7 +1,5 @@
 package com.mock.spring_boot.controller;
 
-import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,8 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mock.spring_boot.dto.EventDto;
-import com.mock.spring_boot.dto.UserDto;
 import com.mock.spring_boot.models.Event;
+import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.EventService;
 import com.mock.spring_boot.services.UserService;
 
@@ -23,18 +21,15 @@ public class EventController {
 	
 	private EventService eventService;
 	private UserService userService;
+	private ClubService clubService;
 	
-	public EventController(EventService eventService, UserService userService) {
+	public EventController(EventService eventService, UserService userService, ClubService clubService) {
 		super();
 		this.eventService = eventService;
 		this.userService = userService;
+		this.clubService = clubService;
 	}
-	
-	private UserDto getCurrentUser() {
-		UserDto currentUser = userService.findByUsername(getSessionUsername());
-		return currentUser;
-	}
-	
+
 	@GetMapping("/events")
 	public String listEvents(Model model) {
 		model.addAttribute("events", eventService.findAllEvents());
@@ -54,7 +49,7 @@ public class EventController {
 		EventDto event = eventService.findEventById(eventId);
 		model.addAttribute("canEditEvent", eventService.canCurrentUserEditEvent(event));
 		model.addAttribute("event", event);
-		model.addAttribute("club", event.getClub());
+		model.addAttribute("club", clubService.findById(event.getClubId()));
 		return "events-detail";
 	}
 	
@@ -79,12 +74,12 @@ public class EventController {
 	public String saveEvent(@PathVariable Long clubId, 
 			Model model, 
 			@ModelAttribute("event") EventDto eventDto ) {
-		eventDto.setCreatedBy(getCurrentUser());
+		eventDto.setCreatedByUsername(userService.getCurrentUser().getUsername());
 		eventService.createEvent(clubId, eventDto);
 		return "redirect:/clubs/" + clubId;
 	}
 	
-	@GetMapping("/events/{eventId}/delete")
+	@PostMapping("/events/{eventId}/delete")
 	public String deleteEvent(@PathVariable Long eventId) {
 		eventService.deleteEvent(eventId);
 		return "redirect:/events";

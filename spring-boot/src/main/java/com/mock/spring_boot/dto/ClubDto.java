@@ -24,8 +24,8 @@ public class ClubDto {
 	private LocalDateTime createdOn;
 	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime updatedOn;
-	private UserDto createdBy;
-	private UserDto lastUpdatedBy;
 	//This field can be empty if the clubMapper is called from the eventMapper to avoid an infinite loop.
 	private List<EventDto> events;
+	private String createdByUsername;
+	private String lastUpdatedByUsername;
 }

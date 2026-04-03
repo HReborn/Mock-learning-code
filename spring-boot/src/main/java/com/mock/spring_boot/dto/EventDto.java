@@ -18,11 +18,11 @@ public class EventDto {
 	private LocalDateTime endTime;
 	private String type;
 	private String photoURL;
-	private UserDto createdBy;
-	private UserDto lastUpdatedBy;
 	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime updatedOn;
 	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime createdOn;	
-	private ClubDto club;
+	private Long clubId;
+	private String createdByUsername;
+	private String lastUpdatedByUsername;
 }

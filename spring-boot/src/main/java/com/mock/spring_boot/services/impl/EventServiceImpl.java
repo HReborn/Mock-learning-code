@@ -42,7 +42,7 @@ public class EventServiceImpl implements EventService {
 	public Event createEvent(Long clubId, EventDto eventDto) {
 		Club club = clubRepository.findById(clubId).get();
 		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
-		Event mappedEvent = mapToEventWhileCreatingEvent(eventDto);
+		Event mappedEvent = mapToEvent(eventDto);
 		// TODO: Implement @Component to avoid code duplication
 		
 		mappedEvent.setClub(club);
@@ -66,11 +66,12 @@ public class EventServiceImpl implements EventService {
 	@PreAuthorize("isAuthenticated()")
 	@Override
 	public void updateEvent(EventDto eventDto) {
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
 		Event mappedEvent = mapToEvent(eventDto);
 		// TODO: Implement @Component to avoid code duplication
-		mappedEvent.setClub(clubRepository.findById(mappedEvent.getClub().getId()).get());
-		mappedEvent.setCreatedBy(userRepository.findById(mappedEvent.getCreatedBy().getId()).get());
-		mappedEvent.setLastUpdatedBy(userRepository.findById(mappedEvent.getLastUpdatedBy().getId()).get());
+		mappedEvent.setClub(clubRepository.findById(eventDto.getClubId()).get());
+		mappedEvent.setCreatedBy(userRepository.findByUsername(eventDto.getCreatedByUsername()));
+		mappedEvent.setLastUpdatedBy(currentUser);
 		eventRepository.save(mappedEvent);
 	}
 	@PreAuthorize("isAuthenticated()")
@@ -91,7 +92,7 @@ public class EventServiceImpl implements EventService {
 			return false;
 		}
 		// This means that the current user is the owner
-		if (userService.getCurrentUser().getId() == eventDto.getCreatedBy().getId()) {
+		if (userService.getCurrentUser().getUsername() == eventDto.getCreatedByUsername()) {
 			return true;
 		}
 		if (isSuperAdmin()) {

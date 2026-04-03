@@ -1,12 +1,7 @@
 package com.mock.spring_boot.mapper;
 
-import static com.mock.spring_boot.mapper.ClubMapper.*;
-import static com.mock.spring_boot.mapper.UserMapper.*;
-
 import com.mock.spring_boot.dto.EventDto;
 import com.mock.spring_boot.models.Event;
-import static com.mock.spring_boot.mapper.UserMapper.mapToUserDto;
-import static com.mock.spring_boot.mapper.UserMapper.mapToUserEntity;
 
 public class EventMapper {
 	
@@ -20,9 +15,6 @@ public class EventMapper {
 				.photoURL(eventDto.getPhotoURL())
 				.createdOn(eventDto.getCreatedOn())
 				.updatedOn(eventDto.getUpdatedOn())
-				.club(mapToClub(eventDto.getClub()))
-				.createdBy(mapToUserEntity(eventDto.getCreatedBy()))
-				.lastUpdatedBy(mapToUserEntity(eventDto.getLastUpdatedBy()))
 				.build();
 	}
 	
@@ -36,22 +28,9 @@ public class EventMapper {
 				.photoURL(event.getPhotoURL())
 				.createdOn(event.getCreatedOn())
 				.updatedOn(event.getUpdatedOn())
-				.club(mapToClubDtoWithoutEvents(event.getClub()))
-				.createdBy(mapToUserDto(event.getCreatedBy()))
-				.lastUpdatedBy(mapToUserDto(event.getLastUpdatedBy()))
-				.build();
-	}
-	
-	public static Event mapToEventWhileCreatingEvent(EventDto eventDto) {
-		return Event.builder()
-				.id(eventDto.getId())
-				.name(eventDto.getName())
-				.startTime(eventDto.getStartTime())
-				.endTime(eventDto.getEndTime())
-				.type(eventDto.getType())
-				.photoURL(eventDto.getPhotoURL())
-				.createdOn(eventDto.getCreatedOn())
-				.updatedOn(eventDto.getUpdatedOn())
+				.clubId(event.getClub().getId())
+				.createdByUsername(event.getCreatedBy().getUsername())
+				.lastUpdatedByUsername(event.getLastUpdatedBy().getUsername())
 				.build();
 	}
 }
