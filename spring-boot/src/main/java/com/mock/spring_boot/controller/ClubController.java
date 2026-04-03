@@ -48,7 +48,7 @@ public class ClubController {
 	public String saveClub (@Valid @ModelAttribute("club") ClubDto clubDto,
 							BindingResult result,
 							Model model) {
-		clubDto.setCreatedBy(userService.getCurrentUser());
+		clubDto.setCreatedByUsername(userService.getCurrentUser().getUsername());
 		if (result.hasErrors()) {
 			// I don't know why he didn't put the model on the club edit
 			// Probably because the model var already existed and we were editing
@@ -84,11 +84,12 @@ public class ClubController {
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("canEditClub", clubService.canCurrentUserEditClub(club));
+		System.out.println(club.toString());
 		model.addAttribute("club", club);
 		return "clubs-detail";
 	}
 	
-	@GetMapping("/clubs/{clubId}/delete")
+	@PostMapping("/clubs/{clubId}/delete")
 	public String deleteClub (@PathVariable Long clubId) {
 		clubService.deleteClub(clubId);
 		return "redirect:/clubs";

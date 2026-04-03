@@ -1,6 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
-import static com.mock.spring_boot.mapper.ClubMapper.*;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
 
@@ -45,7 +46,7 @@ public class ClubServiceImpl implements ClubService {
 	@PreAuthorize("isAuthenticated()")
 	public Club saveClub(ClubDto clubDto) {
 		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
-		Club club = mapToClubWhileCreatingClub(clubDto);
+		Club club = mapToClub(clubDto);
 		// Intentionally duplicating code. This will be deleted after implementing @Component or MapStruct
 		// TODO: Implement @Component to avoid code duplication
 			club.setCreatedBy(currentUser);
@@ -65,10 +66,11 @@ public class ClubServiceImpl implements ClubService {
 	@Override
 	@PreAuthorize("isAuthenticated()")
 	public void updateClub(ClubDto clubDto) {
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
 		Club club = mapToClub(clubDto);
 		// TODO: Implement @Component to avoid code duplication
-			club.setCreatedBy(userRepository.findById(club.getCreatedBy().getId()).get());
-			club.setLastUpdatedBy(userRepository.findById(club.getLastUpdatedBy().getId()).get());
+			club.setCreatedBy(userRepository.findByUsername(clubDto.getCreatedByUsername()));
+			club.setLastUpdatedBy(currentUser);
 		clubRepository.save(club);
 	}
 
@@ -90,7 +92,7 @@ public class ClubServiceImpl implements ClubService {
 			return false;
 		}
 		// This means that the current user is the owner
-		if (userService.getCurrentUser().getId() == clubDto.getCreatedBy().getId()) {
+		if (userService.getCurrentUser().getUsername() == clubDto.getCreatedByUsername()) {
 			return true;
 		}
 		if (isSuperAdmin()) {
