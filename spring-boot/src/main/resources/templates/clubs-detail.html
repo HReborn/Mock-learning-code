@@ -1,0 +1,61 @@
+<html xmlns:th="http://thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:sec="http://www.thymeleaf.org/extras/spring-security" layout:decorate="~{layout}">
+	<head>
+		<title>Detalhes da paisagem</title>
+	</head>
+	<body class="d-flex flex-column">
+		<!-- Page Content-->
+		<section layout:fragment="body">
+			<header class="py-5 bg-light border-bottom mb-4">
+				<div class="container">
+					<div class="text-center my-5">
+						<h1 class="fw-bolder" th:text="${club.title}"></h1>
+						<p class="lead mb-0">Essa paisagem linda para você, paizão. Aprecie com moderação.</p>
+					</div>
+				</div>
+			</header>
+			<!-- Page content-->
+			<div class="container">
+				<div class="row justify-content-center">
+   					 <div class="col-lg-8">
+						<!-- Featured blog post-->
+						<div class="card mb-4">
+							<a><img class="card-img-top" th:src="${club.photoURL}" alt="Foto de paisagem" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/></a>
+							<div class="card-body">
+								<div class="small text-muted" th:text="'Created on: ' + ${club.createdOn}"></div>
+								<div class="small text-muted" th:text="'Created by: ' + ${club.createdByUsername}"></div>
+								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated by: ' + ${club.lastUpdatedByUsername}"></div>
+								<div th:if="${canEditClub}" class="small text-muted" th:text="'Last updated on: ' + ${club.updatedOn}"></div>
+								<h2 class="card-title" th:text="${club.title}"></h2>
+								<p class="card-text" th:text="${club.content}"></p>
+								<div sec:authorized="isAuthorized()" >
+									<div th:if="${canEditClub}" class="d-flex gap-2">
+										<a class="btn btn-primary" th:href="@{/events/{clubId}/new(clubId=${club.id})}">Create Event</a>
+										<a class="btn btn-primary" th:href="@{/clubs/{clubId}/edit(clubId=${club.id})}">Editar</a>
+										<form method="post" th:action="@{/clubs/{clubId}/delete(clubId=${club.id})}">
+											<button type="submit" class="btn btn-primary">Delete</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Nested row for non-featured blog posts-->
+						<div class="row">
+							<div class="col-lg-6">
+								<!-- Blog post-->
+								<div th:each="event :${club.events}" class="card mb-4">
+									<img class="card-img-top" th:src="${event.photoURL}" alt="..." style="height:300px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
+									<div class="card-body">
+										<h2 th:text="${event.name}" class="card-title h4"></h2>
+										<div class="small text-muted" th:text="'Start: ' + ${event.startTime}"></div>
+										<div class="small text-muted mb-2" th:text="'End: ' + ${event.endTime}"></div>
+										<a class="btn btn-primary" th:href="@{/events/{eventId}(eventId=${event.id})}">Detalhes</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</body>
+</html>

@@ -1,0 +1,103 @@
+package com.mock.spring_boot.services.impl;
+
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClub;
+import static com.mock.spring_boot.mapper.ClubMapper.mapToClubDto;
+import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
+import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
+import com.mock.spring_boot.dto.ClubDto;
+import com.mock.spring_boot.models.Club;
+import com.mock.spring_boot.models.UserEntity;
+import com.mock.spring_boot.repositories.ClubRepository;
+import com.mock.spring_boot.repositories.UserRepository;
+import com.mock.spring_boot.services.ClubService;
+import com.mock.spring_boot.services.UserService;
+
+@Service
+public class ClubServiceImpl implements ClubService {
+
+	private ClubRepository clubRepository;
+	private UserRepository userRepository;
+	private UserService userService; 
+	
+	public ClubServiceImpl(ClubRepository clubRepository, UserService userService, UserRepository userRepository) {
+		super();
+		this.userService = userService;
+		this.clubRepository = clubRepository;
+		this.userRepository = userRepository;
+	}
+	
+	@Override
+	public List<ClubDto> findAllClubs() {
+		List<Club> clubs =  clubRepository.findAll();
+		List<ClubDto> clubDtos = clubs.stream().map(club -> mapToClubDto(club)).toList(); 
+		return clubDtos;
+	}
+
+	@Override
+	@PreAuthorize("isAuthenticated()")
+	public Club saveClub(ClubDto clubDto) {
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		Club club = mapToClub(clubDto);
+		// Intentionally duplicating code. This will be deleted after implementing @Component or MapStruct
+		// TODO: Implement @Component to avoid code duplication
+			club.setCreatedBy(currentUser);
+			club.setLastUpdatedBy(currentUser);
+		return clubRepository.save(club);
+	}
+
+	@Override
+	public ClubDto findById(Long id) {
+		Club club = clubRepository.findById(id)
+				.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		
+		ClubDto clubDto = mapToClubDto(club);
+		return clubDto;
+	}
+
+	@Override
+	@PreAuthorize("isAuthenticated()")
+	public void updateClub(ClubDto clubDto) {
+		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
+		Club club = mapToClub(clubDto);
+		// TODO: Implement @Component to avoid code duplication
+			club.setCreatedBy(userRepository.findByUsername(clubDto.getCreatedByUsername()));
+			club.setLastUpdatedBy(currentUser);
+		clubRepository.save(club);
+	}
+
+	@Override
+	@PreAuthorize("isAuthenticated()")
+	public void deleteClub(Long id) {
+		clubRepository.deleteById(id);
+	}
+
+	@Override
+	public List<ClubDto> searchClubs(String query) {
+		return clubRepository.searchClubs(query).stream().map((club) -> mapToClubDto(club)).collect(Collectors.toList());
+	}
+
+	@Override
+	public boolean canCurrentUserEditClub(ClubDto clubDto) {
+		// This means that the user isn't authenticated
+		if (getSessionUsername() == null) {
+			return false;
+		}
+		// This means that the current user is the owner
+		if (userService.getCurrentUser().getUsername() == clubDto.getCreatedByUsername()) {
+			return true;
+		}
+		if (isSuperAdmin()) {
+			return true;
+		}	
+		return false;
+	}
+}

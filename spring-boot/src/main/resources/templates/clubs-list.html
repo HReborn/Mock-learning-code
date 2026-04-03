@@ -1,0 +1,37 @@
+<html xmlns:th="http://thymeleaf.org" 
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+	<head>
+		<title>Lista de paisagens</title>
+	</head>
+	<body class="d-flex flex-column h-100">
+		<main class="flex-shrink-0">
+			<!-- Page Content-->
+			<section layout:fragment="body" class="py-5">
+				<div class="container px-5 my-5">
+					<div th:if="${param.success}" class="alert alert-success">You have registered successfully!</div>
+					<div th:if="${errorMessage}" class="alert alert-danger">
+    					<span th:text="${errorMessage}"></span>
+					</div>
+					<div class="text-center mb-5">
+						<h1 class="fw-bolder">Paisagens perto de você</h1>
+						<p class="lead fw-normal text-muted mb-0">Paisagens na sua area!</p>
+					</div>
+					<div class="row gx-5">
+						<form th:action="@{/clubs/search}" class="form-inline my-2 my-lg-0 mb-3">
+							<input name="query" class="form-control mr-sm-2 mb-5" type="search" placeholder="Pesquisar paisagem" aria-label="Search" />
+						</form>
+						<!-- The "th:each" is a loop from thymeleaf that'll iterate through the clubs object and will also feed the th:src -->
+						<div th:each="club :${clubs}" class="col-lg-6">
+							<div class="position-relative mb-3">
+								<img class="img-fluid rounded-3 mb-2" th:src="${club.photoURL}" alt="..." style="height:350px; width:100%; object-fit: contain; background-color: #f0f0f0;" onerror="this.onerror=null;this.src='/assets/placeholder.png';"/>
+								<p th:text="${club.title}" class="h3 fw-bolder text-decoration-none link-dark mb-2" ></p>
+								<a class="btn btn-primary" th:href="@{/clubs/{clubId}(clubId=${club.id})}">Detalhes</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+	</body>
+</html>
