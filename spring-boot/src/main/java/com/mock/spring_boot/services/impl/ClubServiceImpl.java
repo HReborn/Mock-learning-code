@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mock.spring_boot.dto.ClubDto;
+import com.mock.spring_boot.dto.ClubEditDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.models.UserEntity;
 import com.mock.spring_boot.repositories.ClubRepository;
@@ -65,12 +66,13 @@ public class ClubServiceImpl implements ClubService {
 
 	@Override
 	@PreAuthorize("isAuthenticated()")
-	public void updateClub(ClubDto clubDto) {
+	public void updateClub(ClubEditDto clubEditDto) {
 		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
-		Club club = mapToClub(clubDto);
-		// TODO: Implement @Component to avoid code duplication
-			club.setCreatedBy(userRepository.findByUsername(clubDto.getCreatedByUsername()));
-			club.setLastUpdatedBy(currentUser);
+		Club club = clubRepository.findById(clubEditDto.getClubId()).get(); 
+		club.setTitle(clubEditDto.getTitle());
+		club.setPhotoURL(clubEditDto.getPhotoURL());
+		club.setContent(clubEditDto.getContent());
+		club.setLastUpdatedBy(currentUser);
 		clubRepository.save(club);
 	}
 

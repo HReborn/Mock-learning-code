@@ -9,8 +9,8 @@ import lombok.Data;
 
 @Data
 @Builder
-public class EventDto {
-	private Long id;
+public class EventEditDto {
+	private Long eventId;
 	private String name;
 	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
 	private LocalDateTime startTime;
@@ -18,11 +18,4 @@ public class EventDto {
 	private LocalDateTime endTime;
 	private String type;
 	private String photoURL;
-	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
-	private LocalDateTime updatedOn;
-	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")
-	private LocalDateTime createdOn;	
-	private Long clubId;
-	private String createdByUsername;
-	private String lastUpdatedByUsername;
 }

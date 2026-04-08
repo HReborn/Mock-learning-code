@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.mock.spring_boot.dto.EventDto;
+import com.mock.spring_boot.dto.EventEditDto;
 import com.mock.spring_boot.models.Event;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.EventService;
@@ -61,11 +62,12 @@ public class EventController {
 	
 	@PostMapping("/events/{eventId}/edit")
 	public String updateEvent(@PathVariable Long eventId, 
-							  @Valid @ModelAttribute EventDto event,
+							  @Valid @ModelAttribute EventEditDto event,
 							  BindingResult result) {
 		if (result.hasErrors()) {
 			return "event-edit";
 		}
+		event.setEventId(eventId);
 		eventService.updateEvent(event);
 		return "redirect:/events/" + eventId;
 	}

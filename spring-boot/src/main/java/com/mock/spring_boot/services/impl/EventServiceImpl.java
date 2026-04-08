@@ -1,6 +1,7 @@
 package com.mock.spring_boot.services.impl;
 
-import static com.mock.spring_boot.mapper.EventMapper.*;
+import static com.mock.spring_boot.mapper.EventMapper.mapToEvent;
+import static com.mock.spring_boot.mapper.EventMapper.mapToEventDto;
 import static com.mock.spring_boot.security.SecurityUtil.getSessionUsername;
 import static com.mock.spring_boot.security.SecurityUtil.isSuperAdmin;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.mock.spring_boot.dto.EventDto;
+import com.mock.spring_boot.dto.EventEditDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.models.Event;
 import com.mock.spring_boot.models.UserEntity;
@@ -65,15 +67,19 @@ public class EventServiceImpl implements EventService {
 	}
 	@PreAuthorize("isAuthenticated()")
 	@Override
-	public void updateEvent(EventDto eventDto) {
+	public void updateEvent(EventEditDto eventEditDto) {
 		UserEntity currentUser = userRepository.findByUsername(getSessionUsername());
-		Event mappedEvent = mapToEvent(eventDto);
+		Event event = eventRepository.findById(eventEditDto.getEventId()).get();
+		event.setName(eventEditDto.getName());
+		event.setType(eventEditDto.getType());
+		event.setPhotoURL(eventEditDto.getPhotoURL());
+		event.setStartTime(eventEditDto.getStartTime());
+		event.setEndTime(eventEditDto.getEndTime());
 		// TODO: Implement @Component to avoid code duplication
-		mappedEvent.setClub(clubRepository.findById(eventDto.getClubId()).get());
-		mappedEvent.setCreatedBy(userRepository.findByUsername(eventDto.getCreatedByUsername()));
-		mappedEvent.setLastUpdatedBy(currentUser);
-		eventRepository.save(mappedEvent);
+		event.setLastUpdatedBy(currentUser);
+		eventRepository.save(event);
 	}
+	
 	@PreAuthorize("isAuthenticated()")
 	@Override
 	public void deleteEvent(Long eventId) {
