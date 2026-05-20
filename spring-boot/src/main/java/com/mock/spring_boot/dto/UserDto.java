@@ -14,7 +14,7 @@ import lombok.Data;
 @Builder
 public class UserDto {
 	
-	private Long id;
+	private Long id; //
 	private String email;
 	private String username;
 	@DateTimeFormat(pattern = "yyy-MM-dd'T'HH:mm")

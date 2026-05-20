@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mock.spring_boot.dto.ClubDto;
+import com.mock.spring_boot.dto.ClubEditDto;
 import com.mock.spring_boot.models.Club;
 import com.mock.spring_boot.services.ClubService;
 import com.mock.spring_boot.services.UserService;
@@ -70,21 +71,20 @@ public class ClubController {
 	
 	@PostMapping("/clubs/{clubId}/edit")
 	public String updateClub(@PathVariable Long clubId, 
-							 @Valid @ModelAttribute ClubDto club,
+							 @Valid @ModelAttribute ClubEditDto club,
 							 BindingResult result) {
 		if (result.hasErrors()) {
 			return "clubs-edit";
 		}
-		club.setId(clubId);
+		club.setClubId(clubId);
 		clubService.updateClub(club);
-		return "redirect:/clubs";
+		return "redirect:/clubs/" + clubId;
 	}
 	
 	@GetMapping("/clubs/{clubId}")
 	public String getClubs (@PathVariable Long clubId, Model model) {
 		ClubDto club = clubService.findById(clubId);
 		model.addAttribute("canEditClub", clubService.canCurrentUserEditClub(club));
-		System.out.println(club.toString());
 		model.addAttribute("club", club);
 		return "clubs-detail";
 	}
