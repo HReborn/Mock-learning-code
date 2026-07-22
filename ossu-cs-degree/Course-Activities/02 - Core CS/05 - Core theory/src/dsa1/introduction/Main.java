@@ -6,13 +6,13 @@ public class Main {
 		long y = 5678;
 		int result = 7006652;
 		
-		GradeSchoolMultiplication gsMult = new GradeSchoolMultiplication();
-		long gsMultResult = gsMult.multiply(x, y); 
+		KaratsubaMultiplication karaMult = new KaratsubaMultiplication();
+		long karaMultResult = karaMult.multiply(x, y); 
 		
-		if (gsMultResult != result) {
-			throw new Exception("Estás a brincar comigo trouxa? Resultado do grade school foi: " + gsMultResult + ", mas o resultado esperado era: " + result + ".");
+		if (karaMultResult != result) {
+			throw new Exception("Estás a brincar comigo trouxa? Resultado do grade school foi: " + karaMultResult + ", mas o resultado esperado era: " + result + ".");
 		} else {
-			System.out.println("Grade school funcionou perfeitamente com o resultado de: " + gsMultResult);
+			System.out.println("Grade school funcionou perfeitamente com o resultado de: " + karaMultResult);
 		}
 	}	
 }
