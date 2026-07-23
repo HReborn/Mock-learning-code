@@ -23,11 +23,14 @@ public class Main {
 		long y = 5678;
 		int result = 7006652;
 		
-		InsertionSort insertionSort = new InsertionSort();
 		KaratsubaMultiplication karaMult = new KaratsubaMultiplication();
+		InsertionSort insertionSort = new InsertionSort();
+		BubbleSort bubbleSort = new BubbleSort();
+		
+		
 		long karaMultResult = karaMult.multiply(x, y);
-		int[] insertionSortResult = new int[unsorted.length];
-		insertionSortResult = insertionSort.sort(unsorted);
+		int[] insertionSortResult = insertionSort.sort(unsorted);
+		int[] bubbleSortResult = bubbleSort.sort(unsorted);
 		
 		if (karaMultResult != result) {
 			throw new Exception("Estás a brincar comigo trouxa? Resultado do grade school foi: " + karaMultResult + ", mas o resultado esperado era: " + result + ".");
@@ -42,6 +45,15 @@ public class Main {
 			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O insertion sort está errado!");
 		} else {
 			System.out.println("2. Aí sim, manolo. Mandou bem pakas implementando o insertion sort. O array está bunitin e igual.");
+		}
+		
+		if (!Arrays.equals(insertionSortResult, sorted)) {
+			System.out.println(Arrays.toString(unsorted));
+			System.out.println(Arrays.toString(bubbleSortResult));
+			System.out.println(Arrays.toString(sorted));
+			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O bubble sort está errado!");
+		} else {
+			System.out.println("3. Aí sim, manolo. Mandou bem pakas implementando o bubble sort. O array está bunitin e igual.");
 		}
 	}	
 }
