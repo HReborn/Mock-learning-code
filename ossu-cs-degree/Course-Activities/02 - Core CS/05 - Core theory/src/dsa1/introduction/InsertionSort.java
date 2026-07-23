@@ -1,11 +1,12 @@
 package dsa1.introduction;
 
+import java.util.Arrays;
+
 public class InsertionSort {
 	
 	public int[] sort(int[] unsorted) {
-		int[] sorted = new int[unsorted.length];
-		sorted = unsorted;
-		for (int i = 1; i < unsorted.length; i++) { 
+		int[] sorted = Arrays.copyOf(unsorted, unsorted.length);
+		for (int i = 1; i < sorted.length; i++) { 
 			int j = i;
 			int current = sorted[j];
 			int leftItem = sorted[j-1];
@@ -14,7 +15,7 @@ public class InsertionSort {
 				sorted[j-1] = current;
 				j--;
 				try {
-					leftItem = unsorted[j-1];
+					leftItem = sorted[j-1];
 				} catch (ArrayIndexOutOfBoundsException ex) {
 					break;
 				}

@@ -26,34 +26,55 @@ public class Main {
 		KaratsubaMultiplication karaMult = new KaratsubaMultiplication();
 		InsertionSort insertionSort = new InsertionSort();
 		BubbleSort bubbleSort = new BubbleSort();
-		
+		SelectionSort selectionSort = new SelectionSort();
 		
 		long karaMultResult = karaMult.multiply(x, y);
 		int[] insertionSortResult = insertionSort.sort(unsorted);
 		int[] bubbleSortResult = bubbleSort.sort(unsorted);
+		int[] selectionSortResult = selectionSort.sort(unsorted);
+		
+		// This print exists to avoid unsync in the console
+		System.out.println();
 		
 		if (karaMultResult != result) {
+			System.out.println();
+			System.out.println("Karatsuba multiplication: ");
 			throw new Exception("Estás a brincar comigo trouxa? Resultado do grade school foi: " + karaMultResult + ", mas o resultado esperado era: " + result + ".");
 		} else {
 			System.out.println("1. Grade school funcionou perfeitamente com o resultado de: " + karaMultResult);
 		}
 		
 		if (!Arrays.equals(insertionSortResult, sorted)) {
-			System.out.println(Arrays.toString(unsorted));
-			System.out.println(Arrays.toString(insertionSortResult));
-			System.out.println(Arrays.toString(sorted));
+			System.out.println();
+			System.out.println("Insertion Sort result: ");
+			System.out.println("unsorted: " + Arrays.toString(unsorted));
+			System.out.println("result  : " + Arrays.toString(insertionSortResult));
+			System.out.println("expected: " + Arrays.toString(sorted));
 			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O insertion sort está errado!");
 		} else {
 			System.out.println("2. Aí sim, manolo. Mandou bem pakas implementando o insertion sort. O array está bunitin e igual.");
 		}
 		
-		if (!Arrays.equals(insertionSortResult, sorted)) {
-			System.out.println(Arrays.toString(unsorted));
-			System.out.println(Arrays.toString(bubbleSortResult));
-			System.out.println(Arrays.toString(sorted));
+		if (!Arrays.equals(bubbleSortResult, sorted)) {
+			System.out.println();
+			System.out.println("Bubble Sort result: ");
+			System.out.println("unsorted: " + Arrays.toString(unsorted));
+			System.out.println("result  : " + Arrays.toString(bubbleSortResult));
+			System.out.println("expected: " + Arrays.toString(sorted));
 			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O bubble sort está errado!");
 		} else {
 			System.out.println("3. Aí sim, manolo. Mandou bem pakas implementando o bubble sort. O array está bunitin e igual.");
+		}
+		
+		if (!Arrays.equals(selectionSortResult, sorted)) {
+			System.out.println();
+			System.out.println("Selection Sort result: ");
+			System.out.println("unsorted: " + Arrays.toString(unsorted));
+			System.out.println("result  : " + Arrays.toString(selectionSortResult));
+			System.out.println("expected: " + Arrays.toString(sorted));
+			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O selection sort está errado!");
+		} else {
+			System.out.println("4. Aí sim, manolo. Mandou bem pakas implementando o selection sort. O array está bunitin e igual.");
 		}
 	}	
 }
