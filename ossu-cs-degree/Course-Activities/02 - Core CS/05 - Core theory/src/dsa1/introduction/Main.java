@@ -27,11 +27,13 @@ public class Main {
 		InsertionSort insertionSort = new InsertionSort();
 		BubbleSort bubbleSort = new BubbleSort();
 		SelectionSort selectionSort = new SelectionSort();
+		MergeSort mergeSort = new MergeSort();
 		
 		long karaMultResult = karaMult.multiply(x, y);
 		int[] insertionSortResult = insertionSort.sort(unsorted);
 		int[] bubbleSortResult = bubbleSort.sort(unsorted);
 		int[] selectionSortResult = selectionSort.sort(unsorted);
+		int[] mergeSortResult = mergeSort.sort(unsorted);
 		
 		// This print exists to avoid unsync in the console
 		System.out.println();
@@ -75,6 +77,17 @@ public class Main {
 			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O selection sort está errado!");
 		} else {
 			System.out.println("4. Aí sim, manolo. Mandou bem pakas implementando o selection sort. O array está bunitin e igual.");
+		}
+		
+		if (!Arrays.equals(mergeSortResult, sorted)) {
+			System.out.println();
+			System.out.println("Merge Sort result: ");
+			System.out.println("unsorted: " + Arrays.toString(unsorted));
+			System.out.println("result  : " + Arrays.toString(mergeSortResult));
+			System.out.println("expected: " + Arrays.toString(sorted));
+			throw new Exception("Estás a brincar comigo trouxa? Os arrays não são iguais!! O merge sort está errado!");
+		} else {
+			System.out.println("5. Aí sim, manolo. Mandou bem pakas implementando o merge sort. O array está bunitin e igual.");
 		}
 	}	
 }
